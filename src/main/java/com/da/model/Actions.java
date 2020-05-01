@@ -1,26 +1,29 @@
 package com.da.model;
 
-import lombok.*;
+import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-@Table(name = "ACTIONS")
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@EqualsAndHashCode
-public class Actions {
+@Data
+@Table(name = "actions")
+public class Actions implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", insertable = false, nullable = false)
     private Integer id;
 
+    @Column(name = "id_actions")
+    private String idActions;
+
     @Column(name = "name_actions")
-    private String actionName;
+    private String nameActions;
 
     @Column(name = "statuss")
-    private String status;
+    private String statuss;
 
+    
 }

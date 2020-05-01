@@ -1,40 +1,41 @@
 package com.da.model;
 
-import lombok.*;
+import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
+@Data
 @Entity
-@Table(name = "DIEM")
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@EqualsAndHashCode
-public class Diem {
+@Table(name = "diem")
+public class Diem implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", insertable = false, nullable = false)
     private Integer id;
 
     @Column(name = "ma_diem")
-    private Integer maDiem;
+    private String maDiem;
 
     @Column(name = "ma_lop")
-    private Integer maLop;
+    private String maLop;
 
     @Column(name = "diemmieng")
-    private Float diemMieng;
+    private Float diemmieng;
 
     @Column(name = "diem15p")
-    private Float diem15P;
+    private Float diem15p;
 
     @Column(name = "diem90p")
-    private Float diem90P;
+    private Float diem90p;
 
     @Column(name = "diemtb")
-    private Float diemTB;
+    private Float diemtb;
 
     @Column(name = "id_user")
     private Integer idUser;
+
+    
 }

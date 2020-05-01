@@ -5,10 +5,10 @@ import lombok.Data;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Data
-@Table(name = "roles")
 @Entity
-public class Roles implements Serializable {
+@Table(name = "monhoc")
+@Data
+public class Monhoc implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -16,14 +16,11 @@ public class Roles implements Serializable {
     @Column(name = "id", insertable = false, nullable = false)
     private Integer id;
 
-    @Column(name = "id_role")
-    private String idRole;
+    @Column(name = "ma_monhoc")
+    private String maMonhoc;
 
-    @Column(name = "name_role")
-    private String nameRole;
-
-    @Column(name = "statuss")
-    private String statuss;
+    @Column(name = "tenmonhoc")
+    private String tenmonhoc;
 
     
 }

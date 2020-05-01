@@ -1,43 +1,46 @@
 package com.da.model;
 
-import lombok.*;
+import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
+@Table(name = "lop")
+@Data
 @Entity
-@Table(name = "LOP",schema = "dbo")
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@EqualsAndHashCode
-public class Lop {
+public class Lop implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", insertable = false, nullable = false)
     private Integer id;
-    
+
     @Column(name = "ma_lop")
-    private Integer maLop;
-    
-    
+    private String maLop;
+
     @Column(name = "tenlop")
-    private String tenLop;
+    private String tenlop;
 
     @Column(name = "siso")
-    private Long siSo;
+    private Integer siso;
 
     @Column(name = "thoigianbatdau")
-    private Date thoiGianBatDau;
+    private LocalDate thoigianbatdau;
 
     @Column(name = "thoigianketthuc")
-    private Date thoiGianKetThuc;
+    private LocalDate thoigianketthuc;
 
     @Column(name = "diadiem")
-    private String diaDiem;
+    private String diadiem;
+
+    @Column(name = "hocphi")
+    private BigDecimal hocphi;
 
     @Column(name = "ma_monhoc")
-    private Integer idMonHoc;
+    private String maMonhoc;
 
+    
 }

@@ -3,17 +3,17 @@ server:
 
 spring:
   datasource:
-    url: jdbc:sqlserver://113.190.149.100:1433;databaseName=QLtrungtamtoanhoc1
-    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    username: duc
-    password: 123456
+    url: jdbc:mysql://localhost:3306/qltrungtamtoanhoc1
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: shaiya01
 
   jpa:
     hibernate:
       ddl-auto: none
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.SQLServerDialect
+        dialect: org.hibernate.dialect.MySQLDialect
     show-sql: true
 logging:
   level:

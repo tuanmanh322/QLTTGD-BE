@@ -1,11 +1,11 @@
 package com.da.repository;
 
-import com.da.model.Roles;
+import com.da.model.Chitiethocphi;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RolesRepository extends JpaRepository<Roles, Integer>, JpaSpecificationExecutor<Roles> {
+public interface ChitiethocphiRepository extends JpaRepository<Chitiethocphi, Integer>, JpaSpecificationExecutor<Chitiethocphi> {
 
 }

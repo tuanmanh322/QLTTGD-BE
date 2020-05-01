@@ -1,68 +1,66 @@
 package com.da.model;
 
-
-import lombok.*;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "USERS")
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@EqualsAndHashCode
+@Data
+@Table(name = "users")
 public class Users implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", insertable = false, nullable = false)
     private Integer id;
-    
+
     @Column(name = "id_user")
-    private Integer idUser;
+    private String idUser;
 
     @Column(name = "name")
     private String name;
 
     @Column(name = "gioitinh")
-    private Boolean gioiTinh;
+    private String gioitinh;
 
     @Column(name = "ngaysinh")
-    private Date ngaySinh;
+    private LocalDate ngaysinh;
 
     @Column(name = "socmt")
-    private String soCMT;
+    private Integer socmt;
 
     @Column(name = "quoctich")
-    private String quocTich;
+    private String quoctich;
 
     @Column(name = "quequan")
-    private String queQuan;
+    private String quequan;
 
     @Column(name = "noiohientai")
-    private String noiOHienTai;
+    private String noiohientai;
 
     @Column(name = "hokhau")
-    private String hoKhau;
+    private String hokhau;
 
     @Column(name = "quatrinhlamviec")
-    private String quaTrinhLamViec;
+    private String quatrinhlamviec;
 
     @Column(name = "email")
     private String email;
 
     @Column(name = "sodt")
-    private String soDT;
+    private Integer sodt;
 
     @Column(name = "luongcoban")
-    private Float luongCoBan;
+    private Double luongcoban;
 
-    @Column(name = "id_the")
-    private Integer idThe;
+    @Column(name = "ma_the")
+    private Integer maThe;
 
-    @Column(name = "id_lop")
-    private Integer idLop;
+    @Column(name = "ma_lop")
+    private Integer maLop;
 
+    
 }

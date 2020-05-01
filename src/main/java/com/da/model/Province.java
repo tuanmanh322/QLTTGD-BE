@@ -1,20 +1,19 @@
 package com.da.model;
 
-import lombok.*;
+import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-@Table(name = "PROVINCE")
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@EqualsAndHashCode
-public class Province {
+@Data
+@Table(name = "province")
+public class Province implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", insertable = false, nullable = false)
     private Integer id;
 
     @Column(name = "name_province")
@@ -23,5 +22,5 @@ public class Province {
     @Column(name = "note")
     private String note;
 
-
+    
 }

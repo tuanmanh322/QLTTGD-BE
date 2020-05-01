@@ -4,12 +4,13 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Data
 @Entity
-@Table(name = "the")
-public class The implements Serializable {
+@Table(name = "chitiethocphi")
+@Data
+public class Chitiethocphi implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -17,17 +18,17 @@ public class The implements Serializable {
     @Column(name = "id", insertable = false, nullable = false)
     private Integer id;
 
-    @Column(name = "ma_the")
-    private String maThe;
+    @Column(name = "tenhocphi")
+    private String tenhocphi;
 
-    @Column(name = "ngaycap")
-    private LocalDate ngaycap;
+    @Column(name = "giatien")
+    private BigDecimal giatien;
+
+    @Column(name = "ngaythu")
+    private LocalDate ngaythu;
 
     @Column(name = "trangthai")
     private String trangthai;
-
-    @Column(name = "ma_loaithe")
-    private String maLoaithe;
 
     
 }
