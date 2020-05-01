@@ -3,6 +3,7 @@ package com.da.dto;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -18,9 +19,10 @@ public class LopHocSearchDTO extends BaseSearch{
 	private String tenLop;
 	
 	private String tenMonHoc;
-	
+
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date ngayKhaiGiang;
-	
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date ngayKetThuc;
 	
 	private Integer siSo;
