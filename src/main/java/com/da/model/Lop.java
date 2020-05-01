@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Table(name = "lop")
 @Data
@@ -28,10 +28,10 @@ public class Lop implements Serializable {
     private Integer siso;
 
     @Column(name = "thoigianbatdau")
-    private LocalDate thoigianbatdau;
+    private Date thoigianbatdau;
 
     @Column(name = "thoigianketthuc")
-    private LocalDate thoigianketthuc;
+    private Date thoigianketthuc;
 
     @Column(name = "diadiem")
     private String diadiem;

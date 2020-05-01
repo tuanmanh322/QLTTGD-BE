@@ -4,7 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Table(name = "nhatcheckin")
@@ -24,10 +24,10 @@ public class Nhatcheckin implements Serializable {
     private String maThe;
 
     @Column(name = "thoigianvao")
-    private LocalDate thoigianvao;
+    private Date thoigianvao;
 
     @Column(name = "thoigianra")
-    private LocalDate thoigianra;
+    private Date thoigianra;
 
     
 }

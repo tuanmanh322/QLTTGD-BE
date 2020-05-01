@@ -4,7 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Data
@@ -27,7 +27,7 @@ public class Users implements Serializable {
     private String gioitinh;
 
     @Column(name = "ngaysinh")
-    private LocalDate ngaysinh;
+    private Date ngaysinh;
 
     @Column(name = "socmt")
     private Integer socmt;

@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Table(name = "chitiethocphi")
@@ -25,7 +25,7 @@ public class Chitiethocphi implements Serializable {
     private BigDecimal giatien;
 
     @Column(name = "ngaythu")
-    private LocalDate ngaythu;
+    private Date ngaythu;
 
     @Column(name = "trangthai")
     private String trangthai;
