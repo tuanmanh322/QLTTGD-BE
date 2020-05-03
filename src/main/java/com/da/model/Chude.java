@@ -20,10 +20,11 @@ public class Chude implements Serializable {
     private String maChude;
 
     @Column(name = "tenchude")
-    private String tenchude;
+    private String tenChude;
 
     @Column(name = "noidung")
-    private String noidung;
+    private String noiDung;
 
-    
+    @Column(name = "ma_hangmucbaiviet")
+    private String maHangmucbaiviet;
 }

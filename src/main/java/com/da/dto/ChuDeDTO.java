@@ -14,5 +14,8 @@ public class ChuDeDTO {
     private String tenchude;
 
     private String noidung;
-    private String tenhangmuc;
+
+    private String mahangmucbaiviet;
 }
+
+

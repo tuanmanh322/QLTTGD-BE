@@ -2,11 +2,13 @@ package com.da.service;
 
 import com.da.dto.ChuDeDTO;
 import com.da.dto.ChuDeSearchDTO;
+import com.da.exception.ResultException;
 
 
 public interface ChuDeService {
     void searchChuDe(ChuDeSearchDTO dto);
-
-  ChuDeDTO findById(Integer id);
-
+    void add(ChuDeDTO dto) throws ResultException;
+    void update(ChuDeDTO dto)throws ResultException;
+    void delete(Integer id)throws ResultException;
+    ChuDeDTO findById(Integer id);
 }

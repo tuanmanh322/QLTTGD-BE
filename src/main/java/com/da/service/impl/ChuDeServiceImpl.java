@@ -1,5 +1,7 @@
 package com.da.service.impl;
 import com.da.dto.ChuDeDTO;
+import com.da.exception.ErrorCode;
+import com.da.exception.ResultException;
 import com.da.model.Chude;
 import com.da.service.ChuDeService;
 import org.modelmapper.ModelMapper;
@@ -10,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.da.dao.ChuDeDAO;
 import com.da.dto.ChuDeSearchDTO;
+
+import java.util.Date;
 
 
 @Service
@@ -38,4 +42,30 @@ public class ChuDeServiceImpl implements ChuDeService {
         ChuDeDTO dto = modelMap.map(cd, ChuDeDTO.class);
         return dto;
     }
+    @Override
+    public void add(ChuDeDTO dto) throws ResultException {
+        log.info(" start service to searchChuDe with :{}",dto);
+        Chude chude = modelMap.map(dto, Chude.class);
+        chuDeDao.save(chude);
+    }
+    @Override
+    public void update(ChuDeDTO dto) throws ResultException {
+        log.info(" start service to update with :{}",dto);
+        Chude chude = chuDeDao.findById(dto.getId(), Chude.class).get();
+        if (chude.getId() == null) {
+            throw new ResultException(ErrorCode.RECORD_NOT_EXISTED);
+        }
+        chude = modelMap.map(dto, Chude.class);
+        chuDeDao.update(chude);
+    }
+    @Override
+    public void delete(Integer id) throws ResultException {
+        log.info(" start service to delete with :{}",id);
+        Chude chude = chuDeDao.findById(id, Chude.class).get();
+        if (chude.getId() == null) {
+            throw new ResultException(ErrorCode.RECORD_NOT_EXISTED);
+        }
+        chuDeDao.delete(chude);
+    }
 }
+
