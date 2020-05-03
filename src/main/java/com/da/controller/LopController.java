@@ -38,9 +38,9 @@ public class LopController {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<LopHocDTO> findByID(@PathVariable("id") Integer id) {
-		log.info("start rest to findByID WITH ID:{}", id);
-		LopHocDTO dto = hocService.findById(id);
-		return new ResponseEntity<LopHocDTO>(dto,HttpStatus.OK);
+			log.info("start rest to findByID WITH ID:{}", id);
+			LopHocDTO dto = hocService.findById(id);
+			return new ResponseEntity<LopHocDTO>(dto,HttpStatus.OK);
 	}
 	
 	@PutMapping("/edit")

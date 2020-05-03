@@ -14,6 +14,8 @@ import com.da.exception.ResultException;
 import com.da.model.Lop;
 import com.da.service.LopHocService;
 
+import java.util.Date;
+
 @Service
 @Transactional
 public class LopHocServiceImpl implements LopHocService{
@@ -39,6 +41,7 @@ public class LopHocServiceImpl implements LopHocService{
 	public void add(LopHocDTO dto) throws ResultException {
 		log.info(" start service to addLopHoc with :{}",dto);
 		Lop lop = modelMap.map(dto, Lop.class);
+		lop.setThoigianbatdau(new Date());
 		lopHocDao.save(lop);
 	}
 

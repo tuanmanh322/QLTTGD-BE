@@ -19,8 +19,6 @@ import lombok.extern.java.Log;
 @Repository
 public class LopHocDAOImpl extends AbstractDAO implements LopHocDAO{
 	private final Logger log = LoggerFactory.getLogger(LopHocDAOImpl.class);
-	
-	
 	@Override
 	public void searchLopHoc(LopHocSearchDTO dto) {
 		log.info("Start dao searchLopHoc with :{}",dto);
