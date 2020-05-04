@@ -4,7 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 @Entity
@@ -21,10 +21,13 @@ public class The implements Serializable {
     private String maThe;
 
     @Column(name = "ngaycap")
-    private LocalDate ngaycap;
+    private Date ngaycap;
+
+    @Column(name = "password")
+    private String password;
 
     @Column(name = "trangthai")
-    private String trangthai;
+    private Boolean trangthai;
 
     @Column(name = "ma_loaithe")
     private String maLoaithe;
