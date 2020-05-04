@@ -28,5 +28,7 @@ public class Baiviet implements Serializable {
     @Column(name = "luotkhongthich")
     private Integer luotkhongthich;
 
-    
+    @Column(name = "ma_chude")
+    private String ma_chude;
+
 }
