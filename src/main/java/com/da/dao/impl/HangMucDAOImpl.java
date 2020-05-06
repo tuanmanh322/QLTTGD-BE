@@ -20,10 +20,12 @@ public class HangMucDAOImpl extends AbstractDAO implements HangMucDAO {
         final StringBuilder sb = new StringBuilder();
         Map<String, Object> parameter = new HashMap<>();
         sb.append(" select hm.id,");
-        sb.append("hm.ma_hangmucbaiviet as maHangmucbaiviet,");
-        sb.append("hm.mota as moTa ,mh.ma_monhoc as maMonhoc,");
-        sb.append(" from HANGMUC hm ");
-        sb.append("left join MONHOC mh on hm.ma_monhoc= mh.ma_monhoc where 1=1");
+        sb.append(" hm.ma_hangmucbaiviet as maHangmucbaiviet,");
+        sb.append(" hm.mota as moTa ,mh.ma_monhoc as maMonhoc");
+       sb.append(" hm.tenhangmuc as tenhangmuc, ");
+       sb.append(" mh.tenmonhoc as tenMonHoc ");
+        sb.append(" from HANGMUC as hm ");
+        sb.append(" left join MONHOC as mh on hm.ma_monhoc= mh.ma_monhoc where 1=1");
        if (StringUtils.isNotBlank(dto.getMaHangmucbaiviet())) {
            sb.append(" and hm.ma_hangmucbaiviet like :p_ma_hangmucbaiviet ");
            parameter.put("p_ma_hangmucbaiviet", "%" + dto.getMaHangmucbaiviet().trim() + "%");
@@ -34,7 +36,7 @@ public class HangMucDAOImpl extends AbstractDAO implements HangMucDAO {
                String property  = StringUtils.trimToEmpty(order.getProperty());
                switch (property) {
                    case "ma_hangmucbaiviet":
-                       sb.append(" hn.ma_hangmucbaiviet ").append(getOrderBy(order.isAscending())).append(",");
+                       sb.append(" hm.ma_hangmucbaiviet ").append(getOrderBy(order.isAscending())).append(",");
                        break;
                }
            });

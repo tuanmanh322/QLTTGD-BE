@@ -26,9 +26,9 @@ public class ChuDeDAOImpl extends AbstractDAO implements ChuDeDAO {
         sb.append(" cd.ma_chude as maChude,");
         sb.append(" cd.tenchude as tenChude,");
         sb.append(" cd.noidung as noiDung,");
-        sb.append(" hm.tenhangmuc as tenHangmuc,");
+        sb.append(" hm.tenhangmuc as tenHangmuc");
         sb.append(" from CHUDE as cd");
-        sb.append(" left join HANGMUC as hm on cd.ma_hangmucbaiviet = hn.ma_hangmucbaiviet");
+        sb.append(" left join HANGMUC as hm on cd.ma_hangmucbaiviet = hm.ma_hangmucbaiviet");
         sb.append(" where 1=1");
         if (StringUtils.isNotBlank(dto.getTenchude())) {
             sb.append(" and cd.tenchude like :p_tenchude ");

@@ -17,4 +17,6 @@ public class HangMucSearchDTO extends BaseSearch{
 
     private String maMonhoc;
 
+    private String tenMonHoc;
+
 }
