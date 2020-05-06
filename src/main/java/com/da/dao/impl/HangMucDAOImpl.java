@@ -21,7 +21,8 @@ public class HangMucDAOImpl extends AbstractDAO implements HangMucDAO {
         Map<String, Object> parameter = new HashMap<>();
         sb.append(" select hm.id,");
         sb.append(" hm.ma_hangmucbaiviet as maHangmucbaiviet,");
-        sb.append(" hm.mota as moTa ,mh.ma_monhoc as maMonhoc");
+        sb.append(" hm.mota as moTa ,");
+        sb.append(" mh.ma_monhoc as maMonhoc,");
        sb.append(" hm.tenhangmuc as tenhangmuc, ");
        sb.append(" mh.tenmonhoc as tenMonHoc ");
         sb.append(" from HANGMUC as hm ");

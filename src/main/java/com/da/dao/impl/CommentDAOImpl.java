@@ -24,7 +24,7 @@ public class CommentDAOImpl extends AbstractDAO implements CommentDAO {
         sb.append(" cm.noidung as noiDung,");
         sb.append(" cm.luotthich as luotThich,");
         sb.append(" cm.luotkhongthich as luotKhongthich,");
-        sb.append(" bv.ma_baiviet as maBaiviet,");
+        sb.append(" bv.ten_baiviet as tenBaiviet,");
         sb.append(" from COMMENT as cm");
         sb.append(" left join BAIVIET as bv on cm.ma_baiviet = bv.ma_baiviet");
         sb.append(" where 1=1");
