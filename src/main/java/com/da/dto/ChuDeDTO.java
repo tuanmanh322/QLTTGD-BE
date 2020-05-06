@@ -9,13 +9,13 @@ import lombok.ToString;
 public class ChuDeDTO {
     private Integer id;
 
-    private String machude;
+    private String maChude;
 
-    private String tenchude;
+    private String tenChude;
 
-    private String noidung;
+    private String noiDung;
 
-    private String mahangmucbaiviet;
+    private String maHangmucbaiviet;
 }
 
 
