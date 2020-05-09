@@ -37,7 +37,7 @@ public class LopHocDAOImpl extends AbstractDAO implements LopHocDAO {
         sb.append(" left join MONHOC as mh on lo.ma_monhoc = mh.ma_monhoc");
         sb.append(" where 1=1");
         if (StringUtils.isNotBlank(dto.getTenLop())) {
-            sb.append(" and lo.ten_lop like :p_tenlop ");
+            sb.append(" and lo.tenlop like :p_tenlop ");
             parameter.put("p_tenlop", "%" + dto.getTenLop().trim() + "%");
         }
         if (dto.getEndDate() != null && dto.getStartDate() != null){
