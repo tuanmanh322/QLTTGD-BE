@@ -1,12 +1,8 @@
 package com.da.dao.impl;
 
 import java.util.HashMap;
-import java.util.List;
+
 import java.util.Map;
-
-import javax.persistence.criteria.Order;
-
-import com.da.dto.BaseSearch;
 import com.da.dto.ChuDeSearchDTO;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -14,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.da.dao.ChuDeDAO;
-import com.da.dto.ChuDeSearchDTO;
 @Repository
 public class ChuDeDAOImpl extends AbstractDAO implements ChuDeDAO {
     private final Logger log = LoggerFactory.getLogger(ChuDeDAOImpl.class);
@@ -26,9 +21,9 @@ public class ChuDeDAOImpl extends AbstractDAO implements ChuDeDAO {
         sb.append(" cd.ma_chude as maChude,");
         sb.append(" cd.tenchude as tenChude,");
         sb.append(" cd.noidung as noiDung,");
-        sb.append(" hm.tenhangmuc as tenHangmuc,");
+        sb.append(" hm.tenhangmuc as tenHangmuc");
         sb.append(" from CHUDE as cd");
-        sb.append(" left join HANGMUC as hm on cd.ma_hangmucbaiviet = hn.ma_hangmucbaiviet");
+        sb.append(" left join HANGMUC as hm on cd.ma_hangmucbaiviet = hm.ma_hangmucbaiviet");
         sb.append(" where 1=1");
         if (StringUtils.isNotBlank(dto.getTenchude())) {
             sb.append(" and cd.tenchude like :p_tenchude ");
