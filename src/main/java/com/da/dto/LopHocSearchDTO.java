@@ -31,4 +31,8 @@ public class LopHocSearchDTO extends BaseSearch{
 
 	private Float hocPhi;
 
+	private Date startDate;
+
+	private Date endDate;
+
 }

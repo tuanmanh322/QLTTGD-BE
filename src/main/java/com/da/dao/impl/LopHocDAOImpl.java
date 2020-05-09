@@ -17,43 +17,49 @@ import com.da.dto.LopHocSearchDTO;
 import lombok.extern.java.Log;
 
 @Repository
-public class LopHocDAOImpl extends AbstractDAO implements LopHocDAO{
-	private final Logger log = LoggerFactory.getLogger(LopHocDAOImpl.class);
-	@Override
-	public void searchLopHoc(LopHocSearchDTO dto) {
-		log.info("Start dao searchLopHoc with :{}",dto);
-		final StringBuilder sb = new StringBuilder();
-		Map<String, Object> parameter = new HashMap<>();
-		sb.append(" select  lo.id ,lo.ma_lop as maLop,");
-		sb.append(" lo.tenlop as tenLop,");
-		sb.append(" mh.tenmonhoc as tenMonHoc,");
-		sb.append(" lo.thoigianbatdau  as ngayKhaiGiang,");
-		sb.append(" lo.thoigianketthuc  as ngayKetThuc,");
-		sb.append(" lo.siso  as siSo,");
-		sb.append(" lo.diadiem as diaDiem,");
-		sb.append(" lo.hocphi as hocPhi");
-		sb.append(" from LOP as lo");
-		sb.append(" left join MONHOC as mh on lo.ma_monhoc = mh.ma_monhoc");
-		sb.append(" where 1=1");
-		if (StringUtils.isNotBlank(dto.getTenLop())) {
-			sb.append(" and lo.ten_lop like :p_tenlop ");
-			parameter.put("p_tenlop", "%" + dto.getTenLop().trim() + "%");
+public class LopHocDAOImpl extends AbstractDAO implements LopHocDAO {
+    private final Logger log = LoggerFactory.getLogger(LopHocDAOImpl.class);
+
+    @Override
+    public void searchLopHoc(LopHocSearchDTO dto) {
+        log.info("Start dao searchLopHoc with :{}", dto);
+        final StringBuilder sb = new StringBuilder();
+        Map<String, Object> parameter = new HashMap<>();
+        sb.append(" select  lo.id ,lo.ma_lop as maLop,");
+        sb.append(" lo.tenlop as tenLop,");
+        sb.append(" mh.tenmonhoc as tenMonHoc,");
+        sb.append(" lo.thoigianbatdau  as ngayKhaiGiang,");
+        sb.append(" lo.thoigianketthuc  as ngayKetThuc,");
+        sb.append(" lo.siso  as siSo,");
+        sb.append(" lo.diadiem as diaDiem,");
+        sb.append(" lo.hocphi as hocPhi");
+        sb.append(" from LOP as lo");
+        sb.append(" left join MONHOC as mh on lo.ma_monhoc = mh.ma_monhoc");
+        sb.append(" where 1=1");
+        if (StringUtils.isNotBlank(dto.getTenLop())) {
+            sb.append(" and lo.ten_lop like :p_tenlop ");
+            parameter.put("p_tenlop", "%" + dto.getTenLop().trim() + "%");
+        }
+        if (dto.getEndDate() != null && dto.getStartDate() != null){
+        	sb.append(" and lo.thoigianbatdau >= :p_startdate and lo.thoigianbatdau <= :p_enddate ");
+        	parameter.put("p_startdate",dto.getStartDate());
+        	parameter.put("p_enddate",dto.getEndDate());
 		}
-		if (dto.getOrderDTOS() != null && !dto.getOrderDTOS().isEmpty()) {
-			sb.append(" order by ");
-			dto.getOrderDTOS().forEach(order ->{
-				String property  = StringUtils.trimToEmpty(order.getProperty());
-				switch (property) {
-				case "tenlop":
-					sb.append(" lo.tenlop ").append(getOrderBy(order.isAscending())).append(",");
-					break;
-				}
-			});
-			sb.deleteCharAt(sb.length() -1 );
-		}else {
-			sb.append(" order by lo.tenlop ");
-		}
-		searchAndCountTotal(dto, sb.toString(), parameter,LopHocSearchDTO.class);
-	}
+            if (dto.getOrderDTOS() != null && !dto.getOrderDTOS().isEmpty()) {
+                sb.append(" order by ");
+                dto.getOrderDTOS().forEach(order -> {
+                    String property = StringUtils.trimToEmpty(order.getProperty());
+                    switch (property) {
+                        case "tenlop":
+                            sb.append(" lo.tenlop ").append(getOrderBy(order.isAscending())).append(",");
+                            break;
+                    }
+                });
+                sb.deleteCharAt(sb.length() - 1);
+            } else {
+                sb.append(" order by lo.tenlop ");
+            }
+        searchAndCountTotal(dto, sb.toString(), parameter, LopHocSearchDTO.class);
+    }
 
 }
