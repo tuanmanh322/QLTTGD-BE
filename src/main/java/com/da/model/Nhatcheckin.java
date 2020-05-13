@@ -26,8 +26,8 @@ public class Nhatcheckin implements Serializable {
     @Column(name = "thoigianvao")
     private Date thoigianvao;
 
-    @Column(name = "thoigianra")
-    private Date thoigianra;
+    @Column(name = "ma_lop")
+    private String maLop;
 
     
 }
