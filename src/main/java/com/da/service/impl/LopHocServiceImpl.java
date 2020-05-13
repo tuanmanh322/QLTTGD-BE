@@ -1,4 +1,7 @@
 package com.da.service.impl;
+import com.da.model.Monhoc;
+import com.da.repository.LopRepository;
+import com.da.repository.MonhocRepository;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,11 +25,16 @@ public class LopHocServiceImpl implements LopHocService{
 	private final ModelMapper modelMap;
 	
 	private final LopHocDAO lopHocDao;
-	
-	public LopHocServiceImpl(ModelMapper modelMap, LopHocDAO lopHocDao) {
-		super();
+
+	private final MonhocRepository monhocRepository;
+
+	private final LopRepository lopRepository;
+
+	public LopHocServiceImpl(ModelMapper modelMap, LopHocDAO lopHocDao, MonhocRepository monhocRepository, LopRepository lopRepository) {
 		this.modelMap = modelMap;
 		this.lopHocDao = lopHocDao;
+		this.monhocRepository = monhocRepository;
+		this.lopRepository = lopRepository;
 	}
 
 	@Override
@@ -39,7 +47,11 @@ public class LopHocServiceImpl implements LopHocService{
 	public void add(LopHocDTO dto) throws ResultException {
 		log.info(" start service to addLopHoc with :{}",dto);
 		Lop lop = modelMap.map(dto, Lop.class);
-		lop.setThoigianbatdau(new Date());
+		Monhoc monhoc = monhocRepository.findByTenmonhoc(dto.getMaMonhoc());
+		if (monhoc.getId() == null){
+			throw new ResultException(ErrorCode.RECORD_NOT_FOUND);
+		}
+		lop.setMaMonhoc(monhoc.getMaMonhoc());
 		lopHocDao.save(lop);
 	}
 
@@ -49,6 +61,10 @@ public class LopHocServiceImpl implements LopHocService{
 		Lop lop = lopHocDao.findById(dto.getId(), Lop.class).get();
 		if (lop.getId() == null) {
 			throw new ResultException(ErrorCode.RECORD_NOT_EXISTED);
+		}
+		Lop check = lopRepository.findByTenlop(dto.getTenlop());
+		if (check.getId() != null){
+			throw new ResultException(ErrorCode.RECORD_EXISTED);
 		}
 		lop = modelMap.map(dto, Lop.class);
 		lopHocDao.update(lop);

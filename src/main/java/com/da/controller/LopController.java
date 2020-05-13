@@ -1,5 +1,7 @@
 package com.da.controller;
 
+import com.da.model.Lop;
+import com.da.repository.LopRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,9 +26,11 @@ import lombok.extern.slf4j.Slf4j;
 public class LopController {
 	private final LopHocService hocService;
 
-	public LopController(LopHocService hocService) {
-		super();
+	 private final LopRepository lopRepository;
+
+	public LopController(LopHocService hocService, LopRepository lopRepository) {
 		this.hocService = hocService;
+		this.lopRepository = lopRepository;
 	}
 
 	@PostMapping("/search")
@@ -62,4 +66,10 @@ public class LopController {
 		return ResponseEntity.ok().build();
 	}
 
+	@GetMapping("/find-by-tenlop/{tenlop}")
+	public ResponseEntity<Lop> findByTenLop(@PathVariable("tenlop") String tenLop){
+		log.info("start rest to find by ten lop hoc by tenLop :{} ",tenLop);
+		Lop lop  = lopRepository.findByTenlop(tenLop);
+		return new ResponseEntity<>(lop,HttpStatus.OK);
+	}
 }
