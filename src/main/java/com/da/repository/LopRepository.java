@@ -10,7 +10,14 @@ import org.springframework.stereotype.Repository;
 public interface LopRepository extends JpaRepository<Lop, Integer>, JpaSpecificationExecutor<Lop> {
     @Query(
             nativeQuery = true,
-            value = "select lo from lop as lo where lo.tenlop =?1"
+            value = "select * from lop as lo where lo.tenlop =?1"
     )
     Lop findByTenlop(String tenLop);
+
+
+    @Query(
+            nativeQuery = true,
+            value = "select * from lop as lo where lo.ma_lop =?1"
+    )
+    Lop findByMaLop(String maLop);
 }

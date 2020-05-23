@@ -30,3 +30,11 @@ application:
     exposed-headers: 'Authorization'
     allow-credentials: true
     max-age: 3600
+  authentication:
+    jwt:
+     secret-key: enter-secret-token-for-application
+     token-validity-milliseconds: 86400000
+     token-validity-in-seconds-for-remember-me: 2592000000
+
+
+

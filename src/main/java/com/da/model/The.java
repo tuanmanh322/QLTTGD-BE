@@ -32,5 +32,8 @@ public class The implements Serializable {
     @Column(name = "ma_loaithe")
     private String maLoaithe;
 
+    @Column(name = "id_role")
+    private Integer idRole;
+
     
 }
