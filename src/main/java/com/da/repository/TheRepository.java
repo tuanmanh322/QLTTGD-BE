@@ -10,6 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface TheRepository extends JpaRepository<The, Integer>, JpaSpecificationExecutor<The> {
-    @Query(nativeQuery = true, value = "select  th from the as th where th.ma_the=?1")
+    @Query(nativeQuery = true, value = "select  * from the as th where th.ma_the=?1")
     Optional<The> findByMaThe(String maThe);
 }

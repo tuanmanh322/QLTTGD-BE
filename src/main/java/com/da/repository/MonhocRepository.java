@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MonhocRepository extends JpaRepository<Monhoc, Integer>, JpaSpecificationExecutor<Monhoc> {
-    @Query(nativeQuery = true,value = " select mh from monhoc as mh where mh.ma_monhoc=?1")
+    @Query(nativeQuery = true,value = " select * from monhoc as mh where mh.ma_monhoc=?1")
     Monhoc findByTenmonhoc(String tenMonHoc);
 
 }
