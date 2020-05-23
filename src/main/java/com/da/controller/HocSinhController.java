@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/ hoc-sinh")
+@RequestMapping("/api/hoc-sinh")
 @Slf4j
 public class HocSinhController {
     private final HocSinhService hocService;

@@ -23,4 +23,6 @@ public class CheckInDTO extends BaseSearch{
     private String TenThe;
 
     private String TenLop;
+
+    private String tenHocSinh;
 }

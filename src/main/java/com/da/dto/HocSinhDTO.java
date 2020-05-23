@@ -29,4 +29,7 @@ public class HocSinhDTO extends BaseSearch {
     private String tenLop;
 
     private String maThe;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private String thoiGianBatDau;
 }

@@ -1,6 +1,7 @@
 package com.da.dao.impl;
 
-import com.da.dao.HocSinhDao;
+import com.da.dao.CheckInDAO;
+import com.da.dto.CheckInDTO;
 import com.da.dto.HocSinhDTO;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -11,33 +12,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Repository
-public class HocSinhDAOImpl extends AbstractDAO implements HocSinhDao {
-    private final Logger log = LoggerFactory.getLogger(HocSinhDAOImpl.class);
+public class CheckInDAOImpl extends AbstractDAO implements CheckInDAO  {
+    private final Logger log = LoggerFactory.getLogger(CheckInDAOImpl.class);
 
-    public void searchHocSinh(HocSinhDTO dto){
+    public void searchCheckIn(CheckInDTO dto){
         log.info("Start dao searchHS with :{}",dto);
         final StringBuilder sb = new StringBuilder();
         Map<String, Object> parameter = new HashMap<>();
-        sb.append(" select u.id,");
-        sb.append(" u.id_user as maHocSinh,");
-        sb.append(" u.name as Name ,");
-        sb.append(" u.gioitinh as GioiTinh,");
-        sb.append(" u.ngaysinh as NgaySinh, ");
-        sb.append(" u.socmt as socmt, ");
-        sb.append(" u.sodt as sodt, ");
-        sb.append(" u.ma_lop as maLop, ");
-        sb.append(" l.tenlop as tenLop, ");
-        sb.append(" l.thoigianbatdau as thoiGianBatDau, ");
-        sb.append(" u.ma_the as maThe ");
-        sb.append(" from users as u ");
-        sb.append(" left join Lop as l on l.ma_lop = u.ma_lop where 1=1");
-        if (StringUtils.isNotBlank(dto.getName())) {
+        sb.append(" select ck.id,");
+        sb.append(" ck.ma_nhatky as MaNhatKy,");
+        sb.append(" ck.ma_the as MaThe ,");
+        sb.append(" ck.thoigianvao as Thoigianvao,");
+        sb.append(" ck.ma_lop as MaLop ");
+        sb.append(" from nhatcheckin as ck ");
+        sb.append(" left join users as u on ck.ma_the = u.ma_the where 1=1");
+        if (StringUtils.isNotBlank(dto.getTenHocSinh())) {
             sb.append(" and u.name like :p_name ");
-            parameter.put("p_name", "%" + dto.getName().trim() + "%");
+            parameter.put("p_name", "%" + dto.getTenHocSinh().trim() + "%");
         }
-        if (StringUtils.isNotBlank(dto.getTenLop())) {
-            sb.append(" and l.ma_lop like :p_malop ");
-            parameter.put("p_malop", "%" + dto.getTenLop().trim() + "%");
+        if (StringUtils.isNotBlank(dto.getMaLop())) {
+            sb.append(" and u.ma_lop like :p_malop ");
+            parameter.put("p_malop", "%" + dto.getMaLop().trim() + "%");
         }
         if (dto.getOrderDTOS() != null && !dto.getOrderDTOS().isEmpty()) {
             sb.append(" order by ");
@@ -55,5 +50,4 @@ public class HocSinhDAOImpl extends AbstractDAO implements HocSinhDao {
         }
         searchAndCountTotal(dto, sb.toString(), parameter, HocSinhDTO.class);
     }
-
 }
