@@ -28,5 +28,10 @@ public class Repcomment implements Serializable {
     @Column(name = "luotkhongthich")
     private Integer luotkhongthich;
 
+    @Column(name = "id_comment")
+    private Integer idComment;
+
+    @Column(name = "id_user")
+    private Integer idUser;
     
 }

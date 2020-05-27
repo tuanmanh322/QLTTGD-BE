@@ -19,4 +19,8 @@ public class RepCommentDTO {
     private Integer luotthich;
 
     private Integer luotkhongthich;
+
+    private Integer idComment;
+
+    private Integer idUser;
 }

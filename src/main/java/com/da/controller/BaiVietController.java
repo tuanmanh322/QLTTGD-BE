@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/baiviet")
 @Slf4j
@@ -56,5 +59,17 @@ public class BaiVietController {
         log.info(" start service to delete with :{}",id);
         baiVietService.delete(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<BaiVietDTO>> getAllBVandCm(){
+        log.info("start res to get getAllBVandCm");
+        return new ResponseEntity<>(baiVietService.getBaiVietWithComment(),HttpStatus.OK);
+    }
+
+    @GetMapping("/detail-baiviet/{idBV}")
+    public ResponseEntity<BaiVietDTO> getDetailBVCMREM(@PathVariable("idBV") Integer idBV){
+        log.info("start res to get getDetailBVCMREM with idBV: {}",idBV);
+        return new ResponseEntity<>(baiVietService.getDetailBVCMREM(idBV),HttpStatus.OK);
     }
 }

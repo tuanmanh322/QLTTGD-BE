@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.Column;
+import java.util.List;
 
 @Getter
 @Setter
@@ -26,5 +27,7 @@ public class CommentDTO {
     private Integer idBaiViet;
 
     private Integer idUser;
+
+    private List<RepCommentDTO> repCommentDTOS;
    // private  String maMaiviet;
 }
