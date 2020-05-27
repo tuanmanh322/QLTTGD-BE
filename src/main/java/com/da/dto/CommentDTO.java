@@ -28,6 +28,8 @@ public class CommentDTO {
 
     private Integer idUser;
 
+    private String userName;
+
     private List<RepCommentDTO> repCommentDTOS;
    // private  String maMaiviet;
 }

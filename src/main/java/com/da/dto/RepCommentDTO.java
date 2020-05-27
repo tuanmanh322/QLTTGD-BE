@@ -23,4 +23,6 @@ public class RepCommentDTO {
     private Integer idComment;
 
     private Integer idUser;
+
+    private String userName;
 }

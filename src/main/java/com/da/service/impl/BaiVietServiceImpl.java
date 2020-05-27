@@ -10,9 +10,11 @@ import com.da.exception.ResultException;
 import com.da.model.Baiviet;
 import com.da.model.Comment;
 import com.da.model.Repcomment;
+import com.da.model.Users;
 import com.da.repository.BaivietRepository;
 import com.da.repository.CommentRepository;
 import com.da.repository.RepcommentRepository;
+import com.da.repository.UsersRepository;
 import com.da.security.SecurityUtils;
 import com.da.service.BaiVietService;
 import org.modelmapper.ModelMapper;
@@ -41,12 +43,15 @@ public class BaiVietServiceImpl implements BaiVietService {
 
     private final RepcommentRepository repcommentRepository;
 
-    public BaiVietServiceImpl(ModelMapper modelMap, BaiVietDAO baiVietDao, BaivietRepository baivietRepository, CommentRepository commentRepository, RepcommentRepository repcommentRepository) {
+    private final UsersRepository usersRepository;
+
+    public BaiVietServiceImpl(ModelMapper modelMap, BaiVietDAO baiVietDao, BaivietRepository baivietRepository, CommentRepository commentRepository, RepcommentRepository repcommentRepository, UsersRepository usersRepository) {
         this.modelMap = modelMap;
         this.baiVietDao = baiVietDao;
         this.baivietRepository = baivietRepository;
         this.commentRepository = commentRepository;
         this.repcommentRepository = repcommentRepository;
+        this.usersRepository = usersRepository;
     }
 
     @Override
@@ -101,15 +106,21 @@ public class BaiVietServiceImpl implements BaiVietService {
         List<CommentDTO> commentDTOList = new ArrayList<>();
         List<RepCommentDTO> repCommentDTOList = new ArrayList<>();
         for (Baiviet baiviet : baiviets) {
+            Users users = usersRepository.findById(baiviet.getIdUser()).get();
+            baiVietDTO.setUserName(users.getName());
             // get list comment by id
             List<Comment> comments = commentRepository.findByIdBaiViet(baiviet.getId());
             // add list comment
             comments.stream().map(cm -> {
+                Users usersCM = usersRepository.findById(cm.getIdUser()).get();
                 CommentDTO commentDTO = modelMap.map(cm, CommentDTO.class);
+                commentDTO.setUserName(usersCM.getName());
                 List<Repcomment> repcomments = repcommentRepository.findByIdComment(cm.getId());
                 // add list repcomment
                 repcomments.stream().map(rep -> {
+                    Users usersRCM = usersRepository.findById(rep.getIdUser()).get();
                     RepCommentDTO repCommentDTO = modelMap.map(rep, RepCommentDTO.class);
+                    repCommentDTO.setUserName(usersRCM.getName());
                     repCommentDTOList.add(repCommentDTO);
                     return repCommentDTOList;
                 }).collect(Collectors.toList());
@@ -128,18 +139,24 @@ public class BaiVietServiceImpl implements BaiVietService {
     public BaiVietDTO getDetailBVCMREM(Integer idBV) {
         log.info("start service to get getDetailBVCMREM with idBV: {}", idBV);
         Baiviet baiviets = baivietRepository.findById(idBV).get();
+        Users users = usersRepository.findById(baiviets.getIdUser()).get();
         BaiVietDTO baiVietDTO = modelMap.map(baiviets, BaiVietDTO.class);
+        baiVietDTO.setUserName(users.getName());
         List<CommentDTO> commentDTOList = new ArrayList<>();
         List<RepCommentDTO> repCommentDTOList = new ArrayList<>();
         // get list comment by id
         List<Comment> comments = commentRepository.findByIdBaiViet(baiviets.getId());
         // add list comment
         comments.stream().map(cm -> {
+            Users usersCM = usersRepository.findById(cm.getIdUser()).get();
             CommentDTO commentDTO = modelMap.map(cm, CommentDTO.class);
+            commentDTO.setUserName(usersCM.getName());
             List<Repcomment> repcomments = repcommentRepository.findByIdComment(cm.getId());
             // add list repcomment
             repcomments.stream().map(rep -> {
+                Users usersRCM = usersRepository.findById(rep.getIdUser()).get();
                 RepCommentDTO repCommentDTO = modelMap.map(rep, RepCommentDTO.class);
+                repCommentDTO.setUserName(usersRCM.getName());
                 repCommentDTOList.add(repCommentDTO);
                 return repCommentDTOList;
             }).collect(Collectors.toList());

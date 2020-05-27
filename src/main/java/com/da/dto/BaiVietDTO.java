@@ -22,5 +22,7 @@ public class BaiVietDTO {
 
     private Integer idUser;
 
+    private String userName;
+
     private List<CommentDTO> commentDTOS;
 }
