@@ -31,4 +31,6 @@ public class Baiviet implements Serializable {
     @Column(name = "ma_chude")
     private String ma_chude;
 
+    @Column(name = "id_user")
+    private Integer idUser;
 }

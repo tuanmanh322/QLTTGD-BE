@@ -6,6 +6,7 @@ import com.da.dto.CommentSearchDTO;
 import com.da.exception.ErrorCode;
 import com.da.exception.ResultException;
 import com.da.model.Comment;
+import com.da.security.SecurityUtils;
 import com.da.service.CommentService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -38,6 +39,7 @@ public class CommentServiceImpl implements CommentService {
     public void add(CommentDTO dto) throws ResultException {
         log.info(" start service to searchChuDe with :{}",dto);
         Comment comment = modelMap.map(dto, Comment.class);
+        comment.setIdUser(SecurityUtils.getCurrentUserIdLogin());
         commentDao.save(comment);
     }
 

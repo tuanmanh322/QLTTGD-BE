@@ -18,68 +18,65 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class CrosFilter implements WebMvcConfigurer {
 	private static final Logger log = LoggerFactory.getLogger(CrosFilter.class);
 	private static final String ALL = "*";
-
-	@Value("${application.cors.allowed-headers}")
-	private String allowHeader;
-
 	@Value("${application.cors.allowed-origins}")
-	private String allowOrigins;
+	private String allowedOrigins;
 
 	@Value("${application.cors.allowed-methods}")
-	private String allowMethod;
+	private String allowedMethods;
+
+	@Value("${application.cors.allowed-headers}")
+	private String allowedHeaders;
 
 	@Value("${application.cors.exposed-headers}")
 	private String exposedHeaders;
 
 	@Value("${application.cors.allow-credentials}")
-	private Boolean allowCredentials;
+	private boolean allowCredentials;
 
 	@Value("${application.cors.max-age}")
-	private Long maxAge;
+	private long maxAge;
+
 
 	@Bean
 	public CorsFilter corsFilter() {
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		CorsConfiguration configuration = new CorsConfiguration();
-		this.setAllowedMethods(configuration);
-		this.setAllowHeader(configuration);
-		this.setAllowOrgin(configuration);
-		this.setExposedHeaders(configuration);
-		configuration.setAllowCredentials(allowCredentials);
-		configuration.setMaxAge(maxAge);
-		if (configuration.getAllowedOrigins() != null && !configuration.getAllowedOrigins().isEmpty()) {
-			log.debug("Registering CORS FILTER!");
-			source.registerCorsConfiguration("/api/**", configuration);
+		CorsConfiguration config = new CorsConfiguration();
+		this.setAllowedOrigins(config);
+		this.setAllowedHeaders(config);
+		this.setAllowedMethods(config);
+		this.setExposedHeaders(config);
+		config.setAllowCredentials(allowCredentials);
+		config.setMaxAge(maxAge);
+		if (config.getAllowedOrigins() != null && !config.getAllowedOrigins().isEmpty()) {
+			log.debug("Registering CORS filter");
+			source.registerCorsConfiguration("/api/**", config);
 		}
 		return new CorsFilter(source);
 	}
 
-	private void setAllowOrgin(CorsConfiguration config) {
-		if (ALL.equals(allowOrigins)) {
+	private void setAllowedOrigins(CorsConfiguration config){
+		if(ALL.equals(allowedOrigins)) {
 			config.addAllowedOrigin(ALL);
 		} else {
-			config.setAllowedOrigins(Arrays.asList(allowOrigins.split(",")));
+			config.setAllowedOrigins(Arrays.asList(allowedOrigins.split(",")));
 		}
 	}
-
-	private void setAllowHeader(CorsConfiguration config) {
-		if (ALL.equals(allowHeader)) {
-			config.addAllowedHeader(ALL);
-		} else {
-			config.setAllowedHeaders(Arrays.asList(allowHeader.split(",")));
-		}
-	}
-
-	private void setAllowedMethods(CorsConfiguration config) {
-		if (ALL.equals(allowMethod)) {
+	private void setAllowedMethods(CorsConfiguration config){
+		if(ALL.equals(allowedMethods)) {
 			config.addAllowedMethod(ALL);
 		} else {
-			config.setAllowedMethods(Arrays.asList(allowMethod.split(",")));
+			config.setAllowedMethods(Arrays.asList(allowedMethods.split(",")));
 		}
 	}
-
-	private void setExposedHeaders(CorsConfiguration config) {
-		if (ALL.equals(exposedHeaders)) {
+	private void setAllowedHeaders(CorsConfiguration config){
+		if(ALL.equals(allowedOrigins)) {
+			config.addAllowedHeader(ALL);
+		} else {
+			config.setAllowedHeaders(Arrays.asList(allowedHeaders.split(",")));
+		}
+	}
+	private void setExposedHeaders(CorsConfiguration config){
+		if(ALL.equals(exposedHeaders)) {
 			config.addExposedHeader(ALL);
 		} else {
 			config.setExposedHeaders(Arrays.asList(exposedHeaders.split(",")));

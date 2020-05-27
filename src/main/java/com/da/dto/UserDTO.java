@@ -1,5 +1,6 @@
 package com.da.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,6 +15,7 @@ public class UserDTO {
 
     private String maThe;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date ngaycap;
 
     private String password;
@@ -30,6 +32,7 @@ public class UserDTO {
 
     private String gioitinh;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date ngaysinh;
 
     private Integer socmt;

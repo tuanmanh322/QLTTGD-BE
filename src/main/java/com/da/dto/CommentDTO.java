@@ -23,5 +23,8 @@ public class CommentDTO {
 
     private Integer loutKhongthich;
 
+    private Integer idBaiViet;
+
+    private Integer idUser;
    // private  String maMaiviet;
 }

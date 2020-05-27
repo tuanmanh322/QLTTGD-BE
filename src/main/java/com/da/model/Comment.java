@@ -28,5 +28,9 @@ public class Comment implements Serializable {
     @Column(name = "loutkhongthich")
     private Integer loutkhongthich;
 
-    
+    @Column(name = "id_user")
+    private Integer idUser;
+
+    @Column(name = "id_baiviet")
+    private Integer idBaiViet;
 }

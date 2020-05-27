@@ -17,4 +17,6 @@ public class BaiVietDTO {
     private Integer luotthich;
 
     private Integer luotkhongthich;
+
+    private Integer idUser;
 }

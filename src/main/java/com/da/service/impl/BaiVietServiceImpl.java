@@ -6,6 +6,7 @@ import com.da.dto.BaiVietSearchDTO;
 import com.da.exception.ErrorCode;
 import com.da.exception.ResultException;
 import com.da.model.Baiviet;
+import com.da.security.SecurityUtils;
 import com.da.service.BaiVietService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -38,6 +39,7 @@ public class BaiVietServiceImpl implements BaiVietService {
     public void add(BaiVietDTO dto) throws ResultException {
         log.info(" start service to searchChuDe with :{}",dto);
         Baiviet baiviet = modelMap.map(dto, Baiviet.class);
+        baiviet.setIdUser(SecurityUtils.getCurrentUserIdLogin());
         baiVietDao.save(dto);
 
     }
