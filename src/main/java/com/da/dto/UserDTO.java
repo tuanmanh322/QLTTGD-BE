@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 
@@ -58,4 +59,8 @@ public class UserDTO {
     private String role;
 
     private String tenLop;
+
+    private String imagePath;
+
+    private MultipartFile imageAvatar;
 }

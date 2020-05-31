@@ -25,4 +25,6 @@ public class BaiVietDTO {
     private String userName;
 
     private List<CommentDTO> commentDTOS;
+
+    private String imageAvatar;
 }

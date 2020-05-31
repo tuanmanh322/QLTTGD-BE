@@ -22,7 +22,7 @@ public class CommentDTO {
     private Integer luotThich;
 
 
-    private Integer loutKhongthich;
+    private Integer luotKhongthich;
 
     private Integer idBaiViet;
 
@@ -32,4 +32,5 @@ public class CommentDTO {
 
     private List<RepCommentDTO> repCommentDTOS;
    // private  String maMaiviet;
+    private String imageAvatarCM;
 }

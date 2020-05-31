@@ -68,6 +68,7 @@ public class UserServiceImpl implements UserService {
         userDTO.setSodt(u.getSodt());
         userDTO.setLuongcoban(u.getLuongcoban());
         userDTO.setEmail(u.getEmail());
+        userDTO.setImagePath(u.getImagePath());
         if (u.getMaLop() != null) {
             Optional<Lop> lop = lopRepository.findById(u.getMaLop());
             lop.ifPresent(value -> userDTO.setTenLop(value.getTenlop()));

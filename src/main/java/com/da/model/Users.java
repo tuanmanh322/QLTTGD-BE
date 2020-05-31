@@ -62,5 +62,6 @@ public class Users implements Serializable {
     @Column(name = "ma_lop")
     private Integer maLop;
 
-    
+    @Column(name = "image_path")
+    private String imagePath;
 }

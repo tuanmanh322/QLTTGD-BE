@@ -16,6 +16,8 @@ public class ChuDeDTO {
     private String noiDung;
 
     private String maHangmucbaiviet;
+
+    private Integer baiVietCount;
 }
 
 

@@ -108,6 +108,7 @@ public class BaiVietServiceImpl implements BaiVietService {
         for (Baiviet baiviet : baiviets) {
             Users users = usersRepository.findById(baiviet.getIdUser()).get();
             baiVietDTO.setUserName(users.getName());
+            baiVietDTO.setImageAvatar(users.getImagePath());
             // get list comment by id
             List<Comment> comments = commentRepository.findByIdBaiViet(baiviet.getId());
             // add list comment
@@ -115,12 +116,14 @@ public class BaiVietServiceImpl implements BaiVietService {
                 Users usersCM = usersRepository.findById(cm.getIdUser()).get();
                 CommentDTO commentDTO = modelMap.map(cm, CommentDTO.class);
                 commentDTO.setUserName(usersCM.getName());
+                commentDTO.setImageAvatarCM(usersCM.getImagePath());
                 List<Repcomment> repcomments = repcommentRepository.findByIdComment(cm.getId());
                 // add list repcomment
                 repcomments.stream().map(rep -> {
                     Users usersRCM = usersRepository.findById(rep.getIdUser()).get();
                     RepCommentDTO repCommentDTO = modelMap.map(rep, RepCommentDTO.class);
                     repCommentDTO.setUserName(usersRCM.getName());
+                    repCommentDTO.setImageAvatarRCM(usersRCM.getImagePath());
                     repCommentDTOList.add(repCommentDTO);
                     return repCommentDTOList;
                 }).collect(Collectors.toList());
@@ -142,6 +145,7 @@ public class BaiVietServiceImpl implements BaiVietService {
         Users users = usersRepository.findById(baiviets.getIdUser()).get();
         BaiVietDTO baiVietDTO = modelMap.map(baiviets, BaiVietDTO.class);
         baiVietDTO.setUserName(users.getName());
+        baiVietDTO.setImageAvatar(users.getImagePath());
         List<CommentDTO> commentDTOList = new ArrayList<>();
         List<RepCommentDTO> repCommentDTOList = new ArrayList<>();
         // get list comment by id
@@ -151,12 +155,14 @@ public class BaiVietServiceImpl implements BaiVietService {
             Users usersCM = usersRepository.findById(cm.getIdUser()).get();
             CommentDTO commentDTO = modelMap.map(cm, CommentDTO.class);
             commentDTO.setUserName(usersCM.getName());
+            commentDTO.setImageAvatarCM(usersCM.getImagePath());
             List<Repcomment> repcomments = repcommentRepository.findByIdComment(cm.getId());
             // add list repcomment
             repcomments.stream().map(rep -> {
                 Users usersRCM = usersRepository.findById(rep.getIdUser()).get();
                 RepCommentDTO repCommentDTO = modelMap.map(rep, RepCommentDTO.class);
                 repCommentDTO.setUserName(usersRCM.getName());
+                repCommentDTO.setImageAvatarRCM(usersRCM.getImagePath());
                 repCommentDTOList.add(repCommentDTO);
                 return repCommentDTOList;
             }).collect(Collectors.toList());
@@ -166,5 +172,46 @@ public class BaiVietServiceImpl implements BaiVietService {
         }).collect(Collectors.toList());
         baiVietDTO.setCommentDTOS(commentDTOList);
         return baiVietDTO;
+    }
+
+    @Override
+    public List<BaiVietDTO> getAllByChuDe(Integer idChuDe) {
+        log.info("start service to get getBaiVietWithComment");
+        List<Baiviet> baiviets = baivietRepository.findByMaChuDe(idChuDe);
+        List<BaiVietDTO> bvResult = new ArrayList<>();
+        BaiVietDTO baiVietDTO = new BaiVietDTO();
+        List<CommentDTO> commentDTOList = new ArrayList<>();
+        List<RepCommentDTO> repCommentDTOList = new ArrayList<>();
+        for (Baiviet baiviet : baiviets) {
+            Users users = usersRepository.findById(baiviet.getIdUser()).get();
+            baiVietDTO.setUserName(users.getName());
+            baiVietDTO.setImageAvatar(users.getImagePath());
+            // get list comment by id
+            List<Comment> comments = commentRepository.findByIdBaiViet(baiviet.getId());
+            // add list comment
+            comments.stream().map(cm -> {
+                Users usersCM = usersRepository.findById(cm.getIdUser()).get();
+                CommentDTO commentDTO = modelMap.map(cm, CommentDTO.class);
+                commentDTO.setUserName(usersCM.getName());
+                commentDTO.setImageAvatarCM(usersCM.getImagePath());
+                List<Repcomment> repcomments = repcommentRepository.findByIdComment(cm.getId());
+                // add list repcomment
+                repcomments.stream().map(rep -> {
+                    Users usersRCM = usersRepository.findById(rep.getIdUser()).get();
+                    RepCommentDTO repCommentDTO = modelMap.map(rep, RepCommentDTO.class);
+                    repCommentDTO.setUserName(usersRCM.getName());
+                    repCommentDTO.setImageAvatarRCM(usersRCM.getImagePath());
+                    repCommentDTOList.add(repCommentDTO);
+                    return repCommentDTOList;
+                }).collect(Collectors.toList());
+                commentDTO.setRepCommentDTOS(repCommentDTOList);
+                commentDTOList.add(commentDTO);
+                return commentDTOList;
+            }).collect(Collectors.toList());
+            baiVietDTO = modelMap.map(baiviet, BaiVietDTO.class);
+            baiVietDTO.setCommentDTOS(commentDTOList);
+            bvResult.add(baiVietDTO);
+        }
+        return bvResult;
     }
 }

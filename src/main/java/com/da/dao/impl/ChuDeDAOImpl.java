@@ -1,15 +1,18 @@
 package com.da.dao.impl;
 
-import java.util.HashMap;
-
-import java.util.Map;
+import com.da.dao.ChuDeDAO;
+import com.da.dto.ChuDeCountDTO;
 import com.da.dto.ChuDeSearchDTO;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import com.da.dao.ChuDeDAO;
+import javax.persistence.TypedQuery;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @Repository
 public class ChuDeDAOImpl extends AbstractDAO implements ChuDeDAO {
     private final Logger log = LoggerFactory.getLogger(ChuDeDAOImpl.class);
@@ -44,6 +47,23 @@ public class ChuDeDAOImpl extends AbstractDAO implements ChuDeDAO {
             sb.append(" order by cd.tenchude  ");
         }
         searchAndCountTotal(dto, sb.toString(), parameter, ChuDeSearchDTO.class);
+    }
+
+    @Override
+    public List<ChuDeCountDTO> getChuAndCount() {
+        log.info("Start dao getChuAndCount ");
+        StringBuilder sb = new StringBuilder();
+        sb.append(" select new ").append(ChuDeCountDTO.class.getName());
+        sb.append(" ( cd.id,");
+        sb.append(" cd.maChude as maChuDe,");
+        sb.append(" cd.tenChude as tenChuDe,");
+        sb.append(" count(bv.id) as baiVietCount )");
+        sb.append(" from Chude as cd");
+        sb.append(" left join Baiviet as bv");
+        sb.append(" on (bv.ma_chude = cd.id or bv.id is  null) ");
+        sb.append("  group by cd.id, cd.maChude,cd.tenChude");
+        TypedQuery<ChuDeCountDTO> query = getSession().createQuery(sb.toString(),ChuDeCountDTO.class);
+        return query.getResultList();
     }
 
 }

@@ -20,4 +20,6 @@ public class HangMucDTO {
 
     private String maMonhoc;
 
+    private Integer coutBaiViet;
+
 }

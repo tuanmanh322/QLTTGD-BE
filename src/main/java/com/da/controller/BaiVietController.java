@@ -72,4 +72,10 @@ public class BaiVietController {
         log.info("start res to get getDetailBVCMREM with idBV: {}",idBV);
         return new ResponseEntity<>(baiVietService.getDetailBVCMREM(idBV),HttpStatus.OK);
     }
+    @GetMapping("/by-cd/{idChuDe}")
+    public ResponseEntity<List<BaiVietDTO>> getAllBVandCm(@PathVariable("idChuDe") Integer idChuDe){
+        log.info("start res to get getAllBVandCm");
+        return new ResponseEntity<>(baiVietService.getAllByChuDe(idChuDe),HttpStatus.OK);
+    }
+
 }

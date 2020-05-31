@@ -16,4 +16,6 @@ public interface BaiVietService {
     List<BaiVietDTO> getBaiVietWithComment();
 
     BaiVietDTO getDetailBVCMREM(Integer idBV);
+
+    List<BaiVietDTO> getAllByChuDe(Integer idChuDe);
 }

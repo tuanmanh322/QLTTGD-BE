@@ -1,5 +1,9 @@
 package com.da.service.impl;
+
+import com.da.dao.ChuDeDAO;
+import com.da.dto.ChuDeCountDTO;
 import com.da.dto.ChuDeDTO;
+import com.da.dto.ChuDeSearchDTO;
 import com.da.exception.ErrorCode;
 import com.da.exception.ResultException;
 import com.da.model.Chude;
@@ -10,9 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.da.dao.ChuDeDAO;
-import com.da.dto.ChuDeSearchDTO;
-
+import java.util.List;
 
 
 @Service
@@ -41,6 +43,13 @@ public class ChuDeServiceImpl implements ChuDeService {
         ChuDeDTO dto = modelMap.map(cd, ChuDeDTO.class);
         return dto;
     }
+
+    @Override
+    public List<ChuDeCountDTO> getChuDeAndCount() {
+        log.info(" start service to getChuDeAndCount");
+        return chuDeDao.getChuAndCount();
+    }
+
     @Override
     public void add(ChuDeDTO dto) throws ResultException {
         log.info(" start service to searchChuDe with :{}",dto);

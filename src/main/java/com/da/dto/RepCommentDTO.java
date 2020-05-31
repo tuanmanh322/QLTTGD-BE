@@ -25,4 +25,6 @@ public class RepCommentDTO {
     private Integer idUser;
 
     private String userName;
+
+    private String imageAvatarRCM;
 }
