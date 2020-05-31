@@ -195,6 +195,8 @@ public class BaiVietServiceImpl implements BaiVietService {
                 commentDTO.setUserName(usersCM.getName());
                 commentDTO.setImageAvatarCM(usersCM.getImagePath());
                 List<Repcomment> repcomments = repcommentRepository.findByIdComment(cm.getId());
+//                commentDTO.setCommentCount(repcomments.size());
+                int b = repcomments.size();
                 // add list repcomment
                 repcomments.stream().map(rep -> {
                     Users usersRCM = usersRepository.findById(rep.getIdUser()).get();
@@ -209,6 +211,7 @@ public class BaiVietServiceImpl implements BaiVietService {
                 return commentDTOList;
             }).collect(Collectors.toList());
             baiVietDTO = modelMap.map(baiviet, BaiVietDTO.class);
+            baiVietDTO.setTotalComment(repCommentDTOList.size() +  comments.size());
             baiVietDTO.setCommentDTOS(commentDTOList);
             bvResult.add(baiVietDTO);
         }

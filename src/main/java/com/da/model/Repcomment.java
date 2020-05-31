@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Data
 @Table(name = "repcomment")
@@ -33,5 +34,7 @@ public class Repcomment implements Serializable {
 
     @Column(name = "id_user")
     private Integer idUser;
-    
+
+    @Column(name = "created_date")
+    private Date repDate;
 }

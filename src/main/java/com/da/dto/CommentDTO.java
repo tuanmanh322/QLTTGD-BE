@@ -1,10 +1,12 @@
 package com.da.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.Column;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -30,7 +32,13 @@ public class CommentDTO {
 
     private String userName;
 
+    private String imageAvatarCM;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date commentDate;
+
     private List<RepCommentDTO> repCommentDTOS;
    // private  String maMaiviet;
-    private String imageAvatarCM;
+
+
 }

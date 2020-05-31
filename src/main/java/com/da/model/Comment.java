@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Table(name = "comment")
 @Entity
@@ -33,4 +34,7 @@ public class Comment implements Serializable {
 
     @Column(name = "id_baiviet")
     private Integer idBaiViet;
+
+    @Column(name = "created_date")
+    private Date commentDate;
 }
