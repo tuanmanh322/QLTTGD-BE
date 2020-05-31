@@ -25,7 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -132,6 +131,7 @@ public class BaiVietServiceImpl implements BaiVietService {
                 return commentDTOList;
             }).collect(Collectors.toList());
             baiVietDTO = modelMap.map(baiviet, BaiVietDTO.class);
+            baiVietDTO.setTotalComment(repCommentDTOList.size() +  comments.size());
             baiVietDTO.setCommentDTOS(commentDTOList);
             bvResult.add(baiVietDTO);
         }
@@ -171,6 +171,7 @@ public class BaiVietServiceImpl implements BaiVietService {
             return commentDTOList;
         }).collect(Collectors.toList());
         baiVietDTO.setCommentDTOS(commentDTOList);
+        baiVietDTO.setTotalComment(repCommentDTOList.size() +  comments.size());
         return baiVietDTO;
     }
 
