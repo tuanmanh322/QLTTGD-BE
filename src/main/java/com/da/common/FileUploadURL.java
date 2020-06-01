@@ -22,7 +22,7 @@ public class FileUploadURL {
             "xls", "XLS", "xlsx", "XLSX");
 
     @Value("${storage.location}")
-    private String storage;
+    private static String storage;
 
 
     public static boolean validImageFile(String ext) {
