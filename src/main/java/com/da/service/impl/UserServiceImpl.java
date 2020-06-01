@@ -1,6 +1,11 @@
 package com.da.service.impl;
 
+import com.da.common.CommonResult;
+import com.da.common.FileUploadURL;
+import com.da.common.RandomString;
 import com.da.dto.UserDTO;
+import com.da.exception.ErrorCode;
+import com.da.exception.ResultException;
 import com.da.model.Lop;
 import com.da.model.Roles;
 import com.da.model.The;
@@ -14,15 +19,21 @@ import com.da.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.Optional;
 
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
     private final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     private final UsersRepository usersRepository;
 
@@ -78,5 +89,58 @@ public class UserServiceImpl implements UserService {
             roles.ifPresent(value -> userDTO.setRole(value.getNameRole()));
         }
         return userDTO;
+    }
+
+    @Override
+    public CommonResult addUser(UserDTO dto) throws ResultException {
+        log.info("start service to addUser with: {}",dto);
+        The t = new The();
+        String maThe = RandomString.rdMaThe();
+        Optional<The> the = theRepository.findByMaThe(maThe);
+        if (the.get().getId() !=null){
+            throw new ResultException(ErrorCode.RECORD_EXISTED);
+        }
+        t.setMaThe(maThe);
+        t.setIdRole(dto.getIdRole());
+        t.setNgaycap(new Date());
+        t.setPassword(passwordEncoder.encode(dto.getPassword()));
+        t.setTrangthai(Boolean.TRUE);
+        t.setMaLoaithe(dto.getMaLoaithe());
+        theRepository.save(t);
+        Users u = new Users();
+        Optional<Users> users =  usersRepository.findByEmail(dto.getEmail());
+        if (users.get().getId() != null){
+            throw new ResultException(ErrorCode.EMAIL_EXISTED);
+        }
+        u.setName(dto.getName());
+        u.setGioitinh(dto.getGioitinh());
+        u.setNgaysinh(dto.getNgaysinh());
+        u.setSocmt(dto.getSocmt());
+        u.setQuoctich(dto.getQuoctich());
+        u.setQuequan(dto.getQuequan());
+        u.setNoiohientai(dto.getNoiohientai());
+        u.setHokhau(dto.getHokhau());
+        u.setQuatrinhlamviec(dto.getQuatrinhlamviec());
+        u.setEmail(dto.getEmail());
+        u.setSodt(dto.getSodt());
+        u.setLuongcoban(dto.getLuongcoban());
+        if (!dto.getImageAvatar().isEmpty()){
+            try {
+                u.setImagePath(FileUploadURL.saveFileAndGetUrl(dto.getImageAvatar()));
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new ResultException(ErrorCode.RECORD_NOT_FOUND);
+            }
+        }
+        usersRepository.save(u);
+        return CommonResult.success(maThe);
+
+    }
+
+    @Override
+    public boolean checkEmail(String email) {
+        log.info("start service to checkEmail with {}: ",email);
+        Optional<Users> users = usersRepository.findByEmail(email.trim());
+        return users.isPresent();
     }
 }

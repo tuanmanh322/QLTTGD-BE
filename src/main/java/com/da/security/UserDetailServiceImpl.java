@@ -38,10 +38,10 @@ public class UserDetailServiceImpl implements UserDetailsService {
         log.trace("Service authenticate: {}", maThe);
         try {
             The the = theRepository.findByMaThe(maThe).get();
-//            if (!the.getTrangthai())
-//                throw new UserNotActivatedException("The: " + maThe + " was not activated");
-            if (the.getTrangthai())
-                throw new UserLockedException("User " + maThe + " was locked");
+            if (!the.getTrangthai())
+                throw new UserNotActivatedException("The: " + maThe + " was not activated");
+//            if (the.getTrangthai())
+//                throw new UserLockedException("User " + maThe + " was locked");
             Roles role = rolesRepository.findByRole(the.getIdRole(), Constant.GROUP_ROLE).get();
             List<GrantedAuthority> grantedAuthorities = Stream.of(role.getNameRole())
                     .map(SimpleGrantedAuthority::new)

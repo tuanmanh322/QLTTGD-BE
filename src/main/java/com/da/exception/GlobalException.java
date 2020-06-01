@@ -21,8 +21,10 @@ public class GlobalException {
 	            switch (errorCode){
 	                case RECORD_NOT_FOUND:
 	                case RECORD_NOT_EXISTED:
+					case FORBIDDEN:
 	                    return new ResponseEntity<>(getErrorDetails(errorCode), HttpStatus.NOT_FOUND);
 	                case RECORD_EXISTED:
+					case EMAIL_EXISTED:
 	                    return new ResponseEntity<>(getErrorDetails(errorCode), HttpStatus.CONFLICT);
 	                default:
 	                    return new ResponseEntity<>(getErrorDetails(errorCode), HttpStatus.INTERNAL_SERVER_ERROR);

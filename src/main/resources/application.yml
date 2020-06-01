@@ -15,6 +15,12 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
     show-sql: true
+  servlet:
+    multipart:
+      max-file-size: 3MB
+      max-request-size: 3MB
+      file-size-threshold: 2KB
+      enabled: true
 logging:
   level:
     ROOT: ERROR
@@ -38,3 +44,5 @@ application:
 
 
 
+storage:
+  location: "./uploads"
