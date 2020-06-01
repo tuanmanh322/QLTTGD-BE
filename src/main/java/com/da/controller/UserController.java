@@ -27,7 +27,7 @@ public class UserController {
         return new ResponseEntity<>(userService.getCurrentUserLogin(), HttpStatus.OK);
     }
 
-    @GetMapping("check-mail")
+    @GetMapping("/check-mail")
     public ResponseEntity<Boolean> checkMail(@RequestParam("email")String email){
         log.info("start rest to checkMail with {} : ",email);
         return new ResponseEntity<>( userService.checkEmail(email),HttpStatus.OK);
