@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -36,5 +37,12 @@ public class Baiviet implements Serializable {
     private Integer idUser;
 
     @Column(name = "created_date")
-    private Date createdDate;
+    private LocalDateTime createdDate;
+
+    @Column(name = "title")
+    private String title;
+
+    @Column(name = "image_path")
+    private String imageBV;
+
 }

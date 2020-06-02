@@ -78,4 +78,10 @@ public class BaiVietController {
         return new ResponseEntity<>(baiVietService.getAllByChuDe(idChuDe),HttpStatus.OK);
     }
 
+    @GetMapping("/all-total")
+    public ResponseEntity<List<BaiVietDTO>> getBVandTotal(){
+        log.info("start res to get getAllBVandCm");
+        return new ResponseEntity<>(baiVietService.getBVandTotalComment(),HttpStatus.OK);
+    }
+
 }

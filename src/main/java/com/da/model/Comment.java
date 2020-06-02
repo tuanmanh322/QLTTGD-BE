@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Table(name = "comment")
@@ -36,5 +37,8 @@ public class Comment implements Serializable {
     private Integer idBaiViet;
 
     @Column(name = "created_date")
-    private Date commentDate;
+    private LocalDateTime commentDate;
+
+    @Column(name = "image_path")
+    private String imageCM;
 }

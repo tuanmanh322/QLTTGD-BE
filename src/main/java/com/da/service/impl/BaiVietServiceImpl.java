@@ -1,5 +1,6 @@
 package com.da.service.impl;
 
+import com.da.common.Orders;
 import com.da.dao.BaiVietDAO;
 import com.da.dto.BaiVietDTO;
 import com.da.dto.BaiVietSearchDTO;
@@ -23,8 +24,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 @Service
@@ -99,15 +102,18 @@ public class BaiVietServiceImpl implements BaiVietService {
     @Override
     public List<BaiVietDTO> getBaiVietWithComment() {
         log.info("start service to get getBaiVietWithComment");
-        List<Baiviet> baiviets = baivietRepository.findAll();
+        List<Baiviet> baiviets = baivietRepository.findAll(Orders.DESC("created_date"));
         List<BaiVietDTO> bvResult = new ArrayList<>();
-        BaiVietDTO baiVietDTO = new BaiVietDTO();
+
         List<CommentDTO> commentDTOList = new ArrayList<>();
         List<RepCommentDTO> repCommentDTOList = new ArrayList<>();
         for (Baiviet baiviet : baiviets) {
+            BaiVietDTO baiVietDTO = new BaiVietDTO();
             Users users = usersRepository.findById(baiviet.getIdUser()).get();
             baiVietDTO.setUserName(users.getName());
             baiVietDTO.setImageAvatar(users.getImagePath());
+            baiVietDTO.setCreateDate(baiviet.getCreatedDate().toLocalDate());
+            baiVietDTO.setTitle(baiviet.getTitle());
             // get list comment by id
             List<Comment> comments = commentRepository.findByIdBaiViet(baiviet.getId());
             // add list comment
@@ -131,8 +137,43 @@ public class BaiVietServiceImpl implements BaiVietService {
                 return commentDTOList;
             }).collect(Collectors.toList());
             baiVietDTO = modelMap.map(baiviet, BaiVietDTO.class);
-            baiVietDTO.setTotalComment(repCommentDTOList.size() +  comments.size());
+            baiVietDTO.setTotalComment(repCommentDTOList.size() + comments.size());
             baiVietDTO.setCommentDTOS(commentDTOList);
+            bvResult.add(baiVietDTO);
+        }
+        return bvResult;
+    }
+
+    @Override
+    public List<BaiVietDTO> getBVandTotalComment() {
+        log.info("start service to get getBVandTotalComment");
+        List<Baiviet> baiviets = baivietRepository.findAll(Orders.DESC("createdDate"));
+        List<BaiVietDTO> bvResult = new ArrayList<>();
+        List<Object> objects = new ArrayList<>();
+        for (Baiviet baiviet : baiviets) {
+            BaiVietDTO baiVietDTO = new BaiVietDTO();
+            Users users = usersRepository.findById(baiviet.getIdUser()).get();
+            baiVietDTO.setUserName(users.getName());
+            baiVietDTO.setImageAvatar(users.getImagePath());
+            baiVietDTO.setDateMili(baiviet.getCreatedDate().toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli());
+            baiVietDTO.setCreateDate(baiviet.getCreatedDate().toLocalDate());
+            baiVietDTO.setTitle(baiviet.getTitle());
+            baiVietDTO.setLuotthich(baiviet.getLuotthich());
+            baiVietDTO.setLuotkhongthich(baiviet.getLuotkhongthich());
+            baiVietDTO.setMabaiviet(baiviet.getMaBaiviet());
+            baiVietDTO.setNoidung(baiviet.getNoidung());
+            baiVietDTO.setIdUser(users.getId());
+            baiVietDTO.setId(baiviet.getId());
+            // get list comment by id
+            List<Comment> comments = commentRepository.findByIdBaiViet(baiviet.getId());
+             comments.stream().map(cm -> {
+                List<Repcomment> repcomments = repcommentRepository.findByIdComment(cm.getId());
+                for (Repcomment repcomment : repcomments){
+                    objects.add(repcomment);
+                }
+                return repcomments.size();
+            }).collect(Collectors.toList());
+            baiVietDTO.setTotalComment(comments.size() + objects.size());
             bvResult.add(baiVietDTO);
         }
         return bvResult;
@@ -146,6 +187,8 @@ public class BaiVietServiceImpl implements BaiVietService {
         BaiVietDTO baiVietDTO = modelMap.map(baiviets, BaiVietDTO.class);
         baiVietDTO.setUserName(users.getName());
         baiVietDTO.setImageAvatar(users.getImagePath());
+        baiVietDTO.setDateMili(baiviets.getCreatedDate().toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli());
+        baiVietDTO.setCreateDate(baiviets.getCreatedDate().toLocalDate());
         List<CommentDTO> commentDTOList = new ArrayList<>();
         List<RepCommentDTO> repCommentDTOList = new ArrayList<>();
         // get list comment by id
@@ -156,6 +199,7 @@ public class BaiVietServiceImpl implements BaiVietService {
             CommentDTO commentDTO = modelMap.map(cm, CommentDTO.class);
             commentDTO.setUserName(usersCM.getName());
             commentDTO.setImageAvatarCM(usersCM.getImagePath());
+            commentDTO.setDateMiliCM(cm.getCommentDate().toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli());
             List<Repcomment> repcomments = repcommentRepository.findByIdComment(cm.getId());
             // add list repcomment
             repcomments.stream().map(rep -> {
@@ -163,6 +207,7 @@ public class BaiVietServiceImpl implements BaiVietService {
                 RepCommentDTO repCommentDTO = modelMap.map(rep, RepCommentDTO.class);
                 repCommentDTO.setUserName(usersRCM.getName());
                 repCommentDTO.setImageAvatarRCM(usersRCM.getImagePath());
+                repCommentDTO.setDateMiliRCM(rep.getRepDate().toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli());
                 repCommentDTOList.add(repCommentDTO);
                 return repCommentDTOList;
             }).collect(Collectors.toList());
@@ -171,7 +216,7 @@ public class BaiVietServiceImpl implements BaiVietService {
             return commentDTOList;
         }).collect(Collectors.toList());
         baiVietDTO.setCommentDTOS(commentDTOList);
-        baiVietDTO.setTotalComment(repCommentDTOList.size() +  comments.size());
+        baiVietDTO.setTotalComment(repCommentDTOList.size() + comments.size());
         return baiVietDTO;
     }
 
@@ -180,40 +225,35 @@ public class BaiVietServiceImpl implements BaiVietService {
         log.info("start service to get getBaiVietWithComment");
         List<Baiviet> baiviets = baivietRepository.findByMaChuDe(idChuDe);
         List<BaiVietDTO> bvResult = new ArrayList<>();
-        BaiVietDTO baiVietDTO = new BaiVietDTO();
-        List<CommentDTO> commentDTOList = new ArrayList<>();
-        List<RepCommentDTO> repCommentDTOList = new ArrayList<>();
+        List<Object> objects = new ArrayList<>();
         for (Baiviet baiviet : baiviets) {
+            BaiVietDTO baiVietDTO = new BaiVietDTO();
             Users users = usersRepository.findById(baiviet.getIdUser()).get();
             baiVietDTO.setUserName(users.getName());
             baiVietDTO.setImageAvatar(users.getImagePath());
+            baiVietDTO.setDateMili(baiviet.getCreatedDate().toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli());
+            baiVietDTO.setCreateDate(baiviet.getCreatedDate().toLocalDate());
+            baiVietDTO.setTitle(baiviet.getTitle());
+            baiVietDTO.setLuotthich(baiviet.getLuotthich());
+            baiVietDTO.setLuotkhongthich(baiviet.getLuotkhongthich());
+            baiVietDTO.setMabaiviet(baiviet.getMaBaiviet());
+            baiVietDTO.setNoidung(baiviet.getNoidung());
+            baiVietDTO.setIdUser(users.getId());
+            baiVietDTO.setId(baiviet.getId());
             // get list comment by id
             List<Comment> comments = commentRepository.findByIdBaiViet(baiviet.getId());
-            // add list comment
-            comments.stream().map(cm -> {
-                Users usersCM = usersRepository.findById(cm.getIdUser()).get();
-                CommentDTO commentDTO = modelMap.map(cm, CommentDTO.class);
-                commentDTO.setUserName(usersCM.getName());
-                commentDTO.setImageAvatarCM(usersCM.getImagePath());
-                List<Repcomment> repcomments = repcommentRepository.findByIdComment(cm.getId());
-//                commentDTO.setCommentCount(repcomments.size());
-                int b = repcomments.size();
-                // add list repcomment
-                repcomments.stream().map(rep -> {
-                    Users usersRCM = usersRepository.findById(rep.getIdUser()).get();
-                    RepCommentDTO repCommentDTO = modelMap.map(rep, RepCommentDTO.class);
-                    repCommentDTO.setUserName(usersRCM.getName());
-                    repCommentDTO.setImageAvatarRCM(usersRCM.getImagePath());
-                    repCommentDTOList.add(repCommentDTO);
-                    return repCommentDTOList;
+            if (!comments.isEmpty()){
+                comments.stream().map(cm -> {
+                    List<Repcomment> repcomments = repcommentRepository.findByIdComment(cm.getId());
+                    if (!repcomments.isEmpty()){
+                        for (Repcomment repcomment : repcomments){
+                            objects.add(repcomment);
+                        }
+                    }
+                    return repcomments.size();
                 }).collect(Collectors.toList());
-                commentDTO.setRepCommentDTOS(repCommentDTOList);
-                commentDTOList.add(commentDTO);
-                return commentDTOList;
-            }).collect(Collectors.toList());
-            baiVietDTO = modelMap.map(baiviet, BaiVietDTO.class);
-            baiVietDTO.setTotalComment(repCommentDTOList.size() +  comments.size());
-            baiVietDTO.setCommentDTOS(commentDTOList);
+            }
+            baiVietDTO.setTotalComment(comments.size() + objects.size());
             bvResult.add(baiVietDTO);
         }
         return bvResult;

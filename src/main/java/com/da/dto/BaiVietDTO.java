@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -12,11 +14,13 @@ import java.util.List;
 @Setter
 @ToString
 public class BaiVietDTO {
-    private String id;
+    private Integer id;
 
     private String mabaiviet;
 
     private String noidung;
+
+    private String title;
 
     private Integer luotthich;
 
@@ -30,8 +34,11 @@ public class BaiVietDTO {
 
     private Integer totalComment;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date createDate;
+//    @JsonFormat
+    private LocalDate createDate;
+
+//    @JsonFormat
+    private Long dateMili;
 
     private List<CommentDTO> commentDTOS;
 

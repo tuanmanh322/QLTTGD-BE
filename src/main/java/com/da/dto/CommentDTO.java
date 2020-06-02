@@ -1,11 +1,11 @@
 package com.da.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Column;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -34,9 +34,10 @@ public class CommentDTO {
 
     private String imageAvatarCM;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date commentDate;
+//    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate commentDate;
 
+    private Long dateMiliCM;
     private List<RepCommentDTO> repCommentDTOS;
    // private  String maMaiviet;
 

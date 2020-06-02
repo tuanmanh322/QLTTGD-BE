@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService {
         The t = new The();
         String maThe = RandomString.rdMaThe();
         Optional<The> the = theRepository.findByMaThe(maThe);
-        if (the.get().getId() !=null){
+        if (the.isPresent()){
             throw new ResultException(ErrorCode.RECORD_EXISTED);
         }
         t.setMaThe(maThe);
@@ -109,9 +109,10 @@ public class UserServiceImpl implements UserService {
         theRepository.save(t);
         Users u = new Users();
         Optional<Users> users =  usersRepository.findByEmail(dto.getEmail());
-        if (users.get().getId() != null){
+        if (users.isPresent()){
             throw new ResultException(ErrorCode.EMAIL_EXISTED);
         }
+        u.setMaThe(t.getId());
         u.setName(dto.getName());
         u.setGioitinh(dto.getGioitinh());
         u.setNgaysinh(dto.getNgaysinh());
