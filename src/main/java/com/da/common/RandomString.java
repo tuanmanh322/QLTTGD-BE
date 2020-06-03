@@ -1,11 +1,11 @@
 package com.da.common;
 
 public class RandomString {
-    public static String rdMaThe(){
-        String rdpw = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvxyz";
+    public static String rdMaThe(String theID){
+        String rdpw = "0123456789";
         StringBuilder sb = new StringBuilder(8);
-
-        for (int i = 0; i < 8; i++) {
+        sb.append(theID);
+        for (int i = 0; i < 4; i++) {
 
             int index
                     = (int)(rdpw.length()

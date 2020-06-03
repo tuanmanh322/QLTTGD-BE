@@ -10,4 +10,8 @@ public interface UserService {
     CommonResult addUser(UserDTO dto) throws ResultException;
 
     boolean checkEmail(String email);
+
+    CommonResult register(UserDTO dto) throws ResultException;
+
+    void updateProfile(UserDTO dto) throws ResultException;
 }

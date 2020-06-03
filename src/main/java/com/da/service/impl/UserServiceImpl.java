@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
     public CommonResult addUser(UserDTO dto) throws ResultException {
         log.info("start service to addUser with: {}",dto);
         The t = new The();
-        String maThe = RandomString.rdMaThe();
+        String maThe = RandomString.rdMaThe("1515");
         Optional<The> the = theRepository.findByMaThe(maThe);
         if (the.isPresent()){
             throw new ResultException(ErrorCode.RECORD_EXISTED);
@@ -143,5 +143,92 @@ public class UserServiceImpl implements UserService {
         log.info("start service to checkEmail with {}: ",email);
         Optional<Users> users = usersRepository.findByEmail(email.trim());
         return users.isPresent();
+    }
+
+    @Override
+    public CommonResult register(UserDTO dto) throws ResultException {
+        log.info("start service to register with: {}",dto);
+        The t = new The();
+        String maThe = "";
+        if (dto.getIdRole() == 2){
+             maThe = RandomString.rdMaThe("1111");
+            Optional<The> the = theRepository.findByMaThe(maThe);
+            if (the.isPresent()){
+                switch ((int) (Math.random()* 4) + 1){
+                    case 1:
+                        maThe = RandomString.rdMaThe("1212");
+                        break;
+                    case 2:
+                        maThe = RandomString.rdMaThe("1313");
+                        break;
+                    case 3:
+                        maThe = RandomString.rdMaThe("1414");
+                        break;
+                    case 4:
+                        maThe = RandomString.rdMaThe("1515");
+                        break;
+                }
+                t.setMaThe(maThe);
+            }else {
+                t.setMaThe(maThe);
+            }
+        }
+        if (dto.getIdRole() == 3){
+            maThe = RandomString.rdMaThe("1616");
+            Optional<The> the = theRepository.findByMaThe(maThe);
+            if (the.isPresent()){
+                switch ((int) (Math.random()* 4) + 1){
+                    case 1:
+                        maThe = RandomString.rdMaThe("1717");
+                        break;
+                    case 2:
+                        maThe = RandomString.rdMaThe("1818");
+                        break;
+                    case 3:
+                        maThe = RandomString.rdMaThe("1919");
+                        break;
+                    case 4:
+                        maThe = RandomString.rdMaThe("2020");
+                        break;
+                }
+                t.setMaThe(maThe);
+            }else {
+                t.setMaThe(maThe);
+            }
+        }
+        t.setIdRole(dto.getIdRole());
+        t.setNgaycap(new Date());
+        t.setPassword(passwordEncoder.encode(dto.getPassword()));
+        t.setTrangthai(Boolean.TRUE);
+        theRepository.save(t);
+        Users u = new Users();
+        Optional<Users> users =  usersRepository.findByEmail(dto.getEmail());
+        if (users.isPresent()){
+            throw new ResultException(ErrorCode.EMAIL_EXISTED);
+        }
+        u.setEmail(dto.getEmail());
+        u.setName(dto.getName());
+        u.setMaThe(t.getId());
+        usersRepository.save(u);
+        return CommonResult.success(maThe);
+    }
+
+    @Override
+    public void updateProfile(UserDTO dto) throws ResultException {
+        log.info("start service to updateProfile with :{}",dto);
+        Optional<The> the = theRepository.findById(SecurityUtils.getCurrentUserIdLogin());
+        if (the.isPresent()){
+            Users users = usersRepository.findByMaThe(the.get().getId());
+            users = modelMapper.map(dto,Users.class);
+            if (dto.getImageAvatar() != null){
+                try {
+                    users.setImagePath(FileUploadURL.saveFileAndGetUrl(dto.getImageAvatar()));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    throw  new ResultException(ErrorCode.FILE_UPLOAD_FAILED);
+                }
+            }
+            usersRepository.save(users);
+        }
     }
 }
