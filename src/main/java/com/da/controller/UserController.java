@@ -40,9 +40,14 @@ public class UserController {
     }
 
     @PostMapping("/edit-profile")
-    public ResponseEntity<Void> edit(@ModelAttribute UserDTO dto) throws ResultException{
+    public ResponseEntity<CommonResult> edit(@ModelAttribute UserDTO dto) throws ResultException{
         log.info("start rest to edit with {} : ",dto);
-        userService.updateProfile(dto);
-        return ResponseEntity.ok().build();
+        return new ResponseEntity<>(userService.updateProfile(dto),HttpStatus.OK);
+    }
+
+    @GetMapping("/profile-emp/{idUser}")
+    public ResponseEntity<UserDTO> getProfileEMP(@PathVariable("idUser")Integer idUser){
+        log.info("start rest to get getProfileEMP with: {}",idUser);
+        return new ResponseEntity<>(userService.getUserProfileEmp(idUser),HttpStatus.OK);
     }
 }

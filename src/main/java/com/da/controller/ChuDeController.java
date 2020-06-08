@@ -62,4 +62,10 @@ public class ChuDeController {
         log.info(" start service to getChuDeAndCount");
         return new ResponseEntity<>(chuDeService.getChuDeAndCount(),HttpStatus.OK);
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<ChuDeDTO>> getAll(){
+        log.info(" start service to getAll");
+        return new ResponseEntity<>(chuDeService.getAllCD(),HttpStatus.OK);
+    }
 }

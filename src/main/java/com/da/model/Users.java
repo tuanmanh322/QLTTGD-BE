@@ -51,7 +51,7 @@ public class Users implements Serializable {
     private String email;
 
     @Column(name = "sodt")
-    private Integer sodt;
+    private String sodt;
 
     @Column(name = "luongcoban")
     private Double luongcoban;

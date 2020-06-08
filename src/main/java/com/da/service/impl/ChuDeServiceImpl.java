@@ -7,6 +7,7 @@ import com.da.dto.ChuDeSearchDTO;
 import com.da.exception.ErrorCode;
 import com.da.exception.ResultException;
 import com.da.model.Chude;
+import com.da.repository.ChudeRepository;
 import com.da.service.ChuDeService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -14,7 +15,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -26,11 +29,15 @@ public class ChuDeServiceImpl implements ChuDeService {
 
     private final ChuDeDAO chuDeDao;
 
-    public ChuDeServiceImpl(ModelMapper modelMap, ChuDeDAO chuDeDao) {
-        super();
+    private final ChudeRepository chudeRepository;
+
+
+    public ChuDeServiceImpl(ModelMapper modelMap, ChuDeDAO chuDeDao, ChudeRepository chudeRepository) {
         this.modelMap = modelMap;
         this.chuDeDao = chuDeDao;
+        this.chudeRepository = chudeRepository;
     }
+
     @Override
     public void searchChuDe(ChuDeSearchDTO dto) {
         log.info(" start service to searchChuDe with :{}",dto);
@@ -48,6 +55,19 @@ public class ChuDeServiceImpl implements ChuDeService {
     public List<ChuDeCountDTO> getChuDeAndCount() {
         log.info(" start service to getChuDeAndCount");
         return chuDeDao.getChuAndCount();
+    }
+
+    @Override
+    public List<ChuDeDTO> getAllCD() {
+        log.info(" start service to getAllCD");
+        List<Chude> chudeList  = chudeRepository.findAll();
+        List<ChuDeDTO>  chuDeDTOS = new ArrayList<>();
+        chudeList.stream().map(cd -> {
+            ChuDeDTO deDTO = modelMap.map(cd,ChuDeDTO.class);
+            chuDeDTOS.add(deDTO);
+            return deDTO;
+        }).collect(Collectors.toList());
+        return chuDeDTOS;
     }
 
     @Override

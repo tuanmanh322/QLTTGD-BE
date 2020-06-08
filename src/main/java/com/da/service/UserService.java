@@ -13,5 +13,7 @@ public interface UserService {
 
     CommonResult register(UserDTO dto) throws ResultException;
 
-    void updateProfile(UserDTO dto) throws ResultException;
+    CommonResult updateProfile(UserDTO dto) throws ResultException;
+
+    UserDTO getUserProfileEmp(Integer idUser);
 }

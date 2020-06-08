@@ -2,10 +2,7 @@ package com.da.service.impl;
 
 import com.da.common.Orders;
 import com.da.dao.BaiVietDAO;
-import com.da.dto.BaiVietDTO;
-import com.da.dto.BaiVietSearchDTO;
-import com.da.dto.CommentDTO;
-import com.da.dto.RepCommentDTO;
+import com.da.dto.*;
 import com.da.exception.ErrorCode;
 import com.da.exception.ResultException;
 import com.da.model.Baiviet;
@@ -168,9 +165,7 @@ public class BaiVietServiceImpl implements BaiVietService {
             List<Comment> comments = commentRepository.findByIdBaiViet(baiviet.getId());
              comments.stream().map(cm -> {
                 List<Repcomment> repcomments = repcommentRepository.findByIdComment(cm.getId());
-                for (Repcomment repcomment : repcomments){
-                    objects.add(repcomment);
-                }
+                 objects.addAll(repcomments);
                 return repcomments.size();
             }).collect(Collectors.toList());
             baiVietDTO.setTotalComment(comments.size() + objects.size());
@@ -257,5 +252,11 @@ public class BaiVietServiceImpl implements BaiVietService {
             bvResult.add(baiVietDTO);
         }
         return bvResult;
+    }
+
+    @Override
+    public void searchBaiVietGetTotal(BaiVietTotalSearchDTO baiVietTotalSearchDTO) {
+        log.info(" start service to searchBaiVietGetTotal with : {}",baiVietTotalSearchDTO);
+        baiVietDao.searchBaiVietToTal(baiVietTotalSearchDTO);
     }
 }

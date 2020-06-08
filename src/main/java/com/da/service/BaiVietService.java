@@ -2,6 +2,7 @@ package com.da.service;
 
 import com.da.dto.BaiVietDTO;
 import com.da.dto.BaiVietSearchDTO;
+import com.da.dto.BaiVietTotalSearchDTO;
 import com.da.exception.ResultException;
 
 import java.util.List;
@@ -20,4 +21,6 @@ public interface BaiVietService {
     BaiVietDTO getDetailBVCMREM(Integer idBV);
 
     List<BaiVietDTO> getAllByChuDe(Integer idChuDe);
+
+    void searchBaiVietGetTotal(BaiVietTotalSearchDTO baiVietTotalSearchDTO);
 }

@@ -1,6 +1,7 @@
 package com.da.controller;
 import com.da.dto.BaiVietDTO;
 import com.da.dto.BaiVietSearchDTO;
+import com.da.dto.BaiVietTotalSearchDTO;
 import com.da.exception.ResultException;
 import org.springframework.http.ResponseEntity;
 import com.da.service.BaiVietService;
@@ -31,6 +32,12 @@ public class BaiVietController {
     public ResponseEntity<BaiVietSearchDTO> searchAndGetAll(@RequestBody BaiVietSearchDTO dto) {
         log.info(" start rest to searchAndGetAll with :{}", dto);
         baiVietService.searchBaiViet(dto);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+    @PostMapping("/search-total")
+    public ResponseEntity<BaiVietTotalSearchDTO> searchAndGetAll(@RequestBody BaiVietTotalSearchDTO dto) {
+        log.info(" start rest to searchAndGetAll with :{}", dto);
+        baiVietService.searchBaiVietGetTotal(dto);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 

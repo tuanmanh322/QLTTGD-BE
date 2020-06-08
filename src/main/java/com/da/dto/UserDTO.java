@@ -16,6 +16,8 @@ public class UserDTO {
 
     private String maThe;
 
+    private Integer idThe;
+
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date ngaycap;
 
@@ -50,7 +52,7 @@ public class UserDTO {
 
     private String email;
 
-    private Integer sodt;
+    private String sodt;
 
     private Double luongcoban;
 
@@ -63,4 +65,6 @@ public class UserDTO {
     private String imagePath;
 
     private MultipartFile imageAvatar;
+
+    private Integer totalBV;
 }

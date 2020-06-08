@@ -16,4 +16,6 @@ public interface ChuDeService {
     ChuDeDTO findById(Integer id);
 
     List<ChuDeCountDTO> getChuDeAndCount();
+
+    List<ChuDeDTO> getAllCD();
 }
