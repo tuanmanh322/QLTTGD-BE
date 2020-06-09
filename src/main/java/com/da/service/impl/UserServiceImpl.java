@@ -261,11 +261,11 @@ public class UserServiceImpl implements UserService {
     public UserDTO getUserProfileEmp(Integer idUser) {
         log.info("start service to get getUserProfileEmp with {}",idUser);
         List<Baiviet> totalBv = baivietRepository.getListBVByIdUser(idUser);
-        Optional<Users> users = usersRepository.findById(idUser);
-        if (users.isPresent()){
-            UserDTO userDTO = modelMapper.map(users.get(),UserDTO.class);
-            userDTO.setIdThe(users.get().getMaThe());
-            Optional<The> the = theRepository.findById(users.get().getMaThe());
+        Users users = usersRepository.findByMaThe(idUser);
+        if (users != null){
+            UserDTO userDTO = modelMapper.map(users,UserDTO.class);
+            userDTO.setIdThe(users.getMaThe());
+            Optional<The> the = theRepository.findById(users.getMaThe());
 
             if (the.isPresent()){
                     Roles role = rolesRepository.findById(the.get().getIdRole()).get();

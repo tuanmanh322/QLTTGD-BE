@@ -5,14 +5,8 @@ import com.da.dao.BaiVietDAO;
 import com.da.dto.*;
 import com.da.exception.ErrorCode;
 import com.da.exception.ResultException;
-import com.da.model.Baiviet;
-import com.da.model.Comment;
-import com.da.model.Repcomment;
-import com.da.model.Users;
-import com.da.repository.BaivietRepository;
-import com.da.repository.CommentRepository;
-import com.da.repository.RepcommentRepository;
-import com.da.repository.UsersRepository;
+import com.da.model.*;
+import com.da.repository.*;
 import com.da.security.SecurityUtils;
 import com.da.service.BaiVietService;
 import org.modelmapper.ModelMapper;
@@ -21,9 +15,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.TimeZone;
 import java.util.stream.Collectors;
 
@@ -44,13 +40,16 @@ public class BaiVietServiceImpl implements BaiVietService {
 
     private final UsersRepository usersRepository;
 
-    public BaiVietServiceImpl(ModelMapper modelMap, BaiVietDAO baiVietDao, BaivietRepository baivietRepository, CommentRepository commentRepository, RepcommentRepository repcommentRepository, UsersRepository usersRepository) {
+    private final ChudeRepository chudeRepository;
+
+    public BaiVietServiceImpl(ModelMapper modelMap, BaiVietDAO baiVietDao, BaivietRepository baivietRepository, CommentRepository commentRepository, RepcommentRepository repcommentRepository, UsersRepository usersRepository, ChudeRepository chudeRepository) {
         this.modelMap = modelMap;
         this.baiVietDao = baiVietDao;
         this.baivietRepository = baivietRepository;
         this.commentRepository = commentRepository;
         this.repcommentRepository = repcommentRepository;
         this.usersRepository = usersRepository;
+        this.chudeRepository = chudeRepository;
     }
 
     @Override
@@ -63,8 +62,11 @@ public class BaiVietServiceImpl implements BaiVietService {
     public void add(BaiVietDTO dto) throws ResultException {
         log.info(" start service to searchChuDe with :{}", dto);
         Baiviet baiviet = modelMap.map(dto, Baiviet.class);
-        baiviet.setIdUser(SecurityUtils.getCurrentUserIdLogin());
-        baiVietDao.save(dto);
+        baiviet.setIdThe(SecurityUtils.getCurrentUserIdLogin());
+        baiviet.setMa_chude(dto.getIdCD());
+        baiviet.setCreatedDate(LocalDateTime.now());
+        baiviet.setTrangthai(false);
+        baiVietDao.save(baiviet);
 
     }
 
@@ -106,7 +108,7 @@ public class BaiVietServiceImpl implements BaiVietService {
         List<RepCommentDTO> repCommentDTOList = new ArrayList<>();
         for (Baiviet baiviet : baiviets) {
             BaiVietDTO baiVietDTO = new BaiVietDTO();
-            Users users = usersRepository.findById(baiviet.getIdUser()).get();
+            Users users = usersRepository.findByMaThe(baiviet.getIdThe());
             baiVietDTO.setUserName(users.getName());
             baiVietDTO.setImageAvatar(users.getImagePath());
             baiVietDTO.setCreateDate(baiviet.getCreatedDate().toLocalDate());
@@ -149,7 +151,7 @@ public class BaiVietServiceImpl implements BaiVietService {
         List<Object> objects = new ArrayList<>();
         for (Baiviet baiviet : baiviets) {
             BaiVietDTO baiVietDTO = new BaiVietDTO();
-            Users users = usersRepository.findById(baiviet.getIdUser()).get();
+            Users users = usersRepository.findByMaThe(baiviet.getIdThe());
             baiVietDTO.setUserName(users.getName());
             baiVietDTO.setImageAvatar(users.getImagePath());
             baiVietDTO.setDateMili(baiviet.getCreatedDate().toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli());
@@ -178,12 +180,20 @@ public class BaiVietServiceImpl implements BaiVietService {
     public BaiVietDTO getDetailBVCMREM(Integer idBV) {
         log.info("start service to get getDetailBVCMREM with idBV: {}", idBV);
         Baiviet baiviets = baivietRepository.findById(idBV).get();
-        Users users = usersRepository.findById(baiviets.getIdUser()).get();
+
+        Users users = usersRepository.findByMaThe(baiviets.getIdThe());
         BaiVietDTO baiVietDTO = modelMap.map(baiviets, BaiVietDTO.class);
+        baiVietDTO.setImageBV(baiviets.getImageBV());
         baiVietDTO.setUserName(users.getName());
+        baiVietDTO.setIdUser(users.getId());
         baiVietDTO.setImageAvatar(users.getImagePath());
         baiVietDTO.setDateMili(baiviets.getCreatedDate().toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli());
         baiVietDTO.setCreateDate(baiviets.getCreatedDate().toLocalDate());
+        Optional<Chude> chude = chudeRepository.findById(baiviets.getMa_chude());
+        if (chude.isPresent()){
+            baiVietDTO.setChuDe(chude.get().getTenChude());
+            baiVietDTO.setIdCD(chude.get().getId());
+        }
         List<CommentDTO> commentDTOList = new ArrayList<>();
         List<RepCommentDTO> repCommentDTOList = new ArrayList<>();
         // get list comment by id
@@ -192,17 +202,19 @@ public class BaiVietServiceImpl implements BaiVietService {
         comments.stream().map(cm -> {
             Users usersCM = usersRepository.findById(cm.getIdUser()).get();
             CommentDTO commentDTO = modelMap.map(cm, CommentDTO.class);
+            commentDTO.setImageCM(cm.getImageCM());
             commentDTO.setUserName(usersCM.getName());
             commentDTO.setImageAvatarCM(usersCM.getImagePath());
-            commentDTO.setDateMiliCM(cm.getCommentDate().toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli());
+            commentDTO.setCommentDate(cm.getCommentDate());
             List<Repcomment> repcomments = repcommentRepository.findByIdComment(cm.getId());
             // add list repcomment
             repcomments.stream().map(rep -> {
                 Users usersRCM = usersRepository.findById(rep.getIdUser()).get();
                 RepCommentDTO repCommentDTO = modelMap.map(rep, RepCommentDTO.class);
+                repCommentDTO.setImageRCM(rep.getImageRCM());
                 repCommentDTO.setUserName(usersRCM.getName());
                 repCommentDTO.setImageAvatarRCM(usersRCM.getImagePath());
-                repCommentDTO.setDateMiliRCM(rep.getRepDate().toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli());
+                repCommentDTO.setRepDate(rep.getRepDate());
                 repCommentDTOList.add(repCommentDTO);
                 return repCommentDTOList;
             }).collect(Collectors.toList());
@@ -217,13 +229,13 @@ public class BaiVietServiceImpl implements BaiVietService {
 
     @Override
     public List<BaiVietDTO> getAllByChuDe(Integer idChuDe) {
-        log.info("start service to get getBaiVietWithComment");
+        log.info("start service to get getAllByChuDe");
         List<Baiviet> baiviets = baivietRepository.findByMaChuDe(idChuDe);
         List<BaiVietDTO> bvResult = new ArrayList<>();
         List<Object> objects = new ArrayList<>();
         for (Baiviet baiviet : baiviets) {
             BaiVietDTO baiVietDTO = new BaiVietDTO();
-            Users users = usersRepository.findById(baiviet.getIdUser()).get();
+            Users users = usersRepository.findByMaThe(baiviet.getIdThe());
             baiVietDTO.setUserName(users.getName());
             baiVietDTO.setImageAvatar(users.getImagePath());
             baiVietDTO.setDateMili(baiviet.getCreatedDate().toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli());

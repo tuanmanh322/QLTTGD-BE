@@ -26,6 +26,10 @@ public class BaiVietDTO {
 
     private Integer luotkhongthich;
 
+    private Integer idCD;
+
+    private String chuDe;
+
     private Integer idUser;
 
     private String userName;
@@ -33,6 +37,8 @@ public class BaiVietDTO {
     private String imageAvatar;
 
     private Integer totalComment;
+
+    private String imageBV;
 
 //    @JsonFormat
     private LocalDate createDate;

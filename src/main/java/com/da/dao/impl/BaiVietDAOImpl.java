@@ -60,7 +60,7 @@ public class BaiVietDAOImpl extends AbstractDAO implements BaiVietDAO {
         sb.append(" bv.title as titleBV,");
         sb.append(" bv.luotthich as luotthich,");
         sb.append("  bv.luotkhongthich as luotkhongthich,");
-        sb.append("  bv.id_user as idUserBV,");
+        sb.append("  bv.id_the as idUserBV,");
         sb.append(" bv.ma_chude as maChuDe,");
         sb.append(" cd.tenchude as tenchude,");
         sb.append(" cd.id as idChuDe, ");
@@ -69,23 +69,27 @@ public class BaiVietDAOImpl extends AbstractDAO implements BaiVietDAO {
         sb.append(" u.image_path as imageUser,");
         sb.append(" u.id as idUser,");
         sb.append(" u.name as nameUser,");
+        sb.append(" t.id as idThe,");
         sb.append("  count(distinct cm.id) as cmCount,");
         sb.append(" count(distinct rcm.id) as rcmCount");
         sb.append(" from baiviet as bv");
-        sb.append(" left outer JOIN users as u on u.id = bv.id_user");
+        sb.append(" left outer join the as t on t.id = bv.id_the");
+        sb.append(" left outer JOIN users as u on u.ma_the = bv.id_the");
         sb.append(" left outer JOIN chude as cd on cd.id = bv.ma_chude");
         sb.append("  left outer JOIN comment as cm on cm.id_baiviet = bv.id   or cm.id_baiviet is  null");
         sb.append(" left outer JOIN repcomment as rcm on rcm.id_comment = cm.id or rcm.id_comment is  null");
+        sb.append(" where 1 = 1 ");
+        sb.append(" and bv.trangthai = 1");
         if (StringUtils.isNotBlank(searchDTO.getTitleBV())) {
-            sb.append(" where bv.title like :p_title");
+            sb.append(" and bv.title like :p_title");
             param.put("p_title", "%" + searchDTO.getTitleBV().trim() + "%");
         }
         if (searchDTO.getIdChuDe() != null && searchDTO.getIdChuDe() > 0) {
-            sb.append(" where cd.id =:p_idcd");
+            sb.append(" and cd.id =:p_idcd");
             param.put("p_idcd", searchDTO.getIdChuDe());
         }
         sb.append("  group by bv.id, bv.ma_baiviet, bv.noidung, bv.title, bv.luotthich, bv.luotkhongthich,");
-        sb.append(" bv.id_user, bv.ma_chude, bv.created_date , bv.image_path, u.image_path, u.id, u.name");
+        sb.append(" bv.id_the, bv.ma_chude, bv.created_date , bv.image_path, u.image_path, u.id, u.name, t.id");
         sb.append(" order by bv.created_date desc");
         searchAndCountTotal(searchDTO, sb.toString(), param, BaiVietTotalSearchDTO.class);
     }

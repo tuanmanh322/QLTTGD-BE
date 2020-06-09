@@ -48,14 +48,14 @@ public class BaiVietController {
         return new ResponseEntity<BaiVietDTO>(dto, HttpStatus.OK);
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<Void> add(@RequestBody BaiVietDTO dto) throws ResultException {
         log.info(" start rest to add bai viet with :{}", dto);
         baiVietService.add(dto);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/edit")
+    @PutMapping
     public ResponseEntity<Void> edit(@RequestBody BaiVietDTO dto) throws ResultException {
         log.info(" start rest to edit bai viet with :{}", dto);
         baiVietService.update(dto);

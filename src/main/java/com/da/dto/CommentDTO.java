@@ -32,10 +32,12 @@ public class CommentDTO {
 
     private String userName;
 
+    private String imageCM;
+
     private String imageAvatarCM;
 
 //    @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate commentDate;
+    private LocalDateTime commentDate;
 
     private Long dateMiliCM;
     private List<RepCommentDTO> repCommentDTOS;

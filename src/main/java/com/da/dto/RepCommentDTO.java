@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -26,10 +26,12 @@ public class RepCommentDTO {
 
     private String userName;
 
+    private String imageRCM;
+
     private String imageAvatarRCM;
 
 //    @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate repDate;
+    private LocalDateTime repDate;
 
     private Long dateMiliRCM;
 }

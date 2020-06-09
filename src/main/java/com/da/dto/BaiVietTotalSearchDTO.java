@@ -23,7 +23,9 @@ public class BaiVietTotalSearchDTO extends BaseSearch {
 
     private Integer luotkhongthich;
 
-    private Integer idUserBV;
+    private Integer idTheBV;
+
+    private Integer idThe;
 
     private String maChuDe;
 
@@ -44,5 +46,7 @@ public class BaiVietTotalSearchDTO extends BaseSearch {
     private Long cmCount;
 
     private Long rcmCount;
+
+    private Long dateMili;
 
 }

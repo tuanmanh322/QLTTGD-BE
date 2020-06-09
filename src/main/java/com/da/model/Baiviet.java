@@ -31,10 +31,10 @@ public class Baiviet implements Serializable {
     private Integer luotkhongthich;
 
     @Column(name = "ma_chude")
-    private String ma_chude;
+    private Integer ma_chude;
 
-    @Column(name = "id_user")
-    private Integer idUser;
+    @Column(name = "id_the")
+    private Integer idThe;
 
     @Column(name = "created_date")
     private LocalDateTime createdDate;
@@ -45,4 +45,6 @@ public class Baiviet implements Serializable {
     @Column(name = "image_path")
     private String imageBV;
 
+    @Column(name = "trangthai")
+    private Boolean trangthai;
 }
