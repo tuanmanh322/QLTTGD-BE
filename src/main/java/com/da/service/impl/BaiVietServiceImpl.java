@@ -231,8 +231,10 @@ public class BaiVietServiceImpl implements BaiVietService {
     public List<BaiVietDTO> getAllByChuDe(Integer idChuDe) {
         log.info("start service to get getAllByChuDe");
         List<Baiviet> baiviets = baivietRepository.findByMaChuDe(idChuDe);
+        Optional<Chude> chude = chudeRepository.findById(idChuDe);
+
         List<BaiVietDTO> bvResult = new ArrayList<>();
-        List<Object> objects = new ArrayList<>();
+        List<Integer> objects = new ArrayList<>();
         for (Baiviet baiviet : baiviets) {
             BaiVietDTO baiVietDTO = new BaiVietDTO();
             Users users = usersRepository.findByMaThe(baiviet.getIdThe());
@@ -247,20 +249,19 @@ public class BaiVietServiceImpl implements BaiVietService {
             baiVietDTO.setNoidung(baiviet.getNoidung());
             baiVietDTO.setIdUser(users.getId());
             baiVietDTO.setId(baiviet.getId());
+            baiVietDTO.setChuDe(chude.get().getTenChude());
             // get list comment by id
             List<Comment> comments = commentRepository.findByIdBaiViet(baiviet.getId());
             if (!comments.isEmpty()){
                 comments.stream().map(cm -> {
                     List<Repcomment> repcomments = repcommentRepository.findByIdComment(cm.getId());
                     if (!repcomments.isEmpty()){
-                        for (Repcomment repcomment : repcomments){
-                            objects.add(repcomment);
-                        }
+                             objects.add(repcomments.size());
                     }
-                    return repcomments.size();
+                    return objects;
                 }).collect(Collectors.toList());
             }
-            baiVietDTO.setTotalComment(comments.size() + objects.size());
+            baiVietDTO.setTotalComment(comments.size() + objects.get(0));
             bvResult.add(baiVietDTO);
         }
         return bvResult;
@@ -270,5 +271,11 @@ public class BaiVietServiceImpl implements BaiVietService {
     public void searchBaiVietGetTotal(BaiVietTotalSearchDTO baiVietTotalSearchDTO) {
         log.info(" start service to searchBaiVietGetTotal with : {}",baiVietTotalSearchDTO);
         baiVietDao.searchBaiVietToTal(baiVietTotalSearchDTO);
+    }
+
+    @Override
+    public void searchBaiVietGetTotalByIdCD(BaiVietTotalSearchDTO baiVietTotalSearchDTO, Integer idCD) {
+        log.info(" start service to searchBaiVietGetTotalByIdCD with : {} and idCD: {}",baiVietTotalSearchDTO,idCD);
+        baiVietDao.searchBaiVietToTalByIdCD(baiVietTotalSearchDTO,idCD);
     }
 }

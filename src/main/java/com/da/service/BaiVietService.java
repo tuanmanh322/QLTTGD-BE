@@ -23,4 +23,6 @@ public interface BaiVietService {
     List<BaiVietDTO> getAllByChuDe(Integer idChuDe);
 
     void searchBaiVietGetTotal(BaiVietTotalSearchDTO baiVietTotalSearchDTO);
+
+    void searchBaiVietGetTotalByIdCD(BaiVietTotalSearchDTO baiVietTotalSearchDTO, Integer idCD);
 }

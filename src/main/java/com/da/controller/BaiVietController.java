@@ -40,6 +40,12 @@ public class BaiVietController {
         baiVietService.searchBaiVietGetTotal(dto);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
+    @PostMapping("/search-total-id-cd/{idCD}")
+    public ResponseEntity<BaiVietTotalSearchDTO> searchAndGetAllByIdCD(@RequestBody BaiVietTotalSearchDTO dto,@PathVariable("idCD")Integer idCD) {
+        log.info(" start rest to searchAndGetAllByIdCD with :{} and idCD: {}", dto,idCD);
+        baiVietService.searchBaiVietGetTotalByIdCD(dto,idCD);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<BaiVietDTO> findByID(@PathVariable("id") Integer id) {
