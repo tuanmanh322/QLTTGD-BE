@@ -1,5 +1,6 @@
 package com.da.service.impl;
 
+import com.da.common.Constant;
 import com.da.common.Orders;
 import com.da.dao.BaiVietDAO;
 import com.da.dto.*;
@@ -9,18 +10,23 @@ import com.da.model.*;
 import com.da.repository.*;
 import com.da.security.SecurityUtils;
 import com.da.service.BaiVietService;
+import com.da.service.FileStorageService;
+import com.da.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.messaging.MessageHeaders;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.MimeTypeUtils;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,7 +48,17 @@ public class BaiVietServiceImpl implements BaiVietService {
 
     private final ChudeRepository chudeRepository;
 
-    public BaiVietServiceImpl(ModelMapper modelMap, BaiVietDAO baiVietDao, BaivietRepository baivietRepository, CommentRepository commentRepository, RepcommentRepository repcommentRepository, UsersRepository usersRepository, ChudeRepository chudeRepository) {
+    private final ActionsRepository actionsRepository;
+
+    private final NotificationRepository notificationRepository;
+
+    private final FileStorageService fileStorageService;
+
+    private final SimpMessagingTemplate simpMessagingTemplate;
+
+    private final UserService userService;
+
+    public BaiVietServiceImpl(ModelMapper modelMap, BaiVietDAO baiVietDao, BaivietRepository baivietRepository, CommentRepository commentRepository, RepcommentRepository repcommentRepository, UsersRepository usersRepository, ChudeRepository chudeRepository, ActionsRepository actionsRepository, NotificationRepository notificationRepository, FileStorageService fileStorageService, SimpMessagingTemplate simpMessagingTemplate, UserService userService) {
         this.modelMap = modelMap;
         this.baiVietDao = baiVietDao;
         this.baivietRepository = baivietRepository;
@@ -50,6 +66,11 @@ public class BaiVietServiceImpl implements BaiVietService {
         this.repcommentRepository = repcommentRepository;
         this.usersRepository = usersRepository;
         this.chudeRepository = chudeRepository;
+        this.actionsRepository = actionsRepository;
+        this.notificationRepository = notificationRepository;
+        this.fileStorageService = fileStorageService;
+        this.simpMessagingTemplate = simpMessagingTemplate;
+        this.userService = userService;
     }
 
     @Override
@@ -165,9 +186,9 @@ public class BaiVietServiceImpl implements BaiVietService {
             baiVietDTO.setId(baiviet.getId());
             // get list comment by id
             List<Comment> comments = commentRepository.findByIdBaiViet(baiviet.getId());
-             comments.stream().map(cm -> {
+            comments.stream().map(cm -> {
                 List<Repcomment> repcomments = repcommentRepository.findByIdComment(cm.getId());
-                 objects.addAll(repcomments);
+                objects.addAll(repcomments);
                 return repcomments.size();
             }).collect(Collectors.toList());
             baiVietDTO.setTotalComment(comments.size() + objects.size());
@@ -190,7 +211,7 @@ public class BaiVietServiceImpl implements BaiVietService {
         baiVietDTO.setDateMili(baiviets.getCreatedDate().toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli());
         baiVietDTO.setCreateDate(baiviets.getCreatedDate().toLocalDate());
         Optional<Chude> chude = chudeRepository.findById(baiviets.getMa_chude());
-        if (chude.isPresent()){
+        if (chude.isPresent()) {
             baiVietDTO.setChuDe(chude.get().getTenChude());
             baiVietDTO.setIdCD(chude.get().getId());
         }
@@ -252,11 +273,11 @@ public class BaiVietServiceImpl implements BaiVietService {
             baiVietDTO.setChuDe(chude.get().getTenChude());
             // get list comment by id
             List<Comment> comments = commentRepository.findByIdBaiViet(baiviet.getId());
-            if (!comments.isEmpty()){
+            if (!comments.isEmpty()) {
                 comments.stream().map(cm -> {
                     List<Repcomment> repcomments = repcommentRepository.findByIdComment(cm.getId());
-                    if (!repcomments.isEmpty()){
-                             objects.add(repcomments.size());
+                    if (!repcomments.isEmpty()) {
+                        objects.add(repcomments.size());
                     }
                     return objects;
                 }).collect(Collectors.toList());
@@ -269,13 +290,81 @@ public class BaiVietServiceImpl implements BaiVietService {
 
     @Override
     public void searchBaiVietGetTotal(BaiVietTotalSearchDTO baiVietTotalSearchDTO) {
-        log.info(" start service to searchBaiVietGetTotal with : {}",baiVietTotalSearchDTO);
+        log.info(" start service to searchBaiVietGetTotal with : {}", baiVietTotalSearchDTO);
         baiVietDao.searchBaiVietToTal(baiVietTotalSearchDTO);
     }
 
     @Override
     public void searchBaiVietGetTotalByIdCD(BaiVietTotalSearchDTO baiVietTotalSearchDTO, Integer idCD) {
-        log.info(" start service to searchBaiVietGetTotalByIdCD with : {} and idCD: {}",baiVietTotalSearchDTO,idCD);
-        baiVietDao.searchBaiVietToTalByIdCD(baiVietTotalSearchDTO,idCD);
+        log.info(" start service to searchBaiVietGetTotalByIdCD with : {} and idCD: {}", baiVietTotalSearchDTO, idCD);
+        baiVietDao.searchBaiVietToTalByIdCD(baiVietTotalSearchDTO, idCD);
+    }
+
+    @Override
+    public boolean isLikeOrUnLikeBV(Integer idBV, BaiVietDTO baiVietDTO) {
+        log.info(" start service to isLikeOrUnLikeBV with id :{} and dto : {}", idBV, baiVietDTO);
+        Optional<Baiviet> baiviet = baivietRepository.findById(idBV);
+        if (baiviet.isPresent()) {
+            Baiviet bv = baiviet.get();
+            bv.setLuotthich(baiVietDTO.getLuotthich());
+            baivietRepository.save(bv);
+            Notification notifycation = new Notification();
+            notifycation.setCreatedDate(LocalDateTime.now());
+            notifycation.setIdAction(Constant.LIKE);
+            notifycation.setIdThe(SecurityUtils.getCurrentUserIdLogin());
+            Optional<Actions> actions = actionsRepository.findById(Constant.LIKE);
+            actions.ifPresent(ac -> notifycation.setMessage(ac.getStatuss()));
+            notificationRepository.save(notifycation);
+            /*
+             * This block is used to
+             * send the notification the
+             * users for whom, the event was
+             * generated.
+             */
+            SimpMessageHeaderAccessor simpMessageHeaderAccessor = SimpMessageHeaderAccessor.create();
+            simpMessageHeaderAccessor.setContentType(MimeTypeUtils.APPLICATION_JSON);
+            simpMessageHeaderAccessor.setLeaveMutable(true);
+            MessageHeaders messageHeaders = simpMessageHeaderAccessor.getMessageHeaders();
+            simpMessagingTemplate.convertAndSendToUser(userService.getUserNameLogin(),"/api/feed", notifycation.getMessage(),messageHeaders);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isDislikeOrUnDisLikeBV(Integer idBV, BaiVietDTO baiVietDTO) {
+        log.info(" start service to isDislikeOrUnDisLikeBV with id :{} and dto : {}", idBV, baiVietDTO);
+        Baiviet bv = findByIdModel(idBV);
+        if (bv !=null){
+            bv.setLuotkhongthich(baiVietDTO.getLuotkhongthich());
+            baivietRepository.save(bv);
+            Notification notifycation = new Notification();
+            notifycation.setCreatedDate(LocalDateTime.now());
+            notifycation.setIdAction(Constant.DISLIKE);
+            notifycation.setIdThe(SecurityUtils.getCurrentUserIdLogin());
+            Optional<Actions> actions = actionsRepository.findById(Constant.DISLIKE);
+            actions.ifPresent(ac -> notifycation.setMessage(ac.getStatuss()));
+            notificationRepository.save(notifycation);
+            /*
+             * This block is used to
+             * send the notification the
+             * users for whom, the event was
+             * generated.
+             */
+            SimpMessageHeaderAccessor simpMessageHeaderAccessor = SimpMessageHeaderAccessor.create();
+            simpMessageHeaderAccessor.setContentType(MimeTypeUtils.APPLICATION_JSON);
+            simpMessageHeaderAccessor.setLeaveMutable(true);
+            MessageHeaders messageHeaders = simpMessageHeaderAccessor.getMessageHeaders();
+            simpMessagingTemplate.convertAndSendToUser(userService.getUserNameLogin(),"/api/feed", notifycation.getMessage(),messageHeaders);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Baiviet findByIdModel(Integer idBV) {
+        log.info(" start service to findByIdModel with id :{}  ", idBV);
+        Optional<Baiviet> baiviet = baivietRepository.findById(idBV);
+        return baiviet.orElse(null);
     }
 }

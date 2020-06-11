@@ -10,4 +10,6 @@ public interface RepCommentService {
     void update(RepCommentDTO dto)throws ResultException;
     void delete(Integer id)throws ResultException;
     RepCommentDTO findById(Integer id);
+
+    boolean repcomment(Integer idComment,RepCommentDTO repCommentDTO);
 }

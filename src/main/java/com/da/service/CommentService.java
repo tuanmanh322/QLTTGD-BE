@@ -10,4 +10,6 @@ public interface CommentService {
     void update(CommentDTO dto)throws ResultException;
     void delete(Integer id)throws ResultException;
     CommentDTO findById(Integer id);
+
+    boolean isCommentBV(Integer idBV, CommentDTO commentDTO);
 }

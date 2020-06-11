@@ -13,4 +13,10 @@ public interface Constant {
 
     String DIR_LINK_FILE = "http://localhost:1234/api/document/media/image/";
     String FILE_NAME_PATTERN = "{0}_{1}.{2}";
+
+
+    Integer LIKE = 1;
+    Integer DISLIKE = 2;
+    Integer COMMENT = 3;
+    Integer REPCOMMENT = 4;
 }

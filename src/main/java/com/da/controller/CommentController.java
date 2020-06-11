@@ -2,14 +2,7 @@ package com.da.controller;
 import com.da.dto.CommentDTO;
 import com.da.dto.CommentSearchDTO;
 import com.da.exception.ResultException;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.da.service.CommentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -56,5 +49,11 @@ public class CommentController {
         log.info(" start service to delete with :{}",id);
         commentService.delete(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/is-comment/{idBV}")
+    public ResponseEntity<Boolean> idComment(@PathVariable("idBV")Integer idBV, @ModelAttribute CommentDTO commentDTO){
+        log.info("start res to get idComment with id:{} and dto :{}",idBV,commentDTO);
+        return new ResponseEntity<>( commentService.isCommentBV(idBV,commentDTO),HttpStatus.OK);
     }
 }

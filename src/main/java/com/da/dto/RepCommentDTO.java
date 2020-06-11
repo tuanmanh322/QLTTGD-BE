@@ -3,6 +3,7 @@ package com.da.dto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
@@ -34,4 +35,6 @@ public class RepCommentDTO {
     private LocalDateTime repDate;
 
     private Long dateMiliRCM;
+
+    private MultipartFile repFile;
 }

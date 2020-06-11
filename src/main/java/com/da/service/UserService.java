@@ -16,4 +16,6 @@ public interface UserService {
     CommonResult updateProfile(UserDTO dto) throws ResultException;
 
     UserDTO getUserProfileEmp(Integer idUser);
+
+    String getUserNameLogin();
 }

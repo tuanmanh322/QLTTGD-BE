@@ -12,6 +12,7 @@ import com.da.repository.*;
 import com.da.security.SecurityUtils;
 import com.da.service.FileStorageService;
 import com.da.service.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -276,5 +277,16 @@ public class UserServiceImpl implements UserService {
             return userDTO;
         }
         return null;
+    }
+
+    @Override
+    public String getUserNameLogin() {
+        log.info("start service to get userLogin");
+        Optional<The> the = theRepository.findById(SecurityUtils.getCurrentUserIdLogin());
+        if (the.isPresent()){
+            Users users = usersRepository.findByMaThe(the.get().getId());
+            return users.getName();
+        }
+        return "";
     }
 }
