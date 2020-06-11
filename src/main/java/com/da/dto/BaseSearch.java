@@ -10,10 +10,10 @@ import java.util.List;
 @Setter
 @ToString
 public abstract class BaseSearch {
-    private Long totalRecord;
-    private Integer page;
-    private Integer totalPage;
-    private Integer pageSize;
-    private List<OrderDTO> orderDTOS;
-    private List<?> data;
+    protected Long totalRecords;
+    protected Integer page;
+    protected Integer totalPages;
+    protected Integer pageSize;
+    protected List<OrderDTO> orders;
+    protected List<?> data;
 }

@@ -35,9 +35,9 @@ public class DiemDAOImpl extends AbstractDAO implements DiemDAO {
             sb.append(" and l.tenlop like :p_tenlop ");
             parameter.put("p_tenlop", "%" + dto.getTenLop().trim() + "%");
         }
-        if (dto.getOrderDTOS() != null && !dto.getOrderDTOS().isEmpty()) {
+        if (dto.getOrders() != null && !dto.getOrders().isEmpty()) {
             sb.append(" order by ");
-            dto.getOrderDTOS().forEach(order ->{
+            dto.getOrders().forEach(order ->{
                 String property  = StringUtils.trimToEmpty(order.getProperty());
                 switch (property) {
                     case "ma_diem":

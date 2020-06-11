@@ -34,9 +34,9 @@ public class CheckInDAOImpl extends AbstractDAO implements CheckInDAO  {
             sb.append(" and u.ma_lop like :p_malop ");
             parameter.put("p_malop", "%" + dto.getMaLop().trim() + "%");
         }
-        if (dto.getOrderDTOS() != null && !dto.getOrderDTOS().isEmpty()) {
+        if (dto.getOrders() != null && !dto.getOrders().isEmpty()) {
             sb.append(" order by ");
-            dto.getOrderDTOS().forEach(order ->{
+            dto.getOrders().forEach(order ->{
                 String property  = StringUtils.trimToEmpty(order.getProperty());
                 switch (property) {
                     case "id_user":

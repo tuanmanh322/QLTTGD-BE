@@ -45,9 +45,9 @@ public class LopHocDAOImpl extends AbstractDAO implements LopHocDAO {
         	parameter.put("p_startdate",dto.getStartDate());
         	parameter.put("p_enddate",dto.getEndDate());
 		}
-            if (dto.getOrderDTOS() != null && !dto.getOrderDTOS().isEmpty()) {
+            if (dto.getOrders() != null && !dto.getOrders().isEmpty()) {
                 sb.append(" order by ");
-                dto.getOrderDTOS().forEach(order -> {
+                dto.getOrders().forEach(order -> {
                     String property = StringUtils.trimToEmpty(order.getProperty());
                     switch (property) {
                         case "tenlop":

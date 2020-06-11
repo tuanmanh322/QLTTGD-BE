@@ -32,9 +32,9 @@ public class ChuDeDAOImpl extends AbstractDAO implements ChuDeDAO {
             sb.append(" and cd.tenchude like :p_tenchude ");
             parameter.put("p_tenchude ", "%" + dto.getTenchude().trim() + "%");
         }
-        if (dto.getOrderDTOS() != null && !dto.getOrderDTOS().isEmpty()) {
+        if (dto.getOrders() != null && !dto.getOrders().isEmpty()) {
             sb.append(" order by ");
-            dto.getOrderDTOS().forEach(order ->{
+            dto.getOrders().forEach(order ->{
                 String property  = StringUtils.trimToEmpty(order.getProperty());
                 switch (property) {
                     case "tenchude":

@@ -32,9 +32,9 @@ public class BaiVietDAOImpl extends AbstractDAO implements BaiVietDAO {
             sb.append(" and bv.noidung like :p_noidung");
             parameter.put("p_noidung ", "%" + dto.getNoidung().trim() + "%");
         }
-        if (dto.getOrderDTOS() != null && !dto.getOrderDTOS().isEmpty()) {
+        if (dto.getOrders() != null && !dto.getOrders().isEmpty()) {
             sb.append(" order by ");
-            dto.getOrderDTOS().forEach(order -> {
+            dto.getOrders().forEach(order -> {
                 String property = StringUtils.trimToEmpty(order.getProperty());
                 switch (property) {
                     case "noidung":

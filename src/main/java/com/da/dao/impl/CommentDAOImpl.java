@@ -32,9 +32,9 @@ public class CommentDAOImpl extends AbstractDAO implements CommentDAO {
             sb.append(" and cm.maComment like :p_maComment");
             parameter.put("p_maComment", "%" + dto.getMaComment().trim() + "%");
         }
-        if (dto.getOrderDTOS() != null && !dto.getOrderDTOS().isEmpty()) {
+        if (dto.getOrders() != null && !dto.getOrders().isEmpty()) {
             sb.append(" order by ");
-            dto.getOrderDTOS().forEach(order ->{
+            dto.getOrders().forEach(order ->{
                 String property  = StringUtils.trimToEmpty(order.getProperty());
                 switch (property) {
                     case "maComment":

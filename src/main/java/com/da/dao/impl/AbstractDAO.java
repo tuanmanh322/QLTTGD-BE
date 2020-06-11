@@ -70,8 +70,8 @@ public abstract class AbstractDAO implements BaseDAO{
         if (totalRecords % Long.valueOf(searchDTO.getPageSize()) != 0) {
             totalPages++;
         }
-        searchDTO.setTotalPage(totalPages);
-        searchDTO.setTotalRecord(totalRecords);
+        searchDTO.setTotalPages(totalPages);
+        searchDTO.setTotalRecords(totalRecords);
     }
 
     protected long getOffset(BaseSearch searchDto){

@@ -31,9 +31,9 @@ public class RepCommentDAOImpl extends AbstractDAO implements RepCommentDAO {
             sb.append(" and rcm.maRepomment like :p_maRepomment");
             parameter.put("p_maRepomment", "%" + dto.getMaRepcomment().trim() + "%");
         }
-        if (dto.getOrderDTOS() != null && !dto.getOrderDTOS().isEmpty()) {
+        if (dto.getOrders() != null && !dto.getOrders().isEmpty()) {
             sb.append(" order by ");
-            dto.getOrderDTOS().forEach(order ->{
+            dto.getOrders().forEach(order ->{
                 String property  = StringUtils.trimToEmpty(order.getProperty());
                 switch (property) {
                     case "maRepomment":

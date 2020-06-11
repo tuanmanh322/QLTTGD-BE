@@ -39,9 +39,9 @@ public class HocSinhDAOImpl extends AbstractDAO implements HocSinhDao {
             sb.append(" and l.ma_lop like :p_malop ");
             parameter.put("p_malop", "%" + dto.getTenLop().trim() + "%");
         }
-        if (dto.getOrderDTOS() != null && !dto.getOrderDTOS().isEmpty()) {
+        if (dto.getOrders() != null && !dto.getOrders().isEmpty()) {
             sb.append(" order by ");
-            dto.getOrderDTOS().forEach(order ->{
+            dto.getOrders().forEach(order ->{
                 String property  = StringUtils.trimToEmpty(order.getProperty());
                 switch (property) {
                     case "id_user":
