@@ -11,4 +11,6 @@ public interface MonhocRepository extends JpaRepository<Monhoc, Integer>, JpaSpe
     @Query(nativeQuery = true,value = " select * from monhoc as mh where mh.ma_monhoc=?1")
     Monhoc findByTenmonhoc(String tenMonHoc);
 
+    @Query(nativeQuery = true, value = "SELECT * from monhoc as mh where mh.ma_monhoc like ?1")
+    Monhoc findByMaMH(Integer maMH);
 }

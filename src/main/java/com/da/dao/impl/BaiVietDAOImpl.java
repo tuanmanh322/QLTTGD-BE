@@ -79,7 +79,6 @@ public class BaiVietDAOImpl extends AbstractDAO implements BaiVietDAO {
         sb.append("  left outer JOIN comment as cm on cm.id_baiviet = bv.id   or cm.id_baiviet is  null");
         sb.append(" left outer JOIN repcomment as rcm on rcm.id_comment = cm.id or rcm.id_comment is  null");
         sb.append(" where 1 = 1 ");
-        sb.append(" and bv.trangthai = 1");
         if (StringUtils.isNotBlank(searchDTO.getTitleBV())) {
             sb.append(" and bv.title like :p_title");
             param.put("p_title", "%" + searchDTO.getTitleBV().trim() + "%");
@@ -124,7 +123,6 @@ public class BaiVietDAOImpl extends AbstractDAO implements BaiVietDAO {
         sb.append("  left outer JOIN comment as cm on cm.id_baiviet = bv.id   or cm.id_baiviet is  null");
         sb.append(" left outer JOIN repcomment as rcm on rcm.id_comment = cm.id or rcm.id_comment is  null");
         sb.append(" where 1 = 1 ");
-        sb.append(" and bv.trangthai = 1");
         if (idCd != null){
             sb.append(" and cd.id =:p_idCd");
             param.put("p_idCd",idCd);

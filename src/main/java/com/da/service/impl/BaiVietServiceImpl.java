@@ -86,7 +86,6 @@ public class BaiVietServiceImpl implements BaiVietService {
         baiviet.setIdThe(SecurityUtils.getCurrentUserIdLogin());
         baiviet.setMa_chude(dto.getIdCD());
         baiviet.setCreatedDate(LocalDateTime.now());
-        baiviet.setTrangthai(false);
         baiVietDao.save(baiviet);
 
     }

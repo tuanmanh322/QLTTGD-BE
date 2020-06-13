@@ -67,4 +67,10 @@ public class UserDTO {
     private MultipartFile imageAvatar;
 
     private Integer totalBV;
+
+    private String tenMH;
+
+    private String tenHangMuc;
+
+    private String kipDay;
 }

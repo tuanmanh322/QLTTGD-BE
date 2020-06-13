@@ -18,7 +18,7 @@ public class HangMucDTO {
 
     private String mota;
 
-    private String maMonhoc;
+    private Integer maMonhoc;
 
     private Integer coutBaiViet;
 

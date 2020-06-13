@@ -28,6 +28,6 @@ public class LopHocDTO {
 
 	private BigDecimal hocphi;
 
-	private String maMonhoc;
+	private Integer maMonhoc;
 
 }

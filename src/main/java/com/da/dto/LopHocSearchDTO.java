@@ -1,6 +1,7 @@
 package com.da.dto;
 
 
+import java.sql.Time;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -34,5 +35,13 @@ public class LopHocSearchDTO extends BaseSearch{
 	private Date startDate;
 
 	private Date endDate;
+
+	private String kipDay;
+
+	private String thu;
+
+	private Time gioBatDau;
+
+	private Time gioKetThuc;
 
 }

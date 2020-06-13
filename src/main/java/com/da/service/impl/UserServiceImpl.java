@@ -1,6 +1,7 @@
 package com.da.service.impl;
 
 import com.da.common.CommonResult;
+import com.da.common.Constant;
 import com.da.common.FileUploadURL;
 import com.da.common.RandomString;
 import com.da.dao.UserDAO;
@@ -10,6 +11,7 @@ import com.da.exception.ResultException;
 import com.da.model.*;
 import com.da.repository.*;
 import com.da.security.SecurityUtils;
+import com.da.security.UserTypeEnum;
 import com.da.service.FileStorageService;
 import com.da.service.UserService;
 import org.apache.commons.lang3.StringUtils;
@@ -49,8 +51,11 @@ public class UserServiceImpl implements UserService {
 
     private final BaivietRepository baivietRepository;
 
+    private final MonhocRepository monhocRepository;
 
-    public UserServiceImpl(UsersRepository usersRepository, RolesRepository rolesRepository, TheRepository theRepository, LopRepository lopRepository, ModelMapper modelMapper, UserDAO userDAO, FileStorageService fileStorageService, BaivietRepository baivietRepository) {
+    private final HangMucRepository hangMucRepository;
+
+    public UserServiceImpl(UsersRepository usersRepository, RolesRepository rolesRepository, TheRepository theRepository, LopRepository lopRepository, ModelMapper modelMapper, UserDAO userDAO, FileStorageService fileStorageService, BaivietRepository baivietRepository, MonhocRepository monhocRepository, HangMucRepository hangMucRepository) {
         this.usersRepository = usersRepository;
         this.rolesRepository = rolesRepository;
         this.theRepository = theRepository;
@@ -59,6 +64,8 @@ public class UserServiceImpl implements UserService {
         this.userDAO = userDAO;
         this.fileStorageService = fileStorageService;
         this.baivietRepository = baivietRepository;
+        this.monhocRepository = monhocRepository;
+        this.hangMucRepository = hangMucRepository;
     }
 
     @Override
@@ -103,11 +110,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public CommonResult addUser(UserDTO dto) throws ResultException {
-        log.info("start service to addUser with: {}",dto);
+        log.info("start service to addUser with: {}", dto);
         The t = new The();
         String maThe = RandomString.rdMaThe("1515");
         Optional<The> the = theRepository.findByMaThe(maThe);
-        if (the.isPresent()){
+        if (the.isPresent()) {
             throw new ResultException(ErrorCode.RECORD_EXISTED);
         }
         t.setMaThe(maThe);
@@ -118,8 +125,8 @@ public class UserServiceImpl implements UserService {
         t.setMaLoaithe(dto.getMaLoaithe());
         theRepository.save(t);
         Users u = new Users();
-        Optional<Users> users =  usersRepository.findByEmail(dto.getEmail());
-        if (users.isPresent()){
+        Optional<Users> users = usersRepository.findByEmail(dto.getEmail());
+        if (users.isPresent()) {
             throw new ResultException(ErrorCode.EMAIL_EXISTED);
         }
         u.setMaThe(t.getId());
@@ -135,7 +142,7 @@ public class UserServiceImpl implements UserService {
         u.setEmail(dto.getEmail());
         u.setSodt(dto.getSodt());
         u.setLuongcoban(dto.getLuongcoban());
-        if (!dto.getImageAvatar().isEmpty()){
+        if (!dto.getImageAvatar().isEmpty()) {
             try {
                 u.setImagePath(FileUploadURL.saveFileAndGetUrl(dto.getImageAvatar()));
             } catch (Exception e) {
@@ -150,39 +157,39 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean checkEmail(String email) {
-        log.info("start service to checkEmail with {}: ",email);
+        log.info("start service to checkEmail with {}: ", email);
         Optional<Users> users = usersRepository.findByEmail(email.trim());
         return users.isPresent();
     }
 
     @Override
     public CommonResult register(UserDTO dto) throws ResultException {
-        log.info("start service to register with: {}",dto);
+        log.info("start service to register with: {}", dto);
         The t = new The();
         String maThe = "";
         // ROLE_ANONYMOUS
 //        if (dto.getIdRole() == 4){
-             maThe = RandomString.rdMaThe("1111");
-            Optional<The> the = theRepository.findByMaThe(maThe);
-            if (the.isPresent()){
-                switch ((int) (Math.random()* 4) + 1){
-                    case 1:
-                        maThe = RandomString.rdMaThe("1212");
-                        break;
-                    case 2:
-                        maThe = RandomString.rdMaThe("1313");
-                        break;
-                    case 3:
-                        maThe = RandomString.rdMaThe("1414");
-                        break;
-                    case 4:
-                        maThe = RandomString.rdMaThe("1515");
-                        break;
-                }
-                t.setMaThe(maThe);
-            }else {
-                t.setMaThe(maThe);
+        maThe = RandomString.rdMaThe("1111");
+        Optional<The> the = theRepository.findByMaThe(maThe);
+        if (the.isPresent()) {
+            switch ((int) (Math.random() * 4) + 1) {
+                case 1:
+                    maThe = RandomString.rdMaThe("1212");
+                    break;
+                case 2:
+                    maThe = RandomString.rdMaThe("1313");
+                    break;
+                case 3:
+                    maThe = RandomString.rdMaThe("1414");
+                    break;
+                case 4:
+                    maThe = RandomString.rdMaThe("1515");
+                    break;
             }
+            t.setMaThe(maThe);
+        } else {
+            t.setMaThe(maThe);
+        }
 //        }
 //        if (dto.getIdRole() == 3){
 //            maThe = RandomString.rdMaThe("1616");
@@ -214,8 +221,8 @@ public class UserServiceImpl implements UserService {
         t.setTrangthai(Boolean.TRUE);
         theRepository.save(t);
         Users u = new Users();
-        Optional<Users> users =  usersRepository.findByEmail(dto.getEmail());
-        if (users.isPresent()){
+        Optional<Users> users = usersRepository.findByEmail(dto.getEmail());
+        if (users.isPresent()) {
             throw new ResultException(ErrorCode.EMAIL_EXISTED);
         }
         u.setEmail(dto.getEmail());
@@ -227,9 +234,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public CommonResult updateProfile(UserDTO dto) throws ResultException {
-        log.info("start service to updateProfile with :{}",dto);
+        log.info("start service to updateProfile with :{}", dto);
         Optional<The> the = theRepository.findById(SecurityUtils.getCurrentUserIdLogin());
-        if (the.isPresent()){
+        if (the.isPresent()) {
             Users users = usersRepository.findByMaThe(the.get().getId());
             users.setName(dto.getName());
             users.setLuongcoban(dto.getLuongcoban());
@@ -243,35 +250,57 @@ public class UserServiceImpl implements UserService {
             users.setNgaysinh(dto.getNgaysinh());
             users.setGioitinh(dto.getGioitinh());
             users.setSodt(dto.getSodt());
-            Optional<Roles> roles = rolesRepository.findById(the.get().getIdRole());
-            if (dto.getImageAvatar() != null){
+            Roles roles = rolesRepository.findById(the.get().getIdRole()).get();
+            if (roles.getNameRole().equals(UserTypeEnum.TEACHER.getName()) && roles.getId() == 2) {
+                Optional<Lop> lop = lopRepository.findById(users.getMaLop());
+                if (lop.isPresent()) {
+                    Lop lp = lop.get();
+                    lp.setTenlop(dto.getTenLop());
+                    lp.setKipDay(dto.getKipDay());
+                    lopRepository.save(lp);
+                    Monhoc monhoc = monhocRepository.findByMaMH(lop.get().getMaMonhoc());
+                    monhoc.setTenmonhoc(dto.getTenMH());
+                    monhocRepository.save(monhoc);
+                    Hangmuc hangmuc = hangMucRepository.findByMaMonhoc(monhoc.getId());
+                    hangmuc.setTenhangmuc(dto.getTenHangMuc());
+                    hangMucRepository.save(hangmuc);
+                }
+            }
+            if (dto.getImageAvatar() != null) {
                 try {
                     users.setImagePath(fileStorageService.storeFile(dto.getImageAvatar()));
                 } catch (Exception e) {
                     e.printStackTrace();
-                    throw  new ResultException(ErrorCode.FILE_UPLOAD_FAILED);
+                    throw new ResultException(ErrorCode.FILE_UPLOAD_FAILED);
                 }
             }
             usersRepository.save(users);
-            return CommonResult.success(users);
+            UserDTO userDTO = modelMapper.map(users, UserDTO.class);
+            List<Baiviet> totalBv = baivietRepository.getListBVByIdUser(users.getMaThe());
+            userDTO.setTotalBV(totalBv.size());
+            userDTO.setTenLop(dto.getTenLop());
+            userDTO.setTenMH(dto.getTenMH());
+            userDTO.setTenHangMuc(dto.getTenHangMuc());
+            userDTO.setKipDay(dto.getKipDay());
+            return CommonResult.success(userDTO);
         }
         return null;
     }
 
     @Override
     public UserDTO getUserProfileEmp(Integer idUser) {
-        log.info("start service to get getUserProfileEmp with {}",idUser);
+        log.info("start service to get getUserProfileEmp with {}", idUser);
         List<Baiviet> totalBv = baivietRepository.getListBVByIdUser(idUser);
         Users users = usersRepository.findByMaThe(idUser);
-        if (users != null){
-            UserDTO userDTO = modelMapper.map(users,UserDTO.class);
+        if (users != null) {
+            UserDTO userDTO = modelMapper.map(users, UserDTO.class);
             userDTO.setIdThe(users.getMaThe());
             Optional<The> the = theRepository.findById(users.getMaThe());
 
-            if (the.isPresent()){
-                    Roles role = rolesRepository.findById(the.get().getIdRole()).get();
-                    userDTO.setRole(role.getNameRole());
-                    userDTO.setIdRole(the.get().getIdRole());
+            if (the.isPresent()) {
+                Roles role = rolesRepository.findById(the.get().getIdRole()).get();
+                userDTO.setRole(role.getNameRole());
+                userDTO.setIdRole(the.get().getIdRole());
             }
             userDTO.setTotalBV(totalBv.size());
             return userDTO;
@@ -283,7 +312,7 @@ public class UserServiceImpl implements UserService {
     public String getUserNameLogin() {
         log.info("start service to get userLogin");
         Optional<The> the = theRepository.findById(SecurityUtils.getCurrentUserIdLogin());
-        if (the.isPresent()){
+        if (the.isPresent()) {
             Users users = usersRepository.findByMaThe(the.get().getId());
             return users.getName();
         }

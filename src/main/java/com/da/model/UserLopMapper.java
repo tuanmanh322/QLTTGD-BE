@@ -6,9 +6,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "hangmuc")
 @Data
-public class Hangmuc implements Serializable {
+@Table(name = "user_lop_mapper")
+public class UserLopMapper implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -16,17 +16,11 @@ public class Hangmuc implements Serializable {
     @Column(name = "id", insertable = false, nullable = false)
     private Integer id;
 
-    @Column(name = "ma_hangmucbaiviet")
-    private String maHangmucbaiviet;
+    @Column(name = "id_lop")
+    private Integer idLop;
 
-    @Column(name = "tenhangmuc")
-    private String tenhangmuc;
-
-    @Column(name = "mota")
-    private String mota;
-
-    @Column(name = "ma_monhoc")
-    private Integer maMonhoc;
+    @Column(name = "id_user")
+    private Integer idUser;
 
     
 }

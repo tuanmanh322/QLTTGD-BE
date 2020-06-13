@@ -72,4 +72,18 @@ public class LopController {
 		Lop lop  = lopRepository.findByTenlop(tenLop);
 		return new ResponseEntity<>(lop,HttpStatus.OK);
 	}
+
+	@PostMapping("/get-lop-hoc-by-id-the")
+	public ResponseEntity<LopHocSearchDTO> getAllByIdThe(@RequestBody LopHocSearchDTO dto) {
+		log.info(" start rest to searchAndGetAll with :{}", dto);
+		hocService.getListLopHocByIdThe(dto);
+		return new ResponseEntity<>(dto, HttpStatus.OK);
+	}
+
+	@PostMapping("/get-hoc-ba-by-id-the")
+	public ResponseEntity<LopHocSearchDTO> getHocBaByIdThe(@RequestBody LopHocSearchDTO dto) {
+		log.info(" start rest to searchAndGetAll with :{}", dto);
+		hocService.getListHocBaByIdThe(dto);
+		return new ResponseEntity<>(dto, HttpStatus.OK);
+	}
 }

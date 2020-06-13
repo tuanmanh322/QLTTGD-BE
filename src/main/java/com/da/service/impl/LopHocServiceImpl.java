@@ -1,7 +1,10 @@
 package com.da.service.impl;
 import com.da.model.Monhoc;
+import com.da.model.The;
 import com.da.repository.LopRepository;
 import com.da.repository.MonhocRepository;
+import com.da.repository.TheRepository;
+import com.da.security.SecurityUtils;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +19,8 @@ import com.da.model.Lop;
 import com.da.service.LopHocService;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -30,11 +35,15 @@ public class LopHocServiceImpl implements LopHocService{
 
 	private final LopRepository lopRepository;
 
-	public LopHocServiceImpl(ModelMapper modelMap, LopHocDAO lopHocDao, MonhocRepository monhocRepository, LopRepository lopRepository) {
+	private final TheRepository theRepository;
+
+
+	public LopHocServiceImpl(ModelMapper modelMap, LopHocDAO lopHocDao, MonhocRepository monhocRepository, LopRepository lopRepository, TheRepository theRepository) {
 		this.modelMap = modelMap;
 		this.lopHocDao = lopHocDao;
 		this.monhocRepository = monhocRepository;
 		this.lopRepository = lopRepository;
+		this.theRepository = theRepository;
 	}
 
 	@Override
@@ -47,11 +56,11 @@ public class LopHocServiceImpl implements LopHocService{
 	public void add(LopHocDTO dto) throws ResultException {
 		log.info(" start service to addLopHoc with :{}",dto);
 		Lop lop = modelMap.map(dto, Lop.class);
-		Monhoc monhoc = monhocRepository.findByTenmonhoc(dto.getMaMonhoc());
-		if (monhoc.getId() == null){
+		Optional<Monhoc> monhoc = monhocRepository.findById(dto.getMaMonhoc());
+		if (!monhoc.isPresent()){
 			throw new ResultException(ErrorCode.RECORD_NOT_FOUND);
 		}
-		lop.setMaMonhoc(monhoc.getMaMonhoc());
+		lop.setMaMonhoc(monhoc.get().getId());
 		lopHocDao.save(lop);
 	}
 
@@ -86,5 +95,17 @@ public class LopHocServiceImpl implements LopHocService{
 		LopHocDTO dto = modelMap.map(lop, LopHocDTO.class);
 		return dto;
 	}
+
+	@Override
+	public void getListLopHocByIdThe(LopHocSearchDTO dto) {
+		log.info(" start service to getListLopHocByIdThe");
+		lopHocDao.getListLopHocByIdThe(dto, SecurityUtils.getCurrentUserIdLogin());
+	}
+
+    @Override
+    public void getListHocBaByIdThe(LopHocSearchDTO dto) {
+        log.info(" start service to getListHocBaByIdThe");
+        lopHocDao.getListLopHocByIdThe(dto, SecurityUtils.getCurrentUserIdLogin());
+    }
 
 }

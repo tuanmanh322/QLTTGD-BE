@@ -4,6 +4,8 @@ import com.da.dto.LopHocDTO;
 import com.da.dto.LopHocSearchDTO;
 import com.da.exception.ResultException;
 
+import java.util.List;
+
 public interface LopHocService {
 	void searchLopHoc(LopHocSearchDTO dto);
 	
@@ -14,4 +16,8 @@ public interface LopHocService {
 	void delete(Integer id)throws ResultException;
 	
 	LopHocDTO findById(Integer id);
+
+	void getListLopHocByIdThe(LopHocSearchDTO dto);
+
+	void getListHocBaByIdThe(LopHocSearchDTO dto);
 }

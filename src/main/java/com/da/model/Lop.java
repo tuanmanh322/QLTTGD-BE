@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.Time;
 import java.util.Date;
 
 @Table(name = "lop")
@@ -40,7 +41,17 @@ public class Lop implements Serializable {
     private BigDecimal hocphi;
 
     @Column(name = "ma_monhoc")
-    private String maMonhoc;
+    private Integer maMonhoc;
 
-    
+    @Column(name = "kip_day")
+    private String kipDay;
+
+    @Column(name = "days")
+    private String thu;
+
+    @Column(name = "giobatdau")
+    private Time gioBatDau;
+
+    @Column(name = "gioketthuc")
+    private Time gioKetThuc;
 }
