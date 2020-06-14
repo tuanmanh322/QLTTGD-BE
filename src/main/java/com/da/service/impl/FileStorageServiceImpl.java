@@ -39,8 +39,8 @@ public class FileStorageServiceImpl implements FileStorageService {
     @Override
     public String storeFile(MultipartFile file) throws IOException {
         // check file type
-        if (!(file.getOriginalFilename().endsWith(".png") || file.getOriginalFilename().endsWith(".jpeg") || file.getOriginalFilename().endsWith(".jpg")))
-            throw new FileStorageException("Only PNG, JPEG and JPG images are allowed");
+//        if (!(file.getOriginalFilename().endsWith(".png") || file.getOriginalFilename().endsWith(".jpeg") || file.getOriginalFilename().endsWith(".jpg")))
+//            throw new FileStorageException("Only PNG, JPEG and JPG images are allowed");
 
 //        File f = new File("/uploads/" + file.getOriginalFilename());
         // get file name

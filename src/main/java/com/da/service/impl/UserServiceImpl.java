@@ -258,10 +258,12 @@ public class UserServiceImpl implements UserService {
                     lp.setTenlop(dto.getTenLop());
                     lp.setKipDay(dto.getKipDay());
                     lopRepository.save(lp);
-                    Monhoc monhoc = monhocRepository.findByMaMH(lop.get().getMaMonhoc());
-                    monhoc.setTenmonhoc(dto.getTenMH());
-                    monhocRepository.save(monhoc);
-                    Hangmuc hangmuc = hangMucRepository.findByMaMonhoc(monhoc.getId());
+                    Optional<Monhoc> monhoc = monhocRepository.findById(lop.get().getMaMonhoc());
+                    monhoc.ifPresent(mh -> {
+                        mh.setTenmonhoc(dto.getTenMH());
+                    });
+                    monhocRepository.save(monhoc.get());
+                    Hangmuc hangmuc = hangMucRepository.findByMaMonhoc(monhoc.get().getId());
                     hangmuc.setTenhangmuc(dto.getTenHangMuc());
                     hangMucRepository.save(hangmuc);
                 }

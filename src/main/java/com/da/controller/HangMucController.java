@@ -3,6 +3,8 @@ package com.da.controller;
 import com.da.dto.HangMucDTO;
 import com.da.dto.HangMucSearchDTO;
 import com.da.exception.ResultException;
+import com.da.model.Hangmuc;
+import com.da.repository.HangMucRepository;
 import com.da.service.HangMucService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -16,16 +18,22 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/hang-muc")
 @Slf4j
 public class HangMucController {
-    private HangMucService hangMucService;
+    private final HangMucService hangMucService;
 
-    public HangMucController(HangMucService hangMucService ) {
-        super();
+    private final HangMucRepository hangMucRepository;
+
+    public HangMucController(HangMucService hangMucService, HangMucRepository hangMucRepository) {
         this.hangMucService = hangMucService;
+        this.hangMucRepository = hangMucRepository;
     }
+
     @PostMapping("/search")
     public ResponseEntity<HangMucSearchDTO> searchAndGetAll(@RequestBody HangMucSearchDTO dto) {
         log.info(" start rest to searchAndGetAll with :{}", dto);
@@ -58,5 +66,11 @@ public class HangMucController {
         log.info(" start service to delete with :{}",id);
         hangMucService.delete(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Hangmuc>> getAll() {
+        log.info(" start service to getAll");
+        return new ResponseEntity<>(hangMucRepository.findAll(),HttpStatus.OK);
     }
 }

@@ -20,6 +20,8 @@ import com.da.service.LopHocService;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/lop-hoc")
 @Slf4j
@@ -85,5 +87,11 @@ public class LopController {
 		log.info(" start rest to searchAndGetAll with :{}", dto);
 		hocService.getListHocBaByIdThe(dto);
 		return new ResponseEntity<>(dto, HttpStatus.OK);
+	}
+
+	@GetMapping("/all")
+	public ResponseEntity<List<Lop>> getAll() {
+		log.info(" start rest to getAll with");
+		return new ResponseEntity<>(lopRepository.findAll(),HttpStatus.OK);
 	}
 }

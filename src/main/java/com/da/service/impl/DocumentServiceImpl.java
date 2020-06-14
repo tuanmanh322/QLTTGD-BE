@@ -46,49 +46,50 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public void Add(DocumentDTO documentDTO) {
-        log.info(" start service to Add document by documentDTO :{}",documentDTO);
-        Document document = modelMapper.map(documentDTO,Document.class);
-        if (documentDTO.getFileDocument() !=null){
+        log.info(" start service to Add document by documentDTO :{}", documentDTO);
+        Document document = modelMapper.map(documentDTO, Document.class);
+        if (documentDTO.getFileDocument() != null) {
             try {
                 document.setLinkDownload(fileStorageService.storeFile(documentDTO.getFileDocument()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        document.setIdThe(SecurityUtils.getCurrentUserIdLogin());
         document.setCreatedDate(LocalDateTime.now());
         documentRepository.save(document);
     }
 
     @Override
     public void edit(DocumentDTO documentDTO, Integer idCD) {
-        log.info(" start service to edit document by documentDTO :{}",documentDTO);
-        Optional<Document> document = documentRepository.findById(idCD);
-        if (document.isPresent()){
-            Document doc = document.get();
-            doc = modelMapper.map(documentDTO,Document.class);
-            if (documentDTO.getFileDocument() !=null){
-                try {
-                    doc.setLinkDownload(fileStorageService.storeFile(documentDTO.getFileDocument()));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        log.info(" start service to edit document by documentDTO :{}", documentDTO);
+        Document document = documentRepository.findByIdA(idCD);
+        document.setNoidung(documentDTO.getNoidung());
+        document.setTitle(documentDTO.getTitle());
+        document.setIdThe(SecurityUtils.getCurrentUserIdLogin());
+        document.setCreatedDate(LocalDateTime.now());
+        if (documentDTO.getFileDocument() != null) {
+            try {
+                document.setLinkDownload(fileStorageService.storeFile(documentDTO.getFileDocument()));
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            documentRepository.save(doc);
         }
+        documentRepository.save(document);
     }
 
     @Override
     public void delete(Integer docID) {
-        log.info(" start service to delete document by id :{}",docID);
+        log.info(" start service to delete document by id :{}", docID);
         Optional<Document> document = documentRepository.findById(docID);
-        if (document.isPresent()){
+        if (document.isPresent()) {
             documentRepository.delete(document.get());
         }
     }
 
     @Override
     public void searchGetDocument(DocumentSearchDTO documentSearchDTO) {
-        log.info(" start service to searchGetDocument document by documentSearchDTO :{}",documentSearchDTO);
+        log.info(" start service to searchGetDocument document by documentSearchDTO :{}", documentSearchDTO);
         documentDAO.searchDocument(documentSearchDTO, SecurityUtils.getCurrentUserIdLogin());
     }
 }
