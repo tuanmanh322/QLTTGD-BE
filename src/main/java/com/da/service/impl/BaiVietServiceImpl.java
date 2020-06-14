@@ -366,4 +366,10 @@ public class BaiVietServiceImpl implements BaiVietService {
         Optional<Baiviet> baiviet = baivietRepository.findById(idBV);
         return baiviet.orElse(null);
     }
+
+    @Override
+    public void searchTuongTac(BaiVietTotalSearchDTO searchDTO) {
+        log.info(" start service to searchTuongTac with searchDTO :{}  ", searchDTO);
+        baiVietDao.searchTuongTac(searchDTO,SecurityUtils.getCurrentUserIdLogin());
+    }
 }

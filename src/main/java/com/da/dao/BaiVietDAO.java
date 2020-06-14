@@ -12,4 +12,6 @@ public interface BaiVietDAO extends Serializable,BaseDAO{
     void searchBaiVietToTal(BaiVietTotalSearchDTO searchDTO);
 
     void searchBaiVietToTalByIdCD(BaiVietTotalSearchDTO searchDTO, Integer idCd);
+
+    void searchTuongTac(BaiVietTotalSearchDTO searchDTO,Integer idThe);
 }

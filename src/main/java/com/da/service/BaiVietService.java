@@ -33,4 +33,6 @@ public interface BaiVietService {
     boolean isDislikeOrUnDisLikeBV(Integer idBV, BaiVietDTO baiVietDTO);
 
     Baiviet findByIdModel(Integer idBV);
+
+    void searchTuongTac(BaiVietTotalSearchDTO searchDTO);
 }

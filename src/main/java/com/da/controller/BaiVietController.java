@@ -103,6 +103,12 @@ public class BaiVietController {
         return new ResponseEntity<>( baiVietService.isDislikeOrUnDisLikeBV(idBV,baiVietDTO),HttpStatus.OK);
     }
 
+    @PostMapping("/search-tuong-tac")
+    public ResponseEntity<BaiVietTotalSearchDTO> searchTuongTac(@RequestBody BaiVietTotalSearchDTO dto) {
+        log.info(" start rest to searchAndGetAll with :{}", dto);
+        baiVietService.searchTuongTac(dto);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
 
 
 }

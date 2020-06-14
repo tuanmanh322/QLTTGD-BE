@@ -20,7 +20,7 @@ public class Diem implements Serializable {
     private String maDiem;
 
     @Column(name = "ma_lop")
-    private String maLop;
+    private Integer maLop;
 
     @Column(name = "diemmieng")
     private Float diemmieng;

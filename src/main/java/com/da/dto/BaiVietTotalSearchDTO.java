@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -48,5 +49,9 @@ public class BaiVietTotalSearchDTO extends BaseSearch {
     private Long rcmCount;
 
     private Long dateMili;
+
+    private Date startDate;
+
+    private Date endDate;
 
 }

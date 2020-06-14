@@ -24,7 +24,9 @@ public class DiemDTO extends BaseSearch{
 
     private String Name;
 
-    private String MaLop;
+    private Integer MaLop;
 
     private String TenLop;
+
+    private Integer idUser;
 }

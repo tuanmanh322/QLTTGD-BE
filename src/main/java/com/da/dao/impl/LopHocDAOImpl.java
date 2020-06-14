@@ -127,11 +127,16 @@ public class LopHocDAOImpl extends AbstractDAO implements LopHocDAO {
         sb.append(" lo.hocphi as hocPhi,");
         sb.append(" lo.days as thu,");
         sb.append(" lo.giobatdau as gioBatDau,");
-        sb.append(" lo.gioketthuc as gioKetThuc");
+        sb.append(" lo.gioketthuc as gioKetThuc,");
+        sb.append(" d.diemmieng as diemMieng,");
+        sb.append(" d.diem15p as diem15p,");
+        sb.append(" d.diem90p as diem90p,");
+        sb.append(" d.diemtb as diemTB");
         sb.append(" from LOP as lo");
         sb.append(" left join MONHOC as mh on lo.ma_monhoc = mh.ma_monhoc");
         sb.append(" left join USER_LOP_MAPPER as ulm on ulm.id_lop = lo.id");
         sb.append(" left join USERS as u on u.id = ulm.id_user");
+        sb.append(" left join DIEM as d on d.id_user = u.id");
         sb.append(" where 1=1");
         if (idThe != null) {
             sb.append(" and u.ma_the=:p_idThe");

@@ -95,7 +95,7 @@ public class BaiVietDAOImpl extends AbstractDAO implements BaiVietDAO {
 
     @Override
     public void searchBaiVietToTalByIdCD(BaiVietTotalSearchDTO searchDTO, Integer idCd) {
-        log.info("Start dao searchBaiVietToTal with :{} and idCD: {}", searchDTO,idCd);
+        log.info("Start dao searchBaiVietToTal with :{} and idCD: {}", searchDTO, idCd);
         final StringBuilder sb = new StringBuilder();
         Map<String, Object> param = new HashMap<>();
         sb.append(" select  bv.id as idBV,");
@@ -123,9 +123,9 @@ public class BaiVietDAOImpl extends AbstractDAO implements BaiVietDAO {
         sb.append("  left outer JOIN comment as cm on cm.id_baiviet = bv.id   or cm.id_baiviet is  null");
         sb.append(" left outer JOIN repcomment as rcm on rcm.id_comment = cm.id or rcm.id_comment is  null");
         sb.append(" where 1 = 1 ");
-        if (idCd != null){
+        if (idCd != null) {
             sb.append(" and cd.id =:p_idCd");
-            param.put("p_idCd",idCd);
+            param.put("p_idCd", idCd);
         }
         if (StringUtils.isNotBlank(searchDTO.getTitleBV())) {
             sb.append(" and bv.title like :p_title");
@@ -140,6 +140,35 @@ public class BaiVietDAOImpl extends AbstractDAO implements BaiVietDAO {
         sb.append(" order by bv.created_date desc");
         searchAndCountTotal(searchDTO, sb.toString(), param, BaiVietTotalSearchDTO.class);
 
+    }
+
+    @Override
+    public void searchTuongTac(BaiVietTotalSearchDTO searchDTO, Integer idThe) {
+        log.info("Start dao searchBaiVietToTal with :{} and idThe: {}", searchDTO, idThe);
+        final StringBuilder sb = new StringBuilder();
+        Map<String, Object> params = new HashMap<>();
+        sb.append(" select bv.id,");
+        sb.append(" bv.created_date as createDate,");
+        sb.append(" bv.title as titleBV,");
+        sb.append(" bv.noidung as noidungBV,");
+        sb.append(" bv.luotthich as luotthich,");
+        sb.append(" bv.luotkhongthich as luotkhongthich");
+        sb.append(" from baiviet as bv");
+        sb.append(" left join users as u on u.ma_the = bv.id_the");
+        sb.append(" where 1 = 1 ");
+        if (idThe !=null){
+            sb.append(" and u.ma_the=:p_maThe ");
+            params.put("p_maThe",idThe);
+        }
+        if (searchDTO.getStartDate() != null && searchDTO.getEndDate() != null) {
+            sb.append(" and bv.created_date >= :p_startdate and bv.created_date <= :p_enddate ");
+            params.put("p_startdate", searchDTO.getStartDate());
+            params.put("p_enddate", searchDTO.getEndDate());
+        }
+
+        sb.append(" order by bv.title");
+
+        searchAndCountTotal(searchDTO, sb.toString(), params, BaiVietTotalSearchDTO.class);
     }
 }
 

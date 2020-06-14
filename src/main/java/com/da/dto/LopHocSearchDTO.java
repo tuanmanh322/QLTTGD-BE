@@ -44,4 +44,11 @@ public class LopHocSearchDTO extends BaseSearch{
 
 	private Time gioKetThuc;
 
+	private Float diemMieng;
+
+	private Float diem15p;
+
+	private Float diem90p;
+
+	private Float diemTB;
 }
