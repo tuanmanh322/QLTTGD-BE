@@ -2,10 +2,7 @@ package com.da.service.impl;
 
 import com.da.common.ParseDiemTB;
 import com.da.dao.DiemDAO;
-import com.da.dto.DiemActionDTO;
-import com.da.dto.DiemDTO;
-import com.da.dto.DiemSearchDTO;
-import com.da.dto.HocSinhDTO;
+import com.da.dto.*;
 import com.da.exception.ErrorCode;
 import com.da.exception.ResultException;
 import com.da.model.*;
@@ -22,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -129,5 +127,11 @@ public class DiemServiceImpl implements DiemService {
     public void searchDiemByProfile(DiemSearchDTO dto) {
         log.info(" start service to searchDiemByProfile with :{}", dto);
         diemDAO.searchDiemProfile(dto, SecurityUtils.getCurrentUserIdLogin());
+    }
+
+    @Override
+    public List<DiemToExcelDTO> getAllByIdUser() {
+        log.info(" start service to getAllByIdUser");
+        return  diemDAO.getAllByIdThe(SecurityUtils.getCurrentUserIdLogin());
     }
 }

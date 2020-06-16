@@ -31,4 +31,6 @@ public class DiemActionDTO {
     private String kipDay;
 
     private Integer idLopOld;
+
+
 }
