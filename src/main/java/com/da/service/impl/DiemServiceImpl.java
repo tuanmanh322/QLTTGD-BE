@@ -8,11 +8,9 @@ import com.da.dto.DiemSearchDTO;
 import com.da.dto.HocSinhDTO;
 import com.da.exception.ErrorCode;
 import com.da.exception.ResultException;
-import com.da.model.Diem;
-import com.da.model.Lop;
-import com.da.model.Users;
-import com.da.model.UsersDiemMap;
+import com.da.model.*;
 import com.da.repository.LopRepository;
+import com.da.repository.UserLopMapperRepository;
 import com.da.repository.UsersDiemMapRepository;
 import com.da.repository.UsersRepository;
 import com.da.security.SecurityUtils;
@@ -42,12 +40,15 @@ public class DiemServiceImpl implements DiemService {
 
     private final UsersDiemMapRepository usersDiemMapRepository;
 
-    public DiemServiceImpl(ModelMapper modelMap, DiemDAO diemDAO, UsersRepository usersRepository, LopRepository lopRepository, UsersDiemMapRepository usersDiemMapRepository) {
+    private final UserLopMapperRepository userLopMapperRepository;
+
+    public DiemServiceImpl(ModelMapper modelMap, DiemDAO diemDAO, UsersRepository usersRepository, LopRepository lopRepository, UsersDiemMapRepository usersDiemMapRepository, UserLopMapperRepository userLopMapperRepository) {
         this.modelMap = modelMap;
         this.diemDAO = diemDAO;
         this.usersRepository = usersRepository;
         this.lopRepository = lopRepository;
         this.usersDiemMapRepository = usersDiemMapRepository;
+        this.userLopMapperRepository = userLopMapperRepository;
     }
 
     @Override
@@ -61,10 +62,17 @@ public class DiemServiceImpl implements DiemService {
         log.info(" start service to addDiem with :{}", dto);
         Diem diem = new Diem();
         UsersDiemMap diemMap = new UsersDiemMap();
-        Optional<Users> users = usersRepository.findByName("%" + dto.getUsername().trim() + "%");
-        users.ifPresent(value -> diemMap.setIdUser(value.getId()));
-        Optional<Lop> lop = lopRepository.findByTenlop1("%" + dto.getTenLop().trim() + "%");
-        lop.ifPresent(value -> diem.setMaLop(value.getId()));
+        Optional<Users> users = usersRepository.findById(dto.getIdUser());
+        if (users.isPresent()) {
+            Users us = users.get();
+            diemMap.setIdUser(us.getId());
+            us.setMaLop(dto.getMaLop());
+            usersRepository.save(us);
+            UserLopMapper userLopMapper = new UserLopMapper();
+            userLopMapper.setIdLop(dto.getMaLop());
+            userLopMapper.setIdUser(us.getId());
+            userLopMapperRepository.save(userLopMapper);
+        }
         diem.setDiem15p(dto.getDiem15p());
         diem.setDiemmieng(dto.getDiemmieng());
         diem.setDiem90p(dto.getDiem90p());
@@ -81,18 +89,21 @@ public class DiemServiceImpl implements DiemService {
         if (diem.getId() == null) {
             throw new ResultException(ErrorCode.RECORD_NOT_EXISTED);
         }
-        UsersDiemMap diemMap = new UsersDiemMap();
-        Optional<Users> users = usersRepository.findByName("%" + dto.getUsername().trim() + "%");
-        users.ifPresent(value -> diemMap.setIdUser(value.getId()));
-        Optional<Lop> lop = lopRepository.findByTenlop1("%" + dto.getTenLop().trim() + "%");
-        lop.ifPresent(value -> diem.setMaLop(value.getId()));
+        Optional<Users> users = usersRepository.findById(dto.getIdUser());
+        if (users.isPresent()) {
+            Users u = users.get();
+            Lop lop = lopRepository.getOne(dto.getMaLop());
+            lop.setKipDay(dto.getKipDay());
+            lopRepository.save(lop);
+            UserLopMapper userLopMapper = userLopMapperRepository.findByUserAndLop(u.getId(),dto.getIdLopOld());
+            userLopMapper.setIdLop(lop.getId());
+            userLopMapperRepository.save(userLopMapper);
+        }
         diem.setDiem15p(dto.getDiem15p());
         diem.setDiemmieng(dto.getDiemmieng());
         diem.setDiem90p(dto.getDiem90p());
         diem.setDiemtb(ParseDiemTB.diemTB(dto.getDiemmieng(), dto.getDiem15p(), dto.getDiem90p()));
         diemDAO.update(diem);
-        diemMap.setIdDiem(diem.getId());
-        usersDiemMapRepository.save(diemMap);
     }
 
     @Override
@@ -102,6 +113,8 @@ public class DiemServiceImpl implements DiemService {
         if (diem.getId() == null) {
             throw new ResultException(ErrorCode.RECORD_NOT_EXISTED);
         }
+        UsersDiemMap diemMap = usersDiemMapRepository.findWithIdDiem(id);
+        usersDiemMapRepository.delete(diemMap);
         diemDAO.delete(diem);
     }
 

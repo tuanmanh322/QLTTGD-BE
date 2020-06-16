@@ -36,4 +36,8 @@ public class DiemSearchDTO extends BaseSearch {
     private String maThe;
 
     private String tenLop;
+
+    private Integer idLop;
+
+    private String tenMonHoc;
 }

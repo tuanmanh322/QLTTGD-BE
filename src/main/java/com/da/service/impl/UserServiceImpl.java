@@ -320,4 +320,9 @@ public class UserServiceImpl implements UserService {
         }
         return "";
     }
+
+    @Override
+    public List<Users> getALl() {
+        return usersRepository.findAll();
+    }
 }

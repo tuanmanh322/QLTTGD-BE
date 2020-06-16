@@ -3,6 +3,9 @@ package com.da.service;
 import com.da.common.CommonResult;
 import com.da.dto.UserDTO;
 import com.da.exception.ResultException;
+import com.da.model.Users;
+
+import java.util.List;
 
 public interface UserService {
     UserDTO getCurrentUserLogin();
@@ -18,4 +21,6 @@ public interface UserService {
     UserDTO getUserProfileEmp(Integer idUser);
 
     String getUserNameLogin();
+
+    List<Users> getALl();
 }

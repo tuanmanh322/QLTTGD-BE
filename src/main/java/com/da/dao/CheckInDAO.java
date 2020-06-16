@@ -7,4 +7,6 @@ import java.io.Serializable;
 
 public interface CheckInDAO  extends Serializable,BaseDAO{
     void searchCheckIn(CheckInDTO dto);
+
+    void searchCheckInByProfile(CheckInDTO checkInDTO,Integer idThe);
 }

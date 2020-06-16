@@ -19,9 +19,6 @@ public class Diem implements Serializable {
     @Column(name = "ma_diem")
     private String maDiem;
 
-    @Column(name = "ma_lop")
-    private Integer maLop;
-
     @Column(name = "diemmieng")
     private Float diemmieng;
 

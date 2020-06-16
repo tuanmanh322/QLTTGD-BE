@@ -5,6 +5,7 @@ import com.da.dto.CheckInDTO;
 
 import com.da.exception.ResultException;
 import com.da.model.Users;
+import com.da.security.SecurityUtils;
 import com.da.service.CheckInService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -35,5 +36,11 @@ public class CheckInImpl implements CheckInService {
         log.info(" start service to addLopHoc with :{}",dto);
         Users user = modelMap.map(dto, Users.class);
         checkInDAO.save(user);
+    }
+
+    @Override
+    public void searchCheckInByProfile(CheckInDTO dto) {
+        log.info(" start service to searchCheckInByProfile with :{}",dto);
+        checkInDAO.searchCheckInByProfile(dto, SecurityUtils.getCurrentUserIdLogin());
     }
 }

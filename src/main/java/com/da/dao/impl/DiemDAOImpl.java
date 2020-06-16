@@ -108,17 +108,21 @@ public class DiemDAOImpl extends AbstractDAO implements DiemDAO {
         sb.append(" d.diem15p as diem15p,");
         sb.append(" d.diem90p as diem90p,");
         sb.append(" d.diemtb as diemTB,");
+        sb.append(" l.id as idLop,");
         sb.append(" l.tenlop as tenLop,");
         sb.append(" l.kip_day as kipDay,");
         sb.append(" t.ma_the as maThe,");
+        sb.append(" u.id as idUser,");
         sb.append(" u.name as userName,");
-        sb.append(" u.ngaysinh as ngaySinh ");
+        sb.append(" u.ngaysinh as ngaySinh, ");
+        sb.append(" mh.tenmonhoc as tenMonHoc ");
         sb.append(" from diem d ");
         sb.append(" left join users_diem_map udm on udm.id_diem = d.id");
         sb.append(" left join users u on u.id = udm.id_user");
         sb.append(" left join info_gv igv on igv.idUser = u.id");
         sb.append(" left join user_lop_mapper ulm on ulm.id_user = u.id");
         sb.append(" left join lop l on l.id = ulm.id_lop");
+        sb.append(" left join monhoc mh on mh.id = l.ma_monhoc");
         sb.append(" left join the t on t.id = u.ma_the");
         sb.append(" where 1=1 and u.is_teacher =0");
         if (StringUtils.isNotBlank(dto.getKipDay())){

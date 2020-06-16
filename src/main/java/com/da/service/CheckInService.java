@@ -7,4 +7,6 @@ import com.da.exception.ResultException;
 public interface CheckInService {
     void searchCheckIn(CheckInDTO dto);
     void add(CheckInDTO dto) throws ResultException;
+
+    void searchCheckInByProfile(CheckInDTO dto);
 }

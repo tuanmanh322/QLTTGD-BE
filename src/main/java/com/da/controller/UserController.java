@@ -3,12 +3,15 @@ package com.da.controller;
 import com.da.common.CommonResult;
 import com.da.dto.UserDTO;
 import com.da.exception.ResultException;
+import com.da.model.Users;
 import com.da.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
@@ -49,5 +52,11 @@ public class UserController {
     public ResponseEntity<UserDTO> getProfileEMP(@PathVariable("idUser")Integer idUser){
         log.info("start rest to get getProfileEMP with: {}",idUser);
         return new ResponseEntity<>(userService.getUserProfileEmp(idUser),HttpStatus.OK);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Users>> getAll(){
+        log.info("start rest to get getAll ");
+        return new ResponseEntity<>(userService.getALl(),HttpStatus.OK);
     }
 }

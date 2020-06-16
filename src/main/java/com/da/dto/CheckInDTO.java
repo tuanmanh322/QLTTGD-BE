@@ -25,4 +25,14 @@ public class CheckInDTO extends BaseSearch{
     private String TenLop;
 
     private String tenHocSinh;
+
+    private Date ngayVao;
+
+    private Date thoiGianRa;
+
+    private Integer idUser;
+
+    private String name;
+
+    private String trangthai;
 }
