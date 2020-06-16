@@ -33,9 +33,4 @@ public class Diem implements Serializable {
 
     @Column(name = "diemtb")
     private Float diemtb;
-
-    @Column(name = "id_user")
-    private Integer idUser;
-
-    
 }
