@@ -14,13 +14,13 @@ public class DiemActionDTO {
 
     private Integer maLop;
 
-    private Float diemmieng;
+    private Double diemmieng;
 
-    private Float diem15p;
+    private Double diem15p;
 
-    private Float diem90p;
+    private Double diem90p;
 
-    private Float diemtb;
+    private Double diemtb;
 
     private Integer idUser;
 

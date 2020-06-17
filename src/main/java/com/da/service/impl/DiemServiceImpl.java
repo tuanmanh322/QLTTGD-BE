@@ -2,23 +2,31 @@ package com.da.service.impl;
 
 import com.da.common.ParseDiemTB;
 import com.da.dao.DiemDAO;
-import com.da.dto.*;
+import com.da.dto.DiemActionDTO;
+import com.da.dto.DiemDTO;
+import com.da.dto.DiemSearchDTO;
+import com.da.dto.DiemToExcelDTO;
 import com.da.exception.ErrorCode;
 import com.da.exception.ResultException;
 import com.da.model.*;
-import com.da.repository.LopRepository;
-import com.da.repository.UserLopMapperRepository;
-import com.da.repository.UsersDiemMapRepository;
-import com.da.repository.UsersRepository;
+import com.da.repository.*;
 import com.da.security.SecurityUtils;
 import com.da.service.DiemService;
 import com.da.service.HocSinhService;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,13 +48,22 @@ public class DiemServiceImpl implements DiemService {
 
     private final UserLopMapperRepository userLopMapperRepository;
 
-    public DiemServiceImpl(ModelMapper modelMap, DiemDAO diemDAO, UsersRepository usersRepository, LopRepository lopRepository, UsersDiemMapRepository usersDiemMapRepository, UserLopMapperRepository userLopMapperRepository) {
+    private final DiemRepository diemRepository;
+
+    private final MonhocRepository monhocRepository;
+
+    private final TheRepository theRepository;
+
+    public DiemServiceImpl(ModelMapper modelMap, DiemDAO diemDAO, UsersRepository usersRepository, LopRepository lopRepository, UsersDiemMapRepository usersDiemMapRepository, UserLopMapperRepository userLopMapperRepository, DiemRepository diemRepository, MonhocRepository monhocRepository, TheRepository theRepository) {
         this.modelMap = modelMap;
         this.diemDAO = diemDAO;
         this.usersRepository = usersRepository;
         this.lopRepository = lopRepository;
         this.usersDiemMapRepository = usersDiemMapRepository;
         this.userLopMapperRepository = userLopMapperRepository;
+        this.diemRepository = diemRepository;
+        this.monhocRepository = monhocRepository;
+        this.theRepository = theRepository;
     }
 
     @Override
@@ -93,7 +110,7 @@ public class DiemServiceImpl implements DiemService {
             Lop lop = lopRepository.getOne(dto.getMaLop());
             lop.setKipDay(dto.getKipDay());
             lopRepository.save(lop);
-            UserLopMapper userLopMapper = userLopMapperRepository.findByUserAndLop(u.getId(),dto.getIdLopOld());
+            UserLopMapper userLopMapper = userLopMapperRepository.findByUserAndLop(u.getId(), dto.getIdLopOld());
             userLopMapper.setIdLop(lop.getId());
             userLopMapperRepository.save(userLopMapper);
         }
@@ -132,6 +149,97 @@ public class DiemServiceImpl implements DiemService {
     @Override
     public List<DiemToExcelDTO> getAllByIdUser(Integer ud) {
         log.info(" start service to getAllByIdUser");
-        return  diemDAO.getAllByIdThe(ud);
+        return diemDAO.getAllByIdThe(ud);
+    }
+
+    @Override
+    public void readAndWriteDateFromExcel(MultipartFile file) {
+        log.info(" start service to readAndWriteDateFromExcel : {}", file);
+        try {
+            int i = 1;
+            XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
+            XSSFSheet workSheet = workbook.getSheetAt(0);
+            Iterator rows = workSheet.iterator();
+            while (rows.hasNext()) {
+                Row ro = (Row) rows.next();
+                if (ro.getRowNum() == 0) {
+                    continue;
+                }
+                Users users = new Users();
+                Diem diem = new Diem();
+                UsersDiemMap usersDiemMap = new UsersDiemMap();
+                UserLopMapper userLopMapper = new UserLopMapper();
+                Lop lop = new Lop();
+                Monhoc monhoc = new Monhoc();
+
+                Iterator cells = ro.cellIterator();
+                while (cells.hasNext()) {
+                    Cell cell = (Cell) cells.next();
+                    XSSFRow row = workSheet.getRow(i++);
+                    Optional<The> the = theRepository.findByMaThe(row.getCell(0).getStringCellValue());
+                    if (the.isPresent()) {
+                        Users u = usersRepository.findByMaThe(the.get().getId());
+                        diem.setDiemmieng(row.getCell(3).getNumericCellValue());
+                        diem.setDiem15p(row.getCell(4).getNumericCellValue());
+                        diem.setDiem90p(row.getCell(5).getNumericCellValue());
+                        diem.setDiemtb(row.getCell(6).getNumericCellValue());
+                        diemRepository.save(diem);
+                        usersDiemMap.setIdUser(u.getId());
+                        usersDiemMap.setIdDiem(diem.getId());
+                        usersDiemMapRepository.save(usersDiemMap);
+                        Optional<Lop> lo = lopRepository.findTenLopOptinal(row.getCell(8).getStringCellValue().toLowerCase());
+                        if (lo.isPresent()) {
+                            userLopMapper.setIdLop(lo.get().getId());
+                            userLopMapper.setIdUser(u.getId());
+                            userLopMapperRepository.save(userLopMapper);
+                        } else {
+                            lop.setTenlop(row.getCell(8).getStringCellValue());
+                            lop.setKipDay(row.getCell(7).getStringCellValue());
+                            Optional<Monhoc> mh = monhocRepository.findTenMonHocOp( row.getCell(9).getStringCellValue().toLowerCase());
+                            if (mh.isPresent()) {
+                                lop.setMaMonhoc(mh.get().getId());
+                            } else {
+                                monhoc.setTenmonhoc(row.getCell(9).getStringCellValue());
+                                monhocRepository.save(monhoc);
+                            }
+                            lopRepository.save(lop);
+
+                        }
+                    } else {
+                        users.setName(row.getCell(1).getStringCellValue());
+                        users.setNgaysinh(row.getCell(2).getDateCellValue());
+                        usersRepository.save(users);
+                        diem.setDiemmieng(row.getCell(3).getNumericCellValue());
+                        diem.setDiem15p(row.getCell(4).getNumericCellValue());
+                        diem.setDiem90p(row.getCell(5).getNumericCellValue());
+                        diem.setDiemtb(row.getCell(6).getNumericCellValue());
+                        diemRepository.save(diem);
+                        usersDiemMap.setIdUser(users.getId());
+                        usersDiemMap.setIdDiem(diem.getId());
+                        usersDiemMapRepository.save(usersDiemMap);
+                        Optional<Lop> lo = lopRepository.findTenLopOptinal(row.getCell(7).getStringCellValue().toLowerCase());
+                        if (lo.isPresent()) {
+                            userLopMapper.setIdLop(lo.get().getId());
+                            userLopMapper.setIdUser(users.getId());
+                            userLopMapperRepository.save(userLopMapper);
+                        } else {
+                            lop.setTenlop(row.getCell(8).getStringCellValue());
+                            lop.setKipDay(row.getCell(7).getStringCellValue());
+                            Optional<Monhoc> mh = monhocRepository.findTenMonHocOp(row.getCell(9).getStringCellValue().toLowerCase());
+                            if (mh.isPresent()) {
+                                lop.setMaMonhoc(mh.get().getId());
+                            } else {
+                                monhoc.setTenmonhoc(row.getCell(9).getStringCellValue());
+                                monhocRepository.save(monhoc);
+                            }
+                            lopRepository.save(lop);
+                        }
+                    }
+
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

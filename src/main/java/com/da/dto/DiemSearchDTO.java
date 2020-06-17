@@ -15,13 +15,13 @@ public class DiemSearchDTO extends BaseSearch {
 
     private Integer maLop;
 
-    private Float diemMieng;
+    private Double diemMieng;
 
-    private Float diem15p;
+    private Double diem15p;
 
-    private Float diem90p;
+    private Double diem90p;
 
-    private Float diemTB;
+    private Double diemTB;
 
     private Integer idUser;
 

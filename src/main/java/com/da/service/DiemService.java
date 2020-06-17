@@ -6,6 +6,7 @@ import com.da.dto.DiemDTO;
 import com.da.dto.DiemSearchDTO;
 import com.da.dto.DiemToExcelDTO;
 import com.da.exception.ResultException;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -19,4 +20,6 @@ public interface DiemService {
     void searchDiemByProfile(DiemSearchDTO dto);
 
     List<DiemToExcelDTO> getAllByIdUser(Integer ud);
+
+    void readAndWriteDateFromExcel(MultipartFile file);
 }

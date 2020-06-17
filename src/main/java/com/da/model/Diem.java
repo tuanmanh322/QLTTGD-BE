@@ -20,14 +20,14 @@ public class Diem implements Serializable {
     private String maDiem;
 
     @Column(name = "diemmieng")
-    private Float diemmieng;
+    private Double diemmieng;
 
     @Column(name = "diem15p")
-    private Float diem15p;
+    private Double diem15p;
 
     @Column(name = "diem90p")
-    private Float diem90p;
+    private Double diem90p;
 
     @Column(name = "diemtb")
-    private Float diemtb;
+    private Double diemtb;
 }

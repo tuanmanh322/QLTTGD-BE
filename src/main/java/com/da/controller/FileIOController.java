@@ -1,5 +1,6 @@
 package com.da.controller;
 
+import com.da.service.DiemService;
 import com.da.service.FileStorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +23,9 @@ public class FileIOController {
 
     @Autowired
     private FileStorageService fileStorageService;
+
+    @Autowired
+    private DiemService diemService;
 
     @GetMapping("/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable("fileName") String fileName, HttpServletRequest request) {
@@ -50,6 +54,12 @@ public class FileIOController {
     @PostMapping("/file-upload")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
         return new ResponseEntity<>(fileStorageService.storeFile(file), HttpStatus.OK);
+    }
+
+    @PostMapping("/file-excel")
+    public ResponseEntity<Void> readExcelFile(@RequestParam("excelFile") MultipartFile file){
+        diemService.readAndWriteDateFromExcel(file);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

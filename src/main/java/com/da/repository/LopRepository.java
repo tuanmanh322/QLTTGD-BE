@@ -19,6 +19,12 @@ public interface LopRepository extends JpaRepository<Lop, Integer>, JpaSpecifica
 
     @Query(
             nativeQuery = true,
+            value = "select * from lop as lo where lo.tenlop LIKE BINARY ?1"
+    )
+    Optional<Lop> findTenLopOptinal(String tenLop);
+
+    @Query(
+            nativeQuery = true,
             value = "select * from lop as lo where lo.ma_lop =?1"
     )
     Lop findByMaLop(String maLop);

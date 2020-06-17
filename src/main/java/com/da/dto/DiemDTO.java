@@ -12,13 +12,13 @@ public class DiemDTO extends BaseSearch{
 
     private String ma_diem;
 
-    private float diemHS1;
+    private Double diemHS1;
 
-    private float diemHS2;
+    private Double diemHS2;
 
-    private float diemHS3;
+    private Double diemHS3;
 
-    private float diemPlus;
+    private Double diemPlus;
 
     private String MaHocSinh;
 

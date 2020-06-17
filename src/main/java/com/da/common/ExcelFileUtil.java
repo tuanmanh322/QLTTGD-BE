@@ -15,7 +15,7 @@ public class ExcelFileUtil {
         String[] COLUMNS = {
                 "MÃ HỌC SINH", "HỌ VÀ TÊN", "NGÀY SINH",
                 "ĐIỂM 15'", "ĐIỂM 45'", "ĐIỂM 90'", "ĐIỂM TB",
-                "KÍP DẠY", "TÊN LỚP", "MÔN HỌC"};
+                "KÍP DẠY", "TÊN LỚP", "MÔN HỌC","NOTE"};
 
         try (
                 Workbook workbook = new XSSFWorkbook();
@@ -58,6 +58,11 @@ public class ExcelFileUtil {
                 row.createCell(7).setCellValue(diem.getKipDay());
                 row.createCell(8).setCellValue(diem.getTenLop());
                 row.createCell(9).setCellValue(diem.getTenMonHoc());
+                row.createCell(10).setCellValue("1-Kíp 1(7h - 9h)" +
+                        "2-Kíp 2(9h30- 12h)" +
+                        "3-Kíp 3(13h-15h)" +
+                        "4-Kíp 4(15h-18h)" +
+                        "5-Kíp 5(18h30-21h30)");
             }
             workbook.write(out);
             return new ByteArrayInputStream(out.toByteArray());
