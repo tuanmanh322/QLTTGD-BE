@@ -176,7 +176,7 @@ public class DiemServiceImpl implements DiemService {
                 while (cells.hasNext()) {
                     Cell cell = (Cell) cells.next();
                     XSSFRow row = workSheet.getRow(i++);
-                    Optional<The> the = theRepository.findByMaThe(row.getCell(0).getStringCellValue());
+                    Optional<The> the = theRepository.findByMaThe(row.getCell(0).getStringCellValue().trim());
                     if (the.isPresent()) {
                         Users u = usersRepository.findByMaThe(the.get().getId());
                         diem.setDiemmieng(row.getCell(3).getNumericCellValue());
@@ -187,26 +187,26 @@ public class DiemServiceImpl implements DiemService {
                         usersDiemMap.setIdUser(u.getId());
                         usersDiemMap.setIdDiem(diem.getId());
                         usersDiemMapRepository.save(usersDiemMap);
-                        Optional<Lop> lo = lopRepository.findTenLopOptinal(row.getCell(8).getStringCellValue().toLowerCase());
+                        Optional<Lop> lo = lopRepository.findByTenlop1(row.getCell(8).getStringCellValue().toLowerCase().trim());
                         if (lo.isPresent()) {
                             userLopMapper.setIdLop(lo.get().getId());
                             userLopMapper.setIdUser(u.getId());
                             userLopMapperRepository.save(userLopMapper);
                         } else {
-                            lop.setTenlop(row.getCell(8).getStringCellValue());
-                            lop.setKipDay(row.getCell(7).getStringCellValue());
+                            lop.setTenlop(row.getCell(8).getStringCellValue().trim());
+                            lop.setKipDay(row.getCell(7).getStringCellValue().trim());
                             Optional<Monhoc> mh = monhocRepository.findTenMonHocOp( row.getCell(9).getStringCellValue().toLowerCase());
                             if (mh.isPresent()) {
                                 lop.setMaMonhoc(mh.get().getId());
                             } else {
-                                monhoc.setTenmonhoc(row.getCell(9).getStringCellValue());
+                                monhoc.setTenmonhoc(row.getCell(9).getStringCellValue().trim());
                                 monhocRepository.save(monhoc);
                             }
                             lopRepository.save(lop);
 
                         }
                     } else {
-                        users.setName(row.getCell(1).getStringCellValue());
+                        users.setName(row.getCell(1).getStringCellValue().trim());
                         users.setNgaysinh(row.getCell(2).getDateCellValue());
                         usersRepository.save(users);
                         diem.setDiemmieng(row.getCell(3).getNumericCellValue());
@@ -217,19 +217,19 @@ public class DiemServiceImpl implements DiemService {
                         usersDiemMap.setIdUser(users.getId());
                         usersDiemMap.setIdDiem(diem.getId());
                         usersDiemMapRepository.save(usersDiemMap);
-                        Optional<Lop> lo = lopRepository.findTenLopOptinal(row.getCell(7).getStringCellValue().toLowerCase());
+                        Optional<Lop> lo = lopRepository.findByTenlop1(row.getCell(7).getStringCellValue().toLowerCase().trim());
                         if (lo.isPresent()) {
                             userLopMapper.setIdLop(lo.get().getId());
                             userLopMapper.setIdUser(users.getId());
                             userLopMapperRepository.save(userLopMapper);
                         } else {
-                            lop.setTenlop(row.getCell(8).getStringCellValue());
-                            lop.setKipDay(row.getCell(7).getStringCellValue());
-                            Optional<Monhoc> mh = monhocRepository.findTenMonHocOp(row.getCell(9).getStringCellValue().toLowerCase());
+                            lop.setTenlop(row.getCell(8).getStringCellValue().trim());
+                            lop.setKipDay(row.getCell(7).getStringCellValue().trim());
+                            Optional<Monhoc> mh = monhocRepository.findTenMonHocOp(row.getCell(9).getStringCellValue().toLowerCase().trim());
                             if (mh.isPresent()) {
                                 lop.setMaMonhoc(mh.get().getId());
                             } else {
-                                monhoc.setTenmonhoc(row.getCell(9).getStringCellValue());
+                                monhoc.setTenmonhoc(row.getCell(9).getStringCellValue().trim());
                                 monhocRepository.save(monhoc);
                             }
                             lopRepository.save(lop);
