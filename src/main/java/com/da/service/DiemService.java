@@ -18,5 +18,5 @@ public interface DiemService {
 
     void searchDiemByProfile(DiemSearchDTO dto);
 
-    List<DiemToExcelDTO> getAllByIdUser();
+    List<DiemToExcelDTO> getAllByIdUser(Integer ud);
 }

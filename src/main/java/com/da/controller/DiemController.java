@@ -4,6 +4,7 @@ import com.da.common.ExcelFileUtil;
 import com.da.dto.DiemActionDTO;
 import com.da.dto.DiemDTO;
 import com.da.dto.DiemSearchDTO;
+import com.da.dto.DiemToExcelDTO;
 import com.da.exception.ResultException;
 import com.da.service.DiemService;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/diem")
@@ -67,8 +69,8 @@ public class DiemController {
     }
 
     @GetMapping("/download/points.xlsx")
-    public ResponseEntity<InputStreamResource> excelCustomersReport() throws IOException {
-        ByteArrayInputStream in = ExcelFileUtil.objectToExcel(diemService.getAllByIdUser());
+    public ResponseEntity<InputStreamResource> excelCustomersReport(@RequestParam("d")Integer d) throws IOException {
+        ByteArrayInputStream in = ExcelFileUtil.objectToExcel(diemService.getAllByIdUser(d));
         // return IOUtils.toByteArray(in);
 
         HttpHeaders headers = new HttpHeaders();
@@ -78,5 +80,11 @@ public class DiemController {
                 .ok()
                 .headers(headers)
                 .body(new InputStreamResource(in));
+    }
+
+    @GetMapping("/all-diem")
+    public ResponseEntity<List<DiemToExcelDTO>> getAlltoExcel(@RequestParam("d")Integer ud){
+        log.info(" start rest to getAlltoExcel ");
+        return new ResponseEntity<>(diemService.getAllByIdUser(ud),HttpStatus.OK);
     }
 }

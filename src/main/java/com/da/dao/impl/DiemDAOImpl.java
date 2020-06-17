@@ -105,30 +105,18 @@ public class DiemDAOImpl extends AbstractDAO implements DiemDAO {
         sb.append(" left join user_lop_mapper ulm on ulm.id_user = u.id");
         sb.append(" left join lop l on l.id = ulm.id_lop");
         sb.append(" where 1 = 1   ");
-        sb.append(" and  u.ma_the =" + idThe + ")");
-        sb.append(" select d.id,");
-        sb.append(" d.ma_diem as maDiem,");
-        sb.append(" d.diemmieng as diemMieng,");
-        sb.append(" d.diem15p as diem15p,");
-        sb.append(" d.diem90p as diem90p,");
-        sb.append(" d.diemtb as diemTB,");
-        sb.append(" l.id as idLop,");
-        sb.append(" l.tenlop as tenLop,");
-        sb.append(" l.kip_day as kipDay,");
-        sb.append(" t.ma_the as maThe,");
-        sb.append(" u.id as idUser,");
-        sb.append(" u.name as userName,");
-        sb.append(" u.ngaysinh as ngaySinh, ");
-        sb.append(" mh.tenmonhoc as tenMonHoc ");
-        sb.append(" from diem d ");
-        sb.append(" left join users_diem_map udm on udm.id_diem = d.id");
-        sb.append(" left join users u on u.id = udm.id_user");
-        sb.append(" left join info_gv igv on igv.idUser = u.id");
+        sb.append(" and  u.ma_the =" + idThe + "),");
+        sb.append(" info_hs as ");
+        sb.append(" (select l.kip_day as kipDay,");
+        sb.append("  l.tenlop as tenLop,");
+        sb.append(" mh.tenmonhoc as tenMonHoc,");
+        sb.append(" u.id as idHS");
+        sb.append(" from users u ");
         sb.append(" left join user_lop_mapper ulm on ulm.id_user = u.id");
         sb.append(" left join lop l on l.id = ulm.id_lop");
+        sb.append(" left join info_gv igv on igv.idLop = l.id");
         sb.append(" left join monhoc mh on mh.id = l.ma_monhoc");
-        sb.append(" left join the t on t.id = u.ma_the");
-        sb.append(" where 1=1 and u.is_teacher =0");
+        sb.append(" where igv.idLop = l.id  ");
         if (StringUtils.isNotBlank(dto.getKipDay())) {
             sb.append(" and l.kip_day like :p_kipDay");
             params.put("p_kipDay", "%" + dto.getKipDay().trim() + "%");
@@ -137,6 +125,26 @@ public class DiemDAOImpl extends AbstractDAO implements DiemDAO {
             sb.append(" and l.tenlop like :p_tenLop");
             params.put("p_tenLop", "%" + dto.getTenLop().trim() + "%");
         }
+        sb.append(" )");
+        sb.append(" select distinct d.id,");
+        sb.append("  d.ma_diem as maDiem,");
+        sb.append("    t.ma_the as maThe,");
+        sb.append("  u.name as userName,");
+        sb.append(" u.ngaysinh as ngaySinh,");
+        sb.append("  d.diemmieng as diemMieng,");
+        sb.append(" d.diem15p as diem15p,");
+        sb.append(" d.diem90p as diem90p,");
+        sb.append(" d.diemtb as diemTB,");
+        sb.append("  info_hs.* ");
+        sb.append(" from diem d ");
+        sb.append(" left join users_diem_map udm on udm.id_diem = d.id");
+        sb.append(" left join users u on u.id = udm.id_user");
+        sb.append(" left join info_hs on info_hs.idHS = u.id");
+        sb.append(" left join the t on t.id = u.ma_the");
+        sb.append(" where 1=1 and u.is_teacher =0 and info_hs.idHS = udm.id_user");
+
+
+
         sb.append(" order by t.ma_the");
         searchAndCountTotal(dto, sb.toString(), params, DiemSearchDTO.class);
     }
@@ -155,30 +163,34 @@ public class DiemDAOImpl extends AbstractDAO implements DiemDAO {
         sb.append(" left join user_lop_mapper ulm on ulm.id_user = u.id");
         sb.append(" left join lop l on l.id = ulm.id_lop");
         sb.append(" where 1 = 1   ");
-        sb.append(" and  u.ma_the =" + idThe + ")");
-        sb.append(" select d.id,");
-        sb.append(" d.ma_diem as maDiem,");
-        sb.append(" d.diemmieng as diemMieng,");
+        sb.append(" and  u.ma_the =" + idThe + "),");
+        sb.append(" info_hs as ");
+        sb.append(" (select l.kip_day as kipDay,");
+        sb.append("  l.tenlop as tenLop,");
+        sb.append(" mh.tenmonhoc as tenMonHoc,");
+        sb.append(" u.id as idHS");
+        sb.append(" from users u ");
+        sb.append(" left join user_lop_mapper ulm on ulm.id_user = u.id");
+        sb.append(" left join lop l on l.id = ulm.id_lop");
+        sb.append(" left join info_gv igv on igv.idLop = l.id");
+        sb.append(" left join monhoc mh on mh.id = l.ma_monhoc");
+        sb.append(" where igv.idLop = l.id) ");
+        sb.append(" select distinct d.id,");
+        sb.append("  d.ma_diem as maDiem,");
+        sb.append("    t.ma_the as maThe,");
+        sb.append("  u.name as userName,");
+        sb.append(" u.ngaysinh as ngaySinh,");
+        sb.append("  d.diemmieng as diemMieng,");
         sb.append(" d.diem15p as diem15p,");
         sb.append(" d.diem90p as diem90p,");
         sb.append(" d.diemtb as diemTB,");
-        sb.append(" l.id as idLop,");
-        sb.append(" l.tenlop as tenLop,");
-        sb.append(" l.kip_day as kipDay,");
-        sb.append(" t.ma_the as maThe,");
-        sb.append(" u.id as idUser,");
-        sb.append(" u.name as userName,");
-        sb.append(" u.ngaysinh as ngaySinh, ");
-        sb.append(" mh.tenmonhoc as tenMonHoc ");
+        sb.append("  info_hs.* ");
         sb.append(" from diem d ");
         sb.append(" left join users_diem_map udm on udm.id_diem = d.id");
         sb.append(" left join users u on u.id = udm.id_user");
-        sb.append(" left join info_gv igv on igv.idUser = u.id");
-        sb.append(" left join user_lop_mapper ulm on ulm.id_user = u.id");
-        sb.append(" left join lop l on l.id = ulm.id_lop");
-        sb.append(" left join monhoc mh on mh.id = l.ma_monhoc");
+        sb.append(" left join info_hs on info_hs.idHS = u.id");
         sb.append(" left join the t on t.id = u.ma_the");
-        sb.append(" where 1=1 and u.is_teacher =0");
+        sb.append(" where 1=1 and u.is_teacher =0 and info_hs.idHS = udm.id_user");
         return namedParameterJdbcTemplate().query(sb.toString(), params, new BeanPropertyRowMapper<>(DiemToExcelDTO.class));
     }
 }

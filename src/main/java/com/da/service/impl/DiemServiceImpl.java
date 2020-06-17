@@ -130,8 +130,8 @@ public class DiemServiceImpl implements DiemService {
     }
 
     @Override
-    public List<DiemToExcelDTO> getAllByIdUser() {
+    public List<DiemToExcelDTO> getAllByIdUser(Integer ud) {
         log.info(" start service to getAllByIdUser");
-        return  diemDAO.getAllByIdThe(SecurityUtils.getCurrentUserIdLogin());
+        return  diemDAO.getAllByIdThe(ud);
     }
 }

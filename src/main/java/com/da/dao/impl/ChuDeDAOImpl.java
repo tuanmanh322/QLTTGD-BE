@@ -60,7 +60,7 @@ public class ChuDeDAOImpl extends AbstractDAO implements ChuDeDAO {
         sb.append(" count(bv.id) as baiVietCount )");
         sb.append(" from Chude as cd");
         sb.append(" left join Baiviet as bv");
-        sb.append(" on (bv.ma_chude = cd.id or bv.id is  null) and bv.trangthai = 1");
+        sb.append(" on (bv.ma_chude = cd.id or bv.id is  null)");
         sb.append("  group by cd.id, cd.maChude,cd.tenChude");
         TypedQuery<ChuDeCountDTO> query = getSession().createQuery(sb.toString(),ChuDeCountDTO.class);
         return query.getResultList();
