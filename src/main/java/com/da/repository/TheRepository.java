@@ -12,4 +12,7 @@ import java.util.Optional;
 public interface TheRepository extends JpaRepository<The, Integer>, JpaSpecificationExecutor<The> {
     @Query(nativeQuery = true, value = "select  * from the as th where th.ma_the=?1")
     Optional<The> findByMaThe(String maThe);
+
+    @Query(nativeQuery = true, value = "select  * from the as th where th.ma_the=?1 and th.id_role = 3")
+    Optional<The> findByMaTheExcel(Integer maThe);
 }

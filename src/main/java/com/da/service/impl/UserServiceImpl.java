@@ -142,6 +142,7 @@ public class UserServiceImpl implements UserService {
         u.setEmail(dto.getEmail());
         u.setSodt(dto.getSodt());
         u.setLuongcoban(dto.getLuongcoban());
+        u.setIsTeacher(dto.getIsTeacher());
         if (!dto.getImageAvatar().isEmpty()) {
             try {
                 u.setImagePath(FileUploadURL.saveFileAndGetUrl(dto.getImageAvatar()));
@@ -228,6 +229,7 @@ public class UserServiceImpl implements UserService {
         u.setEmail(dto.getEmail());
         u.setName(dto.getName());
         u.setMaThe(t.getId());
+        u.setIsTeacher(false);
         usersRepository.save(u);
         return CommonResult.success(maThe);
     }

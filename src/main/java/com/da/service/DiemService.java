@@ -21,5 +21,5 @@ public interface DiemService {
 
     List<DiemToExcelDTO> getAllByIdUser(Integer ud);
 
-    void readAndWriteDateFromExcel(MultipartFile file);
+    void readAndWriteDateFromExcel(MultipartFile file,Integer idUser);
 }

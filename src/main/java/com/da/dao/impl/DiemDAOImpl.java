@@ -97,7 +97,7 @@ public class DiemDAOImpl extends AbstractDAO implements DiemDAO {
 //        sb.append(" order by t.ma_the");
 //        searchAndCountTotal(dto,sb.toString(),params,DiemSearchDTO.class);
         sb.append(" with info_gv");
-        sb.append(" as(select u.id idUser,");
+        sb.append(" as(select distinct u.id idUser,");
         sb.append(" u.name, ");
         sb.append("  l.id as idLop,");
         sb.append(" l.tenlop");
@@ -107,7 +107,7 @@ public class DiemDAOImpl extends AbstractDAO implements DiemDAO {
         sb.append(" where 1 = 1   ");
         sb.append(" and  u.ma_the =" + idThe + "),");
         sb.append(" info_hs as ");
-        sb.append(" (select l.kip_day as kipDay,");
+        sb.append(" (select distinct l.kip_day as kipDay,");
         sb.append("  l.tenlop as tenLop,");
         sb.append(" mh.tenmonhoc as tenMonHoc,");
         sb.append(" u.id as idHS");
@@ -155,7 +155,7 @@ public class DiemDAOImpl extends AbstractDAO implements DiemDAO {
         final StringBuilder sb = new StringBuilder();
         Map<String, Object> params = new HashMap<>();
         sb.append(" with info_gv");
-        sb.append(" as(select u.id idUser,");
+        sb.append(" as(select distinct u.id idUser,");
         sb.append(" u.name, ");
         sb.append("  l.id as idLop,");
         sb.append(" l.tenlop");
@@ -165,7 +165,7 @@ public class DiemDAOImpl extends AbstractDAO implements DiemDAO {
         sb.append(" where 1 = 1   ");
         sb.append(" and  u.ma_the =" + idThe + "),");
         sb.append(" info_hs as ");
-        sb.append(" (select l.kip_day as kipDay,");
+        sb.append(" (select distinct l.kip_day as kipDay,");
         sb.append("  l.tenlop as tenLop,");
         sb.append(" mh.tenmonhoc as tenMonHoc,");
         sb.append(" u.id as idHS");

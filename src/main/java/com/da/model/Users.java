@@ -64,4 +64,7 @@ public class Users implements Serializable {
 
     @Column(name = "image_path")
     private String imagePath;
+
+    @Column(name = "is_teacher")
+    private Boolean isTeacher;
 }

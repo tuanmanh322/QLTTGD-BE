@@ -153,8 +153,8 @@ public class DiemServiceImpl implements DiemService {
     }
 
     @Override
-    public void readAndWriteDateFromExcel(MultipartFile file) {
-        log.info(" start service to readAndWriteDateFromExcel : {}", file);
+    public void readAndWriteDateFromExcel(MultipartFile file,Integer idUser) {
+        log.info(" start service to readAndWriteDateFromExcel : {} and idUSer: {}", file,idUser);
         try {
             int i = 1;
             XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
@@ -165,18 +165,16 @@ public class DiemServiceImpl implements DiemService {
                 if (ro.getRowNum() == 0) {
                     continue;
                 }
-                Users users = new Users();
-                Diem diem = new Diem();
-                UsersDiemMap usersDiemMap = new UsersDiemMap();
-                UserLopMapper userLopMapper = new UserLopMapper();
-                Lop lop = new Lop();
-                Monhoc monhoc = new Monhoc();
-
                 Iterator cells = ro.cellIterator();
-                while (cells.hasNext()) {
-                    Cell cell = (Cell) cells.next();
+                while (i <= workSheet.getLastRowNum()) {
+                    Users users = new Users();
+                    Diem diem = new Diem();
+                    UsersDiemMap usersDiemMap = new UsersDiemMap();
+                    UserLopMapper userLopMapper = new UserLopMapper();
+                    Lop lop = new Lop();
+                    Monhoc monhoc = new Monhoc();
                     XSSFRow row = workSheet.getRow(i++);
-                    Optional<The> the = theRepository.findByMaThe(row.getCell(0).getStringCellValue().trim());
+                    Optional<The> the = theRepository.findByMaTheExcel((int)row.getCell(0).getNumericCellValue());
                     if (the.isPresent()) {
                         Users u = usersRepository.findByMaThe(the.get().getId());
                         diem.setDiemmieng(row.getCell(3).getNumericCellValue());
@@ -187,27 +185,41 @@ public class DiemServiceImpl implements DiemService {
                         usersDiemMap.setIdUser(u.getId());
                         usersDiemMap.setIdDiem(diem.getId());
                         usersDiemMapRepository.save(usersDiemMap);
-                        Optional<Lop> lo = lopRepository.findByTenlop1(row.getCell(8).getStringCellValue().toLowerCase().trim());
+                        Optional<Lop> lo = lopRepository.findBYmAlOP(row.getCell(8).getStringCellValue().trim());
                         if (lo.isPresent()) {
                             userLopMapper.setIdLop(lo.get().getId());
                             userLopMapper.setIdUser(u.getId());
                             userLopMapperRepository.save(userLopMapper);
+                            UserLopMapper lopMapper = new UserLopMapper();
+                            lopMapper.setIdUser(idUser);
+                            lopMapper.setIdLop(lo.get().getId());
+                            userLopMapperRepository.save(lopMapper);
                         } else {
-                            lop.setTenlop(row.getCell(8).getStringCellValue().trim());
+                            lop.setTenlop(row.getCell(9).getStringCellValue().trim());
                             lop.setKipDay(row.getCell(7).getStringCellValue().trim());
-                            Optional<Monhoc> mh = monhocRepository.findTenMonHocOp( row.getCell(9).getStringCellValue().toLowerCase());
+                            lop.setMaLop(row.getCell(8).getStringCellValue().trim());
+                            Optional<Monhoc> mh = monhocRepository.findMamonHocOp( row.getCell(10).getStringCellValue().trim());
                             if (mh.isPresent()) {
                                 lop.setMaMonhoc(mh.get().getId());
                             } else {
-                                monhoc.setTenmonhoc(row.getCell(9).getStringCellValue().trim());
+                                monhoc.setMaMonhoc(row.getCell(10).getStringCellValue().trim());
+                                monhoc.setTenmonhoc(row.getCell(11).getStringCellValue().trim());
                                 monhocRepository.save(monhoc);
+                                lop.setMaMonhoc(monhoc.getId());
                             }
                             lopRepository.save(lop);
-
+                            userLopMapper.setIdUser(idUser);
+                            userLopMapper.setIdLop(lop.getId());
+                            userLopMapperRepository.save(userLopMapper);
+                            UserLopMapper lopMapper = new UserLopMapper();
+                            lopMapper.setIdUser(idUser);
+                            lopMapper.setIdLop(lop.getId());
+                            userLopMapperRepository.save(lopMapper);
                         }
                     } else {
                         users.setName(row.getCell(1).getStringCellValue().trim());
                         users.setNgaysinh(row.getCell(2).getDateCellValue());
+                        users.setIsTeacher(false);
                         usersRepository.save(users);
                         diem.setDiemmieng(row.getCell(3).getNumericCellValue());
                         diem.setDiem15p(row.getCell(4).getNumericCellValue());
@@ -217,25 +229,38 @@ public class DiemServiceImpl implements DiemService {
                         usersDiemMap.setIdUser(users.getId());
                         usersDiemMap.setIdDiem(diem.getId());
                         usersDiemMapRepository.save(usersDiemMap);
-                        Optional<Lop> lo = lopRepository.findByTenlop1(row.getCell(7).getStringCellValue().toLowerCase().trim());
+                        Optional<Lop> lo = lopRepository.findBYmAlOP(row.getCell(8).getStringCellValue().trim());
                         if (lo.isPresent()) {
                             userLopMapper.setIdLop(lo.get().getId());
                             userLopMapper.setIdUser(users.getId());
                             userLopMapperRepository.save(userLopMapper);
+                            UserLopMapper lopMapper = new UserLopMapper();
+                            lopMapper.setIdUser(idUser);
+                            lopMapper.setIdLop(lo.get().getId());
+                            userLopMapperRepository.save(lopMapper);
                         } else {
-                            lop.setTenlop(row.getCell(8).getStringCellValue().trim());
+                            lop.setTenlop(row.getCell(9).getStringCellValue().trim());
                             lop.setKipDay(row.getCell(7).getStringCellValue().trim());
-                            Optional<Monhoc> mh = monhocRepository.findTenMonHocOp(row.getCell(9).getStringCellValue().toLowerCase().trim());
+                            lop.setMaLop(row.getCell(8).getStringCellValue().trim());
+                            Optional<Monhoc> mh = monhocRepository.findMamonHocOp(row.getCell(10).getStringCellValue().trim());
                             if (mh.isPresent()) {
                                 lop.setMaMonhoc(mh.get().getId());
                             } else {
-                                monhoc.setTenmonhoc(row.getCell(9).getStringCellValue().trim());
+                                monhoc.setMaMonhoc(row.getCell(10).getStringCellValue().trim());
+                                monhoc.setTenmonhoc(row.getCell(11).getStringCellValue().trim());
                                 monhocRepository.save(monhoc);
+                                lop.setMaMonhoc(monhoc.getId());
                             }
                             lopRepository.save(lop);
+                            userLopMapper.setIdLop(lop.getId());
+                            userLopMapper.setIdUser(users.getId());
+                            userLopMapperRepository.save(userLopMapper);
+                            UserLopMapper lopMapper = new UserLopMapper();
+                            lopMapper.setIdUser(idUser);
+                            lopMapper.setIdLop(lop.getId());
+                            userLopMapperRepository.save(lopMapper);
                         }
                     }
-
                 }
             }
         } catch (IOException e) {

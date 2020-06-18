@@ -56,9 +56,9 @@ public class FileIOController {
         return new ResponseEntity<>(fileStorageService.storeFile(file), HttpStatus.OK);
     }
 
-    @PostMapping("/file-excel")
-    public ResponseEntity<Void> readExcelFile(@RequestParam("excelFile") MultipartFile file){
-        diemService.readAndWriteDateFromExcel(file);
+    @PostMapping("/file-excel/{d}")
+    public ResponseEntity<Void> readExcelFile(@RequestParam("excelFile") MultipartFile file, @PathVariable("d") Integer idUser){
+        diemService.readAndWriteDateFromExcel(file,idUser);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

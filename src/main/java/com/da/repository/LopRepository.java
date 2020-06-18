@@ -31,7 +31,7 @@ public interface LopRepository extends JpaRepository<Lop, Integer>, JpaSpecifica
 
     @Query(
             nativeQuery = true,
-            value = "select * from lop as lo where lo.tenlop like ?1"
+            value = "select * from lop as lo where lo.ma_lop=?1"
     )
-    Optional<Lop> findByTenlop1(String tenLop);
+    Optional<Lop> findBYmAlOP(String tenLop);
 }
