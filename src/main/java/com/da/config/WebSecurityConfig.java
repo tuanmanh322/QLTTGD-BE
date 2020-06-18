@@ -45,6 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/api/user/profile").authenticated()
 				.antMatchers("/api/user/update-profile").authenticated()
 				.antMatchers("/api/**").permitAll()
+  				.antMatchers("/greeting").permitAll()
 //                .antMatchers("/api/location/find-top-job-city/{topCity}").permitAll()
 //                .antMatchers(HttpMethod.GET, "/api/location").permitAll()
 //                .antMatchers("/api/location/**").hasAnyRole(UserTypeEnum.ADMIN.getName())

@@ -46,6 +46,8 @@ public class BaiVietDTO {
 //    @JsonFormat
     private Long dateMili;
 
+    private Integer viewCounts;
+
     private List<CommentDTO> commentDTOS;
 
 

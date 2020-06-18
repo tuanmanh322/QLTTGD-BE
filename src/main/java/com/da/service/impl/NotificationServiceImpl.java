@@ -32,7 +32,7 @@ public class NotificationServiceImpl implements NotificationService {
         log.info("start service to getAll notification");
         List<Notification> notificationList = notificationRepository.getAllByIdThe(SecurityUtils.getCurrentUserIdLogin());
         for (Notification notification : notificationList){
-            notification.setRead(true);
+            notification.setRead(0);
         }
         notificationRepository.saveAll(notificationList);
         return notificationList;
@@ -41,7 +41,7 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public boolean isUnRead() {
         log.info("start service to isUnRead notification");
-        List<Notification> notifications = notificationRepository.isUnReadShowAll(SecurityUtils.getCurrentUserIdLogin(),false);
+        List<Notification> notifications = notificationRepository.isUnReadShowAll(SecurityUtils.getCurrentUserIdLogin(),0);
         if (notifications.size()!= 0){
             return true;
         }

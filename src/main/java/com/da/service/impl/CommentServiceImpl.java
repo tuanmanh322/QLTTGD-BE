@@ -122,6 +122,7 @@ public class CommentServiceImpl implements CommentService {
             notifycation.setCreatedDate(LocalDateTime.now());
             notifycation.setIdAction(Constant.COMMENT);
             notifycation.setIdThe(SecurityUtils.getCurrentUserIdLogin());
+            notifycation.setRead(0);
             Optional<Actions> actions = actionsRepository.findById(Constant.COMMENT);
             actions.ifPresent(ac -> notifycation.setMessage(ac.getStatuss()));
             notificationRepository.save(notifycation);

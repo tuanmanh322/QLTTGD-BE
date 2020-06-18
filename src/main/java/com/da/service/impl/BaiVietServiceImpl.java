@@ -200,7 +200,12 @@ public class BaiVietServiceImpl implements BaiVietService {
     public BaiVietDTO getDetailBVCMREM(Integer idBV) {
         log.info("start service to get getDetailBVCMREM with idBV: {}", idBV);
         Baiviet baiviets = baivietRepository.findById(idBV).get();
-
+        if (baiviets.getViewCount() == null || baiviets.getViewCount() == 0){
+            baiviets.setViewCount(1);
+        }else {
+            int viewCount = baiviets.getViewCount();
+            baiviets.setViewCount(viewCount + 1);
+        }
         Users users = usersRepository.findByMaThe(baiviets.getIdThe());
         BaiVietDTO baiVietDTO = modelMap.map(baiviets, BaiVietDTO.class);
         baiVietDTO.setImageBV(baiviets.getImageBV());
@@ -244,6 +249,8 @@ public class BaiVietServiceImpl implements BaiVietService {
         }).collect(Collectors.toList());
         baiVietDTO.setCommentDTOS(commentDTOList);
         baiVietDTO.setTotalComment(repCommentDTOList.size() + comments.size());
+        baiVietDTO.setViewCounts(baiviets.getViewCount());
+        baivietRepository.save(baiviets);
         return baiVietDTO;
     }
 
@@ -267,6 +274,11 @@ public class BaiVietServiceImpl implements BaiVietService {
             baiVietDTO.setLuotkhongthich(baiviet.getLuotkhongthich());
             baiVietDTO.setMabaiviet(baiviet.getMaBaiviet());
             baiVietDTO.setNoidung(baiviet.getNoidung());
+            if (baiviet.getViewCount() == null){
+                baiVietDTO.setViewCounts(0);
+            }else {
+                baiVietDTO.setViewCounts(baiviet.getViewCount());
+            }
             baiVietDTO.setIdUser(users.getId());
             baiVietDTO.setId(baiviet.getId());
             baiVietDTO.setChuDe(chude.get().getTenChude());
@@ -313,6 +325,7 @@ public class BaiVietServiceImpl implements BaiVietService {
             notifycation.setIdThe(SecurityUtils.getCurrentUserIdLogin());
             Optional<Actions> actions = actionsRepository.findById(Constant.LIKE);
             actions.ifPresent(ac -> notifycation.setMessage(ac.getStatuss()));
+            notifycation.setRead(0);
             notificationRepository.save(notifycation);
             /*
              * This block is used to
@@ -343,6 +356,7 @@ public class BaiVietServiceImpl implements BaiVietService {
             notifycation.setIdThe(SecurityUtils.getCurrentUserIdLogin());
             Optional<Actions> actions = actionsRepository.findById(Constant.DISLIKE);
             actions.ifPresent(ac -> notifycation.setMessage(ac.getStatuss()));
+            notifycation.setRead(0);
             notificationRepository.save(notifycation);
             /*
              * This block is used to

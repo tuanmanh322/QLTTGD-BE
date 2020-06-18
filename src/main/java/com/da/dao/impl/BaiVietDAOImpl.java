@@ -62,6 +62,7 @@ public class BaiVietDAOImpl extends AbstractDAO implements BaiVietDAO {
         sb.append("  bv.luotkhongthich as luotkhongthich,");
         sb.append("  bv.id_the as idUserBV,");
         sb.append(" bv.ma_chude as maChuDe,");
+        sb.append(" bv.view_count as viewCounts,");
         sb.append(" cd.tenchude as tenchude,");
         sb.append(" cd.id as idChuDe, ");
         sb.append(" bv.created_date as createDate,");
@@ -106,6 +107,7 @@ public class BaiVietDAOImpl extends AbstractDAO implements BaiVietDAO {
         sb.append("  bv.luotkhongthich as luotkhongthich,");
         sb.append("  bv.id_the as idUserBV,");
         sb.append(" bv.ma_chude as maChuDe,");
+        sb.append(" bv.view_count as viewCounts,");
         sb.append(" cd.tenchude as tenchude,");
         sb.append(" cd.id as idChuDe, ");
         sb.append(" bv.created_date as createDate,");

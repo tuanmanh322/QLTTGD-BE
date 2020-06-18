@@ -18,7 +18,7 @@ public class WebsocketConfig implements WebSocketMessageBrokerConfigurer {
         log.info("------websocket running!----");
         // endPoint to config StompJS in client app
         // http://localhost:4200
-        registry.addEndpoint("/api").setAllowedOrigins("*").withSockJS();
+        registry.addEndpoint("/greeting").setAllowedOrigins("http://localhost:4200").withSockJS();
     }
 
     @Override

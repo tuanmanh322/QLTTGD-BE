@@ -28,8 +28,8 @@ public class Notification implements Serializable {
     @Column(name = "id_action")
     private Integer idAction;
 
-    @Column(name = "read")
-    private Boolean read;
+    @Column(name = "is_read")
+    private Integer read;
 
     @Column(name = "message")
     private String message;
@@ -40,10 +40,10 @@ public class Notification implements Serializable {
     public Notification() {
     }
 
-    public Notification(Integer idThe, Integer idAction, Boolean read, String message, LocalDateTime createdDate) {
+    public Notification(Integer idThe, Integer idAction, Integer read, String message, LocalDateTime createdDate) {
         this.idThe = idThe;
         this.idAction = idAction;
-        this.read = false;
+        this.read = read;
         this.message = message;
         this.createdDate = createdDate;
     }

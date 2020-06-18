@@ -128,6 +128,7 @@ public class RepCommentServiceImpl implements RepCommentService {
             actions.ifPresent(ac -> notifycation.setMessage(ac.getStatuss()));
             notifycation.setIdThe(SecurityUtils.getCurrentUserIdLogin());
             notifycation.setCreatedDate(LocalDateTime.now());
+            notifycation.setRead(0);
             notificationRepository.save(notifycation);
             /*
              * This block is used to

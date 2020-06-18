@@ -47,4 +47,7 @@ public class Baiviet implements Serializable {
 
     @Column(name = "trangthai")
     private Boolean trangthai;
+
+    @Column(name = "view_count")
+    private Integer viewCount;
 }
