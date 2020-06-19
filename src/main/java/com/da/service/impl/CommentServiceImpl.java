@@ -123,6 +123,7 @@ public class CommentServiceImpl implements CommentService {
             notifycation.setIdAction(Constant.COMMENT);
             notifycation.setIdThe(SecurityUtils.getCurrentUserIdLogin());
             notifycation.setRead(0);
+            notifycation.setIdBaiViet(idBV);
             Optional<Actions> actions = actionsRepository.findById(Constant.COMMENT);
             actions.ifPresent(ac -> notifycation.setMessage(ac.getStatuss()));
             notificationRepository.save(notifycation);
@@ -136,7 +137,7 @@ public class CommentServiceImpl implements CommentService {
             simpMessageHeaderAccessor.setContentType(MimeTypeUtils.APPLICATION_JSON);
             simpMessageHeaderAccessor.setLeaveMutable(true);
             MessageHeaders messageHeaders = simpMessageHeaderAccessor.getMessageHeaders();
-            simpMessagingTemplate.convertAndSendToUser(userService.getUserNameLogin(),"/api/feed", notifycation.getMessage(),messageHeaders);
+            simpMessagingTemplate.convertAndSendToUser(userService.getUserNameLogin(),"/queue/feed", notifycation.getMessage(),messageHeaders);
             return true;
         }
         return false;

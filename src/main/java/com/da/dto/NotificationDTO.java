@@ -16,9 +16,15 @@ public class NotificationDTO {
 
     private Integer idAction;
 
-    private Integer read;
+    private Integer isRead;
 
     private String message;
 
     private LocalDateTime createdDate;
+
+    private Integer idBaiViet;
+
+    private String titleBV;
+
+    private String userName;
 }

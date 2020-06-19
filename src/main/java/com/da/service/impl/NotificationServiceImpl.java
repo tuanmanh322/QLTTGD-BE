@@ -1,5 +1,6 @@
 package com.da.service.impl;
 
+import com.da.dao.NotificationDAO;
 import com.da.dto.NotificationDTO;
 import com.da.model.Notification;
 import com.da.repository.NotificationRepository;
@@ -22,9 +23,12 @@ public class NotificationServiceImpl implements NotificationService {
 
     private final ModelMapper modelMapper;
 
-    public NotificationServiceImpl(NotificationRepository notificationRepository, ModelMapper modelMapper) {
+    private final NotificationDAO notificationDAO;
+
+    public NotificationServiceImpl(NotificationRepository notificationRepository, ModelMapper modelMapper, NotificationDAO notificationDAO) {
         this.notificationRepository = notificationRepository;
         this.modelMapper = modelMapper;
+        this.notificationDAO = notificationDAO;
     }
 
     @Override
@@ -36,6 +40,12 @@ public class NotificationServiceImpl implements NotificationService {
         }
         notificationRepository.saveAll(notificationList);
         return notificationList;
+    }
+
+    @Override
+    public List<Notification> getAllNeedRead() {
+        log.info("start service to getAllNeedRead notification");
+        return notificationRepository.getAllNeedReadByIdThe(SecurityUtils.getCurrentUserIdLogin());
     }
 
     @Override
@@ -53,5 +63,32 @@ public class NotificationServiceImpl implements NotificationService {
         log.info("start service to deleteAll notification");
         List<Notification> notificationList = notificationRepository.getAllByIdThe(SecurityUtils.getCurrentUserIdLogin());
         notificationRepository.deleteAll(notificationList);
+    }
+
+    @Override
+    public List<NotificationDTO> getAllDetail() {
+        log.info("start service to getAllDetail notification");
+
+        return notificationDAO.getAllDetail(SecurityUtils.getCurrentUserIdLogin());
+    }
+
+    @Override
+    public boolean isRead() {
+        log.info("start service to isUnRead notification");
+        List<Notification> notifications = notificationRepository.isUnReadShowAll(SecurityUtils.getCurrentUserIdLogin(),0);
+        if (notifications.size()!= 0){
+            for (Notification notification : notifications){
+                notification.setRead(1);
+                notificationRepository.saveAll(notifications);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void readWithIdBV(Integer idBV) {
+        log.info("start service to readWithIdBV notification");
+
     }
 }

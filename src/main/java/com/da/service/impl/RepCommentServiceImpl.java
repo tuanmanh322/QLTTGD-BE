@@ -140,7 +140,7 @@ public class RepCommentServiceImpl implements RepCommentService {
             simpMessageHeaderAccessor.setContentType(MimeTypeUtils.APPLICATION_JSON);
             simpMessageHeaderAccessor.setLeaveMutable(true);
             MessageHeaders messageHeaders = simpMessageHeaderAccessor.getMessageHeaders();
-            simpMessagingTemplate.convertAndSendToUser(userService.getUserNameLogin(),"/api/feed", notifycation.getMessage(),messageHeaders);
+            simpMessagingTemplate.convertAndSendToUser(userService.getUserNameLogin(),"/queue/feed", notifycation.getMessage(),messageHeaders);
             return true;
         }
         return false;

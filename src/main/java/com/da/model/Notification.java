@@ -37,6 +37,9 @@ public class Notification implements Serializable {
     @Column(name = "created_date")
     private LocalDateTime createdDate;
 
+    @Column(name = "id_baiviet")
+    private Integer idBaiViet;
+
     public Notification() {
     }
 

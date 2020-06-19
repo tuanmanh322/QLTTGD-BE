@@ -1,5 +1,6 @@
 package com.da.controller;
 
+import com.da.dto.NotificationDTO;
 import com.da.model.Notification;
 import com.da.service.NotificationService;
 import org.slf4j.Logger;
@@ -35,11 +36,28 @@ public class NotificationController {
         log.info("start rest to get all Notification");
         return new ResponseEntity<>(notificationService.isUnRead(), HttpStatus.OK);
     }
+    @GetMapping("/all-need")
+    public ResponseEntity<List<Notification>> getAllNeedRead() {
+        log.info("start rest to get all getAllNeedRead");
+        return new ResponseEntity<>(notificationService.getAllNeedRead(), HttpStatus.OK);
+    }
 
     @GetMapping("/clear-notification")
     public ResponseEntity<Void> deleteAll() {
         log.info("start rest to get all Notification");
         notificationService.deleteAll();
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/all-detail")
+    public ResponseEntity<List<NotificationDTO>> getAllDetail() {
+        log.info("start rest to get all getAllDetail");
+        return new ResponseEntity<>(notificationService.getAllDetail(), HttpStatus.OK);
+    }
+
+    @GetMapping("/read-all")
+    public ResponseEntity<Boolean> readAll() {
+        log.info("start rest to get all readAll");
+        return new ResponseEntity<>(notificationService.isRead(), HttpStatus.OK);
     }
 }

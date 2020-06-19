@@ -16,4 +16,7 @@ public interface NotificationRepository extends JpaRepository<Notification, Inte
 
     @Query(nativeQuery = true, value = "select  * from notification as noti where noti.id_the=?1")
     List<Notification> getAllByIdThe(Integer idThe);
+
+    @Query(nativeQuery = true, value = "select  * from notification as noti where noti.id_the=?1 and noti.is_read =0")
+    List<Notification> getAllNeedReadByIdThe(Integer idThe);
 }
