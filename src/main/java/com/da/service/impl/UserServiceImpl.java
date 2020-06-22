@@ -5,6 +5,8 @@ import com.da.common.Constant;
 import com.da.common.FileUploadURL;
 import com.da.common.RandomString;
 import com.da.dao.UserDAO;
+import com.da.dto.ForgotPassword;
+import com.da.dto.PasswordChange;
 import com.da.dto.UserDTO;
 import com.da.exception.ErrorCode;
 import com.da.exception.ResultException;
@@ -315,16 +317,37 @@ public class UserServiceImpl implements UserService {
     @Override
     public String getUserNameLogin() {
         log.info("start service to get userLogin");
-        Optional<The> the = theRepository.findById(SecurityUtils.getCurrentUserIdLogin());
-        if (the.isPresent()) {
-            Users users = usersRepository.findByMaThe(the.get().getId());
-            return users.getName();
-        }
-        return "";
+        The the = theRepository.getOne(SecurityUtils.getCurrentUserIdLogin());
+        Users users = usersRepository.findByMaThe(the.getId());
+        return users.getName();
     }
 
     @Override
     public List<Users> getALl() {
         return usersRepository.findAll();
+    }
+
+    @Override
+    public void changePassword(PasswordChange passwordChange) throws ResultException {
+        log.info("start service to changePassword with {} ", passwordChange);
+        The the = theRepository.getOne(SecurityUtils.getCurrentUserIdLogin());
+        if (!passwordEncoder.matches(passwordChange.getOldPassword(),the.getPassword())) {
+            throw new ResultException(ErrorCode.PASSWORD_MATCH);
+        }
+        the.setPassword(passwordEncoder.encode(passwordChange.getNewPassword()));
+        theRepository.save(the);
+    }
+
+    @Override
+    public void forgotPassword(String email) throws ResultException {
+        log.info("start service to forgotPassword with email :{} ", email);
+        String newPassword = RandomString.rdPW();
+        Optional<Users> users = usersRepository.findByEmail(email.trim());
+        if (!users.isPresent()) {
+            throw new ResultException(ErrorCode.EMAIL_EXISTED);
+        }
+        The the = theRepository.getOne(users.get().getMaThe());
+        the.setPassword(passwordEncoder.encode(newPassword));
+        theRepository.save(the);
     }
 }

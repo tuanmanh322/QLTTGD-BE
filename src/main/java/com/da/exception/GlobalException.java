@@ -22,9 +22,11 @@ public class GlobalException {
 	                case RECORD_NOT_FOUND:
 	                case RECORD_NOT_EXISTED:
 					case FORBIDDEN:
+					case FILE_UPLOAD_FAILED:
 	                    return new ResponseEntity<>(getErrorDetails(errorCode), HttpStatus.NOT_FOUND);
 	                case RECORD_EXISTED:
 					case EMAIL_EXISTED:
+					case PASSWORD_MATCH:
 	                    return new ResponseEntity<>(getErrorDetails(errorCode), HttpStatus.CONFLICT);
 	                default:
 	                    return new ResponseEntity<>(getErrorDetails(errorCode), HttpStatus.INTERNAL_SERVER_ERROR);

@@ -316,17 +316,22 @@ public class BaiVietServiceImpl implements BaiVietService {
         log.info(" start service to isLikeOrUnLikeBV with id :{} and dto : {}", idBV, baiVietDTO);
         Optional<Baiviet> baiviet = baivietRepository.findById(idBV);
         if (baiviet.isPresent()) {
+            Notification notifycation = new Notification();
             Baiviet bv = baiviet.get();
+            if (bv.getLuotthich() < baiVietDTO.getLuotthich()){
+                notifycation.setCreatedDate(LocalDateTime.now());
+                notifycation.setIdAction(Constant.LIKE);
+                notifycation.setIdThe(SecurityUtils.getCurrentUserIdLogin());
+                Optional<Actions> actions = actionsRepository.findById(Constant.LIKE);
+                actions.ifPresent(ac -> notifycation.setMessage(ac.getStatuss()));
+                notifycation.setRead(0);
+                notifycation.setIdBaiViet(idBV);
+                notificationRepository.save(notifycation);
+            }
             bv.setLuotthich(baiVietDTO.getLuotthich());
             baivietRepository.save(bv);
-            Notification notifycation = new Notification();
-            notifycation.setCreatedDate(LocalDateTime.now());
-            notifycation.setIdAction(Constant.LIKE);
-            notifycation.setIdThe(SecurityUtils.getCurrentUserIdLogin());
-            Optional<Actions> actions = actionsRepository.findById(Constant.LIKE);
-            actions.ifPresent(ac -> notifycation.setMessage(ac.getStatuss()));
-            notifycation.setRead(0);
-            notificationRepository.save(notifycation);
+
+
             /*
              * This block is used to
              * send the notification the
@@ -337,7 +342,7 @@ public class BaiVietServiceImpl implements BaiVietService {
             simpMessageHeaderAccessor.setContentType(MimeTypeUtils.APPLICATION_JSON);
             simpMessageHeaderAccessor.setLeaveMutable(true);
             MessageHeaders messageHeaders = simpMessageHeaderAccessor.getMessageHeaders();
-            simpMessagingTemplate.convertAndSendToUser(userService.getUserNameLogin(),"/queue/feed", notifycation.getMessage(),messageHeaders);
+            simpMessagingTemplate.convertAndSendToUser(userService.getUserNameLogin(),"/queue/feed", "LIKE-UNLIKE",messageHeaders);
             return true;
         }
         return false;
@@ -348,16 +353,19 @@ public class BaiVietServiceImpl implements BaiVietService {
         log.info(" start service to isDislikeOrUnDisLikeBV with id :{} and dto : {}", idBV, baiVietDTO);
         Baiviet bv = findByIdModel(idBV);
         if (bv !=null){
-            bv.setLuotkhongthich(baiVietDTO.getLuotkhongthich());
-            baivietRepository.save(bv);
             Notification notifycation = new Notification();
-            notifycation.setCreatedDate(LocalDateTime.now());
-            notifycation.setIdAction(Constant.DISLIKE);
-            notifycation.setIdThe(SecurityUtils.getCurrentUserIdLogin());
-            Optional<Actions> actions = actionsRepository.findById(Constant.DISLIKE);
-            actions.ifPresent(ac -> notifycation.setMessage(ac.getStatuss()));
-            notifycation.setRead(0);
-            notificationRepository.save(notifycation);
+            bv.setLuotkhongthich(baiVietDTO.getLuotkhongthich());
+            if (bv.getLuotkhongthich() < baiVietDTO.getLuotkhongthich()){
+                notifycation.setCreatedDate(LocalDateTime.now());
+                notifycation.setIdAction(Constant.DISLIKE);
+                notifycation.setIdThe(SecurityUtils.getCurrentUserIdLogin());
+                Optional<Actions> actions = actionsRepository.findById(Constant.DISLIKE);
+                actions.ifPresent(ac -> notifycation.setMessage(ac.getStatuss()));
+                notifycation.setRead(0);
+                notifycation.setIdBaiViet(idBV);
+                notificationRepository.save(notifycation);
+            }
+            baivietRepository.save(bv);
             /*
              * This block is used to
              * send the notification the
@@ -368,7 +376,7 @@ public class BaiVietServiceImpl implements BaiVietService {
             simpMessageHeaderAccessor.setContentType(MimeTypeUtils.APPLICATION_JSON);
             simpMessageHeaderAccessor.setLeaveMutable(true);
             MessageHeaders messageHeaders = simpMessageHeaderAccessor.getMessageHeaders();
-            simpMessagingTemplate.convertAndSendToUser(userService.getUserNameLogin(),"/queue/feed", notifycation.getMessage(),messageHeaders);
+            simpMessagingTemplate.convertAndSendToUser(userService.getUserNameLogin(),"/queue/feed", "DISLIKE-UNDISLIKE",messageHeaders);
             return true;
         }
         return false;

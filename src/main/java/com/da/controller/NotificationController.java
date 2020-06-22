@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -59,5 +60,16 @@ public class NotificationController {
     public ResponseEntity<Boolean> readAll() {
         log.info("start rest to get all readAll");
         return new ResponseEntity<>(notificationService.isRead(), HttpStatus.OK);
+    }
+
+    @GetMapping("/already-like/{idBV}")
+    public ResponseEntity<Boolean> checkAlreadyLike(@PathVariable("idBV") Integer idBV) {
+        log.info("start rest to checkAlreadyLike with idBV: {}",idBV);
+        return new ResponseEntity<>(notificationService.checkAlreadyLike(idBV), HttpStatus.OK);
+    }
+    @GetMapping("/already-dislike/{idBV}")
+    public ResponseEntity<Boolean> checkAlreadyDislike(@PathVariable("idBV") Integer idBV) {
+        log.info("start rest to checkAlreadyDislike with idBV: {}",idBV);
+        return new ResponseEntity<>(notificationService.checkAlreadyDisLike(idBV), HttpStatus.OK);
     }
 }

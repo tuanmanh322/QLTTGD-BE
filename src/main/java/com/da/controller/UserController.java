@@ -1,6 +1,7 @@
 package com.da.controller;
 
 import com.da.common.CommonResult;
+import com.da.dto.PasswordChange;
 import com.da.dto.UserDTO;
 import com.da.exception.ResultException;
 import com.da.model.Users;
@@ -58,5 +59,18 @@ public class UserController {
     public ResponseEntity<List<Users>> getAll(){
         log.info("start rest to get getAll ");
         return new ResponseEntity<>(userService.getALl(),HttpStatus.OK);
+    }
+
+    @PostMapping("/change-password")
+    public ResponseEntity<Void> changePassword(@RequestBody PasswordChange passwordChange) throws ResultException{
+        log.info("Start rest to changePassword with :{}",passwordChange);
+        userService.changePassword(passwordChange);
+        return ResponseEntity.ok().build();
+    }
+    @GetMapping("/forgot-password")
+    public ResponseEntity<Void> forgotPassword(@RequestParam("email")String email) throws ResultException{
+        log.info("Start rest to forgotPassword with email:{}",email);
+        userService.forgotPassword(email);
+        return ResponseEntity.ok().build();
     }
 }

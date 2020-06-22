@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -90,5 +91,19 @@ public class NotificationServiceImpl implements NotificationService {
     public void readWithIdBV(Integer idBV) {
         log.info("start service to readWithIdBV notification");
 
+    }
+
+    @Override
+    public boolean checkAlreadyLike(Integer idBV) {
+        log.info("start service to checkAlreadyLike notification");
+        List<Notification> notification = notificationRepository.checkAlreadyLike(SecurityUtils.getCurrentUserIdLogin(),idBV);
+        return notification.size() == 1;
+    }
+
+    @Override
+    public boolean checkAlreadyDisLike(Integer idBV) {
+        log.info("start service to checkAlreadyDisLike notification");
+        List<Notification> notification = notificationRepository.checkAlreadyDisLike(SecurityUtils.getCurrentUserIdLogin(),idBV);
+        return notification.size() == 1;
     }
 }

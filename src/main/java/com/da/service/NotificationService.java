@@ -19,4 +19,8 @@ public interface NotificationService {
     boolean isRead();
 
     void readWithIdBV(Integer idBV);
+
+    boolean checkAlreadyLike(Integer idBV);
+
+    boolean checkAlreadyDisLike(Integer idBV);
 }

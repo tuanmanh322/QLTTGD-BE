@@ -1,6 +1,8 @@
 package com.da.service;
 
 import com.da.common.CommonResult;
+import com.da.dto.ForgotPassword;
+import com.da.dto.PasswordChange;
 import com.da.dto.UserDTO;
 import com.da.exception.ResultException;
 import com.da.model.Users;
@@ -23,4 +25,8 @@ public interface UserService {
     String getUserNameLogin();
 
     List<Users> getALl();
+
+    void changePassword(PasswordChange passwordChange)throws ResultException;
+
+    void forgotPassword(String  email)throws ResultException;
 }
