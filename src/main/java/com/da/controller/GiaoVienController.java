@@ -1,5 +1,6 @@
 package com.da.controller;
 
+import com.da.common.CommonResult;
 import com.da.dto.GiaoVienDTO;
 import com.da.dto.HocSinhDTO;
 import com.da.exception.ResultException;
@@ -35,10 +36,9 @@ public class GiaoVienController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Void> add(@RequestBody GiaoVienDTO dto) throws ResultException {
+    public ResponseEntity<CommonResult> add(@RequestBody GiaoVienDTO dto) throws ResultException {
         log.info(" start rest to add lop hoc with :{}", dto);
-        giaoVienService.add(dto);
-        return ResponseEntity.ok().build();
+        return new ResponseEntity<>( giaoVienService.add(dto),HttpStatus.OK);
     }
 
     @PutMapping("/edit")

@@ -10,6 +10,7 @@ import com.da.service.BaiVietService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -70,6 +71,7 @@ public class BaiVietController {
     }
 
     @GetMapping("/all")
+    @PreAuthorize("ADMIN")
     public ResponseEntity<List<BaiVietDTO>> getAllBVandCm(){
         log.info("start res to get getAllBVandCm");
         return new ResponseEntity<>(baiVietService.getBaiVietWithComment(),HttpStatus.OK);

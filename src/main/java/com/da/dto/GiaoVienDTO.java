@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @ToString
@@ -29,4 +31,18 @@ public class GiaoVienDTO extends BaseSearch{
     private String tenLop;
 
     private String maThe;
+
+    private String kipDay;
+
+    private Double luongcoban;
+
+    private Integer idLop;
+
+    private Date birthday;
+
+    private Integer cmt;
+
+    private Integer siso;
+
+    private String sex;
 }

@@ -13,4 +13,7 @@ public interface RepcommentRepository extends JpaRepository<Repcomment, Integer>
 
     @Query(nativeQuery = true, value = "select * from repcomment as re where re.id_comment=?1 order by re.created_date desc")
     List<Repcomment> findByIdComment(Integer idComment);
+
+    List<Repcomment> findByIdUser(Integer idUser);
 }
+
