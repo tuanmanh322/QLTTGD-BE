@@ -13,4 +13,5 @@ import java.util.List;
 public class AutocompleteSearchDTO {
     private String keyword;
     private List<String> excludeKeywords;
+    private Integer idCD;
 }

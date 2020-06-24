@@ -8,4 +8,7 @@ import java.util.List;
 
 public interface AutoCompleteDAO extends Serializable,BaseDAO {
     List<AutoCompleteTitleSet> searchTitleBV(AutocompleteSearchDTO autocompleteSearchDTO);
+
+    List<AutoCompleteTitleSet> searchTitleCD(AutocompleteSearchDTO autocompleteSearchDTO);
+
 }

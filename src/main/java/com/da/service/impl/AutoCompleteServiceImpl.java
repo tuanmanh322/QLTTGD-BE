@@ -35,4 +35,9 @@ public class AutoCompleteServiceImpl implements AutoCompleteService {
         log.info(" start service to autoCompleteTitleBV with {}",autocompleteSearchDTO);
         return autoCompleteDAO.searchTitleBV(autocompleteSearchDTO);
     }
+
+    @Override
+    public List<AutoCompleteTitleSet> autoCompleteTitleCD(AutocompleteSearchDTO autocompleteSearchDTO) {
+        return null;
+    }
 }

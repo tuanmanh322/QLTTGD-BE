@@ -7,4 +7,7 @@ import java.util.List;
 
 public interface AutoCompleteService {
     List<AutoCompleteTitleSet> autoCompleteTitleBV(AutocompleteSearchDTO autocompleteSearchDTO);
+
+    List<AutoCompleteTitleSet> autoCompleteTitleCD(AutocompleteSearchDTO autocompleteSearchDTO);
+
 }
