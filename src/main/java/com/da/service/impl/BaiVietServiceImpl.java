@@ -86,6 +86,8 @@ public class BaiVietServiceImpl implements BaiVietService {
         baiviet.setIdThe(SecurityUtils.getCurrentUserIdLogin());
         baiviet.setMa_chude(dto.getIdCD());
         baiviet.setCreatedDate(LocalDateTime.now());
+        baiviet.setLuotthich(0);
+        baiviet.setLuotkhongthich(0);
         baiVietDao.save(baiviet);
 
     }
@@ -137,14 +139,14 @@ public class BaiVietServiceImpl implements BaiVietService {
             List<Comment> comments = commentRepository.findByIdBaiViet(baiviet.getId());
             // add list comment
             comments.stream().map(cm -> {
-                Users usersCM = usersRepository.findById(cm.getIdUser()).get();
+                Users usersCM = usersRepository.findByMaThe(cm.getIdUser());
                 CommentDTO commentDTO = modelMap.map(cm, CommentDTO.class);
                 commentDTO.setUserName(usersCM.getName());
                 commentDTO.setImageAvatarCM(usersCM.getImagePath());
                 List<Repcomment> repcomments = repcommentRepository.findByIdComment(cm.getId());
                 // add list repcomment
                 repcomments.stream().map(rep -> {
-                    Users usersRCM = usersRepository.findById(rep.getIdUser()).get();
+                    Users usersRCM = usersRepository.findByMaThe(rep.getIdUser());
                     RepCommentDTO repCommentDTO = modelMap.map(rep, RepCommentDTO.class);
                     repCommentDTO.setUserName(usersRCM.getName());
                     repCommentDTO.setImageAvatarRCM(usersRCM.getImagePath());
@@ -225,7 +227,7 @@ public class BaiVietServiceImpl implements BaiVietService {
         List<Comment> comments = commentRepository.findByIdBaiViet(baiviets.getId());
         // add list comment
         comments.stream().map(cm -> {
-            Users usersCM = usersRepository.findById(cm.getIdUser()).get();
+            Users usersCM = usersRepository.findByMaThe(cm.getIdUser());
             CommentDTO commentDTO = modelMap.map(cm, CommentDTO.class);
             commentDTO.setImageCM(cm.getImageCM());
             commentDTO.setUserName(usersCM.getName());
@@ -234,7 +236,7 @@ public class BaiVietServiceImpl implements BaiVietService {
             List<Repcomment> repcomments = repcommentRepository.findByIdComment(cm.getId());
             // add list repcomment
             repcomments.stream().map(rep -> {
-                Users usersRCM = usersRepository.findById(rep.getIdUser()).get();
+                Users usersRCM = usersRepository.findByMaThe(rep.getIdUser());
                 RepCommentDTO repCommentDTO = modelMap.map(rep, RepCommentDTO.class);
                 repCommentDTO.setImageRCM(rep.getImageRCM());
                 repCommentDTO.setUserName(usersRCM.getName());
@@ -318,7 +320,7 @@ public class BaiVietServiceImpl implements BaiVietService {
         if (baiviet.isPresent()) {
             Notification notifycation = new Notification();
             Baiviet bv = baiviet.get();
-            if (bv.getLuotthich() < baiVietDTO.getLuotthich()){
+            if (bv.getLuotthich() < baiVietDTO.getLuotthich() || bv.getLuotthich() == null){
                 notifycation.setCreatedDate(LocalDateTime.now());
                 notifycation.setIdAction(Constant.LIKE);
                 notifycation.setIdThe(SecurityUtils.getCurrentUserIdLogin());
@@ -355,7 +357,7 @@ public class BaiVietServiceImpl implements BaiVietService {
         if (bv !=null){
             Notification notifycation = new Notification();
             bv.setLuotkhongthich(baiVietDTO.getLuotkhongthich());
-            if (bv.getLuotkhongthich() < baiVietDTO.getLuotkhongthich()){
+            if (bv.getLuotkhongthich() < baiVietDTO.getLuotkhongthich() || bv.getLuotkhongthich() == null){
                 notifycation.setCreatedDate(LocalDateTime.now());
                 notifycation.setIdAction(Constant.DISLIKE);
                 notifycation.setIdThe(SecurityUtils.getCurrentUserIdLogin());

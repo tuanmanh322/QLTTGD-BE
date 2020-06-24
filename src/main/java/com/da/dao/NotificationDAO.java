@@ -6,5 +6,5 @@ import java.io.Serializable;
 import java.util.List;
 
 public interface NotificationDAO extends Serializable, BaseDAO {
-    List<NotificationDTO> getAllDetail(Integer idThe);
+    List<NotificationDTO> getAllDetail(Integer idBV);
 }

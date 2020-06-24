@@ -69,6 +69,8 @@ public class CommentServiceImpl implements CommentService {
         log.info(" start service to searchChuDe with :{}",dto);
         Comment comment = modelMap.map(dto, Comment.class);
         comment.setIdUser(SecurityUtils.getCurrentUserIdLogin());
+        comment.setLuotthich(0);
+        comment.setLoutkhongthich(0);
         commentDao.save(comment);
     }
 

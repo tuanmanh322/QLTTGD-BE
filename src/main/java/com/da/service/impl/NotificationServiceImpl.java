@@ -2,7 +2,9 @@ package com.da.service.impl;
 
 import com.da.dao.NotificationDAO;
 import com.da.dto.NotificationDTO;
+import com.da.model.Baiviet;
 import com.da.model.Notification;
+import com.da.repository.BaivietRepository;
 import com.da.repository.NotificationRepository;
 import com.da.security.SecurityUtils;
 import com.da.service.NotificationService;
@@ -12,13 +14,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class NotificationServiceImpl implements NotificationService {
-    private final Logger log =LoggerFactory.getLogger(NotificationServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(NotificationServiceImpl.class);
 
     private final NotificationRepository notificationRepository;
 
@@ -26,17 +30,20 @@ public class NotificationServiceImpl implements NotificationService {
 
     private final NotificationDAO notificationDAO;
 
-    public NotificationServiceImpl(NotificationRepository notificationRepository, ModelMapper modelMapper, NotificationDAO notificationDAO) {
+    private final BaivietRepository baivietRepository;
+
+    public NotificationServiceImpl(NotificationRepository notificationRepository, ModelMapper modelMapper, NotificationDAO notificationDAO, BaivietRepository baivietRepository) {
         this.notificationRepository = notificationRepository;
         this.modelMapper = modelMapper;
         this.notificationDAO = notificationDAO;
+        this.baivietRepository = baivietRepository;
     }
 
     @Override
     public List<Notification> getAll() {
         log.info("start service to getAll notification");
         List<Notification> notificationList = notificationRepository.getAllByIdThe(SecurityUtils.getCurrentUserIdLogin());
-        for (Notification notification : notificationList){
+        for (Notification notification : notificationList) {
             notification.setRead(0);
         }
         notificationRepository.saveAll(notificationList);
@@ -46,14 +53,24 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public List<Notification> getAllNeedRead() {
         log.info("start service to getAllNeedRead notification");
-        return notificationRepository.getAllNeedReadByIdThe(SecurityUtils.getCurrentUserIdLogin());
+        List<Notification> result = new ArrayList<>();
+        List<Baiviet> baiviet = baivietRepository.getListBVByIdUser(SecurityUtils.getCurrentUserIdLogin());
+        if (!baiviet.isEmpty()) {
+            baiviet.stream().map(bv -> {
+            List<Notification> notifications = notificationRepository.getAllNeedReadByIdThe(bv.getId());
+            result.addAll(notifications);
+            return bv;
+            }).collect(Collectors.toList());
+            return result;
+        }
+        return null;
     }
 
     @Override
     public boolean isUnRead() {
         log.info("start service to isUnRead notification");
-        List<Notification> notifications = notificationRepository.isUnReadShowAll(SecurityUtils.getCurrentUserIdLogin(),0);
-        if (notifications.size()!= 0){
+        List<Notification> notifications = notificationRepository.isUnReadShowAll(SecurityUtils.getCurrentUserIdLogin(), 0);
+        if (notifications.size() != 0) {
             return true;
         }
         return false;
@@ -69,20 +86,37 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public List<NotificationDTO> getAllDetail() {
         log.info("start service to getAllDetail notification");
-
-        return notificationDAO.getAllDetail(SecurityUtils.getCurrentUserIdLogin());
+        List<NotificationDTO> result = new ArrayList<>();
+        List<Baiviet> baiviet = baivietRepository.getListBVByIdUser(SecurityUtils.getCurrentUserIdLogin());
+        if (!baiviet.isEmpty()) {
+            baiviet.stream().map(bv -> {
+                List<NotificationDTO> notifications = notificationDAO.getAllDetail(bv.getId());
+                result.addAll(notifications);
+                return bv;
+            }).collect(Collectors.toList());
+            return result;
+        }
+        return null;
     }
 
     @Override
     public boolean isRead() {
         log.info("start service to isUnRead notification");
-        List<Notification> notifications = notificationRepository.isUnReadShowAll(SecurityUtils.getCurrentUserIdLogin(),0);
-        if (notifications.size()!= 0){
-            for (Notification notification : notifications){
-                notification.setRead(1);
-                notificationRepository.saveAll(notifications);
-            }
-            return true;
+        List<Notification> result = new ArrayList<>();
+        List<Baiviet> baiviet = baivietRepository.getListBVByIdUser(SecurityUtils.getCurrentUserIdLogin());
+        if (!baiviet.isEmpty()) {
+            baiviet.stream().map(bv -> {
+                List<Notification> notifications = notificationRepository.isUnReadShowAll(bv.getId(), 0);
+                result.addAll(notifications);
+                return bv;
+            }).collect(Collectors.toList());
+             if (result.size() != 0) {
+                 for (Notification notification : result) {
+                     notification.setRead(1);
+                     notificationRepository.saveAll(result);
+                 }
+                 return true;
+             }
         }
         return false;
     }
@@ -96,14 +130,14 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public boolean checkAlreadyLike(Integer idBV) {
         log.info("start service to checkAlreadyLike notification");
-        List<Notification> notification = notificationRepository.checkAlreadyLike(SecurityUtils.getCurrentUserIdLogin(),idBV);
+        List<Notification> notification = notificationRepository.checkAlreadyLike(SecurityUtils.getCurrentUserIdLogin(), idBV);
         return notification.size() == 1;
     }
 
     @Override
     public boolean checkAlreadyDisLike(Integer idBV) {
         log.info("start service to checkAlreadyDisLike notification");
-        List<Notification> notification = notificationRepository.checkAlreadyDisLike(SecurityUtils.getCurrentUserIdLogin(),idBV);
+        List<Notification> notification = notificationRepository.checkAlreadyDisLike(SecurityUtils.getCurrentUserIdLogin(), idBV);
         return notification.size() == 1;
     }
 }

@@ -12,7 +12,7 @@ import java.util.Map;
 @Repository
 public class NotificationDAOImpl extends AbstractDAO implements NotificationDAO {
     @Override
-    public List<NotificationDTO> getAllDetail(Integer idThe) {
+    public List<NotificationDTO> getAllDetail(Integer idBV) {
         final StringBuilder sb = new StringBuilder();
         Map<String, Object> map = new HashMap<>();
         sb.append(" select  no.id ,");
@@ -28,9 +28,9 @@ public class NotificationDAOImpl extends AbstractDAO implements NotificationDAO 
         sb.append(" left join baiviet as bv on bv.id = no.id_baiviet");
         sb.append(" left join users as u on u.ma_the = no.id_the ");
         sb.append(" where 1 = 1 ");
-        if (idThe != null) {
-            sb.append(" and u.ma_the =:p_idThe");
-            map.put("p_idThe", idThe);
+        if (idBV != null) {
+            sb.append(" and no.id_baiviet =:p_id_baiviet");
+            map.put("p_id_baiviet", idBV);
         }
         sb.append(" order by no.created_date");
         return namedParameterJdbcTemplate().query(sb.toString(), map, new BeanPropertyRowMapper<>(NotificationDTO.class));

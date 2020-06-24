@@ -1,5 +1,6 @@
 package com.da.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -37,7 +38,7 @@ public class CommentDTO {
 
     private String imageAvatarCM;
 
-//    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime commentDate;
 
     private Long dateMiliCM;

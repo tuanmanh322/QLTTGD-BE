@@ -73,6 +73,8 @@ public class RepCommentServiceImpl implements RepCommentService {
     public void add(RepCommentDTO dto) throws ResultException {
         log.info(" start service to searchrepcomment with :{}", dto);
         Repcomment repcomment = modelMap.map(dto, Repcomment.class);
+        repcomment.setLuotthich(0);
+        repcomment.setLuotkhongthich(0);
         repCommentDao.save(repcomment);
     }
 

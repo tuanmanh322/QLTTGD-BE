@@ -105,7 +105,7 @@ public class LopHocServiceImpl implements LopHocService{
     @Override
     public void getListHocBaByIdThe(LopHocSearchDTO dto) {
         log.info(" start service to getListHocBaByIdThe");
-        lopHocDao.getListLopHocByIdThe(dto, SecurityUtils.getCurrentUserIdLogin());
+        lopHocDao.getListHocBaByIdThe(dto, SecurityUtils.getCurrentUserIdLogin());
     }
 
 }
