@@ -34,6 +34,6 @@ public class AutoCompleteController {
     @PostMapping("/cd")
     public ResponseEntity<List<AutoCompleteTitleSet>> autoCompleteCD(@RequestBody AutocompleteSearchDTO autocompleteSearchDTO) {
         log.info(" start rest  to autoCompleteCD with :{}", autocompleteSearchDTO);
-        return new ResponseEntity<>(autoCompleteService.autoCompleteTitleBV(autocompleteSearchDTO), HttpStatus.OK);
+        return new ResponseEntity<>(autoCompleteService.autoCompleteTitleCD(autocompleteSearchDTO), HttpStatus.OK);
     }
 }

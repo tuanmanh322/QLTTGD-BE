@@ -38,6 +38,7 @@ public class AutoCompleteServiceImpl implements AutoCompleteService {
 
     @Override
     public List<AutoCompleteTitleSet> autoCompleteTitleCD(AutocompleteSearchDTO autocompleteSearchDTO) {
-        return null;
+        log.info(" start service to autoCompleteTitleCD with {}",autocompleteSearchDTO);
+        return autoCompleteDAO.searchTitleCD(autocompleteSearchDTO);
     }
 }
