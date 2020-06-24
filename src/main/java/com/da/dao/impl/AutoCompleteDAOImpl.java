@@ -44,9 +44,9 @@ public class AutoCompleteDAOImpl extends AbstractDAO implements AutoCompleteDAO 
         List<String> excludeNames = autocompleteSearchDTO.getExcludeKeywords();
         sb.append("select new ");
         sb.append(AutoCompleteTitleSet.class.getName());
-        sb.append("(bv.id, bv.title, bv.ma_chude)");
+        sb.append("(bv.id, bv.title)");
         sb.append(" from Baiviet bv ");
-        sb.append(" left join chude as cd on cd.id = bv.ma_chude ");
+        sb.append(" left join Chude as cd on cd.id = bv.ma_chude ");
         sb.append(" where 1 = 1");
         sb.append(" and bv.ma_chude=:p_idCD ");
         sb.append(" and bv.title like :p_title ");
