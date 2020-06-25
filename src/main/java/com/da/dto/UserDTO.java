@@ -75,4 +75,6 @@ public class UserDTO {
     private String kipDay;
 
     private Boolean isTeacher;
+
+    private String maGV;
 }

@@ -87,6 +87,8 @@ public class GiaoVienServiceImpl implements GiaoVienService {
             user.setNgaysinh(dto.getBirthday());
             user.setName(dto.getName());
             user.setSodt(dto.getSodt());
+            String maGV = "GV_" + the.getId();
+            user.setIdUser(maGV);
             user.setSocmt(dto.getCmt());
             giaoVienDAO.save(user);
             UserLopMapper userLopMapper  = new UserLopMapper();
@@ -95,6 +97,7 @@ public class GiaoVienServiceImpl implements GiaoVienService {
             userLopMapperRepository.save(userLopMapper);
             CardDTO cardDTO = modelMap.map(the,CardDTO.class);
             cardDTO.setPassword("123456");
+            cardDTO.setMaGV(maGV);
             return CommonResult.success(cardDTO);
         }
         return CommonResult.failed();

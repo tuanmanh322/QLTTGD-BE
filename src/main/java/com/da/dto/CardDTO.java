@@ -27,4 +27,6 @@ public class CardDTO {
 
 
     private String nameRole;
+
+    private String maGV;
 }

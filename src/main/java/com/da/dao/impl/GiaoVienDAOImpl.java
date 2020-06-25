@@ -22,15 +22,15 @@ public class GiaoVienDAOImpl extends AbstractDAO implements GiaoVienDAO {
         sb.append(" select distinct u.id,");
         sb.append(" u.id_user as maGiaoVien,");
         sb.append(" u.name as Name ,");
-        sb.append(" u.gioitinh as GioiTinh,");
+        sb.append(" u.gioitinh as sex,");
         sb.append(" u.ngaysinh as NgaySinh, ");
         sb.append(" u.socmt as socmt, ");
         sb.append(" u.sodt as sodt, ");
-        sb.append(" u.ma_lop as maLop, ");
         sb.append(" l.id as idLop, ");
         sb.append(" l.tenlop as tenLop, ");
         sb.append(" l.kip_day as kipDay,");
         sb.append(" l.siso as siso,");
+        sb.append(" l.ma_lop as maLop,");
         sb.append(" u.ma_the as maThe");
         sb.append(" from users as u ");
         sb.append(" left join user_lop_mapper as ulm on ulm.id_user = u.id ");
@@ -39,6 +39,10 @@ public class GiaoVienDAOImpl extends AbstractDAO implements GiaoVienDAO {
         if (StringUtils.isNotBlank(dto.getName())) {
             sb.append(" and u.name like :p_name ");
             parameter.put("p_name", "%" + dto.getName().trim() + "%");
+        }
+        if (StringUtils.isNotBlank(dto.getMaGiaoVien())){
+            sb.append(" and u.id_user like :p_maGV ");
+            parameter.put("p_maGV", "%" + dto.getMaGiaoVien().trim() + "%");
         }
         if (StringUtils.isNotBlank(dto.getTenLop())) {
             sb.append(" and l.tenlop like :p_tenlop ");

@@ -288,6 +288,7 @@ public class UserServiceImpl implements UserService {
             userDTO.setTenMH(dto.getTenMH());
             userDTO.setTenHangMuc(dto.getTenHangMuc());
             userDTO.setKipDay(dto.getKipDay());
+            userDTO.setMaGV(users.getIdUser());
             return CommonResult.success(userDTO);
         }
         return null;

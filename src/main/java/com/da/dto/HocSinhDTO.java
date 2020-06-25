@@ -32,4 +32,8 @@ public class HocSinhDTO extends BaseSearch {
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private String thoiGianBatDau;
+
+    private String hocsinhName;
+
+    private String soThe;
 }
