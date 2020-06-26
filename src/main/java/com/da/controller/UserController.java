@@ -3,6 +3,7 @@ package com.da.controller;
 import com.da.common.CommonResult;
 import com.da.dto.PasswordChange;
 import com.da.dto.UserDTO;
+import com.da.dto.UserSearchDTO;
 import com.da.exception.ResultException;
 import com.da.model.Users;
 import com.da.service.UserService;
@@ -71,6 +72,32 @@ public class UserController {
     public ResponseEntity<Void> forgotPassword(@RequestParam("email")String email) throws ResultException{
         log.info("Start rest to forgotPassword with email:{}",email);
         userService.forgotPassword(email);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/search-user")
+    public ResponseEntity<UserSearchDTO> userSearchDTOResponseEntity(@RequestBody UserSearchDTO dto) {
+        log.info("Start rest to userSearchDTOResponseEntity :{}",dto);
+        userService.userSearch(dto);
+        return new ResponseEntity<>(dto,HttpStatus.OK);
+    }
+
+    @PostMapping("/add-admin")
+    public ResponseEntity<Void> userSearchDTOResponseEntity(@RequestBody UserDTO dto)throws ResultException {
+        log.info("Start rest to userSearchDTOResponseEntity :{}",dto);
+        userService.addByAdmin(dto);
+        return ResponseEntity.ok().build();
+    }
+    @GetMapping("/lock-user/{idThe}")
+    public ResponseEntity<Void> doLock(@PathVariable("idThe") Integer idThe) {
+        log.info("Start rest to doLock :{}",idThe);
+        userService.doLock(idThe);
+        return ResponseEntity.ok().build();
+    }
+    @GetMapping("/unlock-user/{idThe}")
+    public ResponseEntity<Void> doUnLock(@PathVariable("idThe") Integer idThe) {
+        log.info("Start rest to doUnLock :{}",idThe);
+        userService.doUnLock(idThe);
         return ResponseEntity.ok().build();
     }
 }

@@ -4,13 +4,20 @@ import com.da.common.CommonResult;
 import com.da.dto.ForgotPassword;
 import com.da.dto.PasswordChange;
 import com.da.dto.UserDTO;
+import com.da.dto.UserSearchDTO;
 import com.da.exception.ResultException;
 import com.da.model.Users;
 
 import java.util.List;
 
 public interface UserService {
+    void userSearch(UserSearchDTO userSearchDTO);
+
     UserDTO getCurrentUserLogin();
+
+    void addByAdmin(UserDTO dto) throws ResultException;
+
+    void editByAdmin(UserDTO dto);
 
     CommonResult addUser(UserDTO dto) throws ResultException;
 
@@ -29,4 +36,7 @@ public interface UserService {
     void changePassword(PasswordChange passwordChange)throws ResultException;
 
     void forgotPassword(String  email)throws ResultException;
+
+    void doLock(Integer idThe);
+    void doUnLock(Integer idThe);
 }

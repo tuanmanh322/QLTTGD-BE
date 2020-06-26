@@ -5,7 +5,7 @@ public class RandomString {
         String rdpw = "0123456789";
         StringBuilder sb = new StringBuilder(8);
         sb.append(theID);
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 5; i++) {
 
             int index
                     = (int)(rdpw.length()

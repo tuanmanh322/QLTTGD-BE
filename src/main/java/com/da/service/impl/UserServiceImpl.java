@@ -8,6 +8,7 @@ import com.da.dao.UserDAO;
 import com.da.dto.ForgotPassword;
 import com.da.dto.PasswordChange;
 import com.da.dto.UserDTO;
+import com.da.dto.UserSearchDTO;
 import com.da.exception.ErrorCode;
 import com.da.exception.ResultException;
 import com.da.model.*;
@@ -57,7 +58,10 @@ public class UserServiceImpl implements UserService {
 
     private final HangMucRepository hangMucRepository;
 
-    public UserServiceImpl(UsersRepository usersRepository, RolesRepository rolesRepository, TheRepository theRepository, LopRepository lopRepository, ModelMapper modelMapper, UserDAO userDAO, FileStorageService fileStorageService, BaivietRepository baivietRepository, MonhocRepository monhocRepository, HangMucRepository hangMucRepository) {
+    private final UserLopMapperRepository userLopMapperRepository;
+
+
+    public UserServiceImpl(UsersRepository usersRepository, RolesRepository rolesRepository, TheRepository theRepository, LopRepository lopRepository, ModelMapper modelMapper, UserDAO userDAO, FileStorageService fileStorageService, BaivietRepository baivietRepository, MonhocRepository monhocRepository, HangMucRepository hangMucRepository, UserLopMapperRepository userLopMapperRepository) {
         this.usersRepository = usersRepository;
         this.rolesRepository = rolesRepository;
         this.theRepository = theRepository;
@@ -68,6 +72,13 @@ public class UserServiceImpl implements UserService {
         this.baivietRepository = baivietRepository;
         this.monhocRepository = monhocRepository;
         this.hangMucRepository = hangMucRepository;
+        this.userLopMapperRepository = userLopMapperRepository;
+    }
+
+    @Override
+    public void userSearch(UserSearchDTO userSearchDTO) {
+        log.info(" start service to userSearch with :{}", userSearchDTO);
+        userDAO.searchUser(userSearchDTO);
     }
 
     @Override
@@ -108,6 +119,73 @@ public class UserServiceImpl implements UserService {
         List<Baiviet> bvTotal = baivietRepository.getListBVByIdUser(u.getId());
         userDTO.setTotalBV(bvTotal.size());
         return userDTO;
+    }
+
+    @Override
+    public void addByAdmin(UserDTO dto) throws ResultException {
+        log.info(" start service to addByAdmin with :{}", dto);
+        The t = new The();
+        UserLopMapper userLopMapper = new UserLopMapper();
+        String maThe = "";
+        switch (dto.getIdRole()) {
+            case 1:
+                maThe = RandomString.rdMaThe(Constant.MA_THE_ADMIN);
+                break;
+            case 2:
+                maThe = RandomString.rdMaThe(Constant.MA_THE_TEACHER);
+                break;
+            case 3:
+                maThe = RandomString.rdMaThe(Constant.MA_THE_STUDENT);
+                break;
+        }
+        Optional<The> the = theRepository.findByMaThe(maThe);
+        if (the.isPresent()) {
+            throw new ResultException(ErrorCode.RECORD_EXISTED);
+        }
+        t.setMaThe(maThe);
+        t.setIdRole(dto.getIdRole());
+        t.setNgaycap(new Date());
+        t.setPassword(passwordEncoder.encode("123456"));
+        t.setTrangthai(Boolean.TRUE);
+        theRepository.save(t);
+        Users users = new Users();
+        users.setMaThe(t.getId());
+        users.setName(dto.getName());
+        users.setGioitinh(dto.getSex());
+        users.setQuequan(dto.getQuequan());
+        users.setSodt(dto.getSodt());
+        if (dto.getIdRole() == 2) {
+            users.setIsTeacher(true);
+            users.setLuongcoban(dto.getLuongcoban());
+            userLopMapper.setIdLop(dto.getIdLop());
+        }
+        usersRepository.save(users);
+        if (dto.getIdRole() == 2) {
+            userLopMapper.setIdUser(users.getId());
+            userLopMapperRepository.save(userLopMapper);
+        }
+    }
+
+    @Override
+    public void editByAdmin(UserDTO dto) {
+        The the = theRepository.getOne(dto.getIdThe());
+        if (dto.getIdRole() != null) {
+            the.setIdRole(dto.getIdRole());
+            theRepository.save(the);
+        }
+        Users users = usersRepository.findByMaThe(the.getId());
+        users.setSodt(dto.getSodt());
+        users.setQuequan(dto.getQuequan());
+        if (dto.getIdRole() == 2) {
+            users.setLuongcoban(dto.getLuongcoban());
+        }
+        users.setName(dto.getName());
+        usersRepository.save(users);
+        if (dto.getIdLop() != null){
+            UserLopMapper userLopMapper = userLopMapperRepository.findByUserAndLop(users.getId(),dto.getIdLopOld());
+            userLopMapper.setIdLop(dto.getIdLop());
+            userLopMapperRepository.save(userLopMapper);
+        }
     }
 
     @Override
@@ -332,7 +410,7 @@ public class UserServiceImpl implements UserService {
     public void changePassword(PasswordChange passwordChange) throws ResultException {
         log.info("start service to changePassword with {} ", passwordChange);
         The the = theRepository.getOne(SecurityUtils.getCurrentUserIdLogin());
-        if (!passwordEncoder.matches(passwordChange.getOldPassword(),the.getPassword())) {
+        if (!passwordEncoder.matches(passwordChange.getOldPassword(), the.getPassword())) {
             throw new ResultException(ErrorCode.PASSWORD_MATCH);
         }
         the.setPassword(passwordEncoder.encode(passwordChange.getNewPassword()));
@@ -350,5 +428,22 @@ public class UserServiceImpl implements UserService {
         The the = theRepository.getOne(users.get().getMaThe());
         the.setPassword(passwordEncoder.encode(newPassword));
         theRepository.save(the);
+    }
+
+    @Override
+    public void doLock(Integer idThe) {
+        log.info("start service to doLock with idThe :{} ", idThe);
+        The the = theRepository.getOne(idThe);
+        the.setTrangthai(false);
+        theRepository.save(the);
+    }
+
+    @Override
+    public void doUnLock(Integer idThe) {
+        log.info("start service to doUnLock with idThe :{} ", idThe);
+        The the = theRepository.getOne(idThe);
+        the.setTrangthai(true);
+        theRepository.save(the);
+
     }
 }

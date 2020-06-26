@@ -19,4 +19,9 @@ public interface Constant {
     Integer DISLIKE = 2;
     Integer COMMENT = 3;
     Integer REPCOMMENT = 4;
+
+    String MA_THE_ADMIN = "111";
+    String MA_THE_TEACHER = "131";
+    String MA_THE_STUDENT = "151";
+    String MA_THE_CUSTOMER = "202";
 }
