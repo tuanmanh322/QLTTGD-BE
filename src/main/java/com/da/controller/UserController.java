@@ -83,9 +83,15 @@ public class UserController {
     }
 
     @PostMapping("/add-admin")
-    public ResponseEntity<Void> userSearchDTOResponseEntity(@RequestBody UserDTO dto)throws ResultException {
-        log.info("Start rest to userSearchDTOResponseEntity :{}",dto);
+    public ResponseEntity<Void> addAdmin(@RequestBody UserDTO dto)throws ResultException {
+        log.info("Start rest to addAdmin :{}",dto);
         userService.addByAdmin(dto);
+        return ResponseEntity.ok().build();
+    }
+    @PutMapping("/edit-admin")
+    public ResponseEntity<Void> editByaDMIN(@RequestBody UserDTO dto)throws ResultException {
+        log.info("Start rest to editByaDMIN :{}",dto);
+        userService.editByAdmin(dto);
         return ResponseEntity.ok().build();
     }
     @GetMapping("/lock-user/{idThe}")
