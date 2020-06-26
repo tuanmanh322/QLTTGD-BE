@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -34,4 +35,10 @@ public interface LopRepository extends JpaRepository<Lop, Integer>, JpaSpecifica
             value = "select * from lop as lo where lo.ma_lop=?1"
     )
     Optional<Lop> findBYmAlOP(String tenLop);
+
+    @Query(
+            nativeQuery = true,
+            value = "select * from lop as lo where lo.id=?1"
+    )
+    List<Lop> findByIdLop(Integer idLop);
 }

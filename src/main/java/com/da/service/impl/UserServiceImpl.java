@@ -5,10 +5,7 @@ import com.da.common.Constant;
 import com.da.common.FileUploadURL;
 import com.da.common.RandomString;
 import com.da.dao.UserDAO;
-import com.da.dto.ForgotPassword;
-import com.da.dto.PasswordChange;
-import com.da.dto.UserDTO;
-import com.da.dto.UserSearchDTO;
+import com.da.dto.*;
 import com.da.exception.ErrorCode;
 import com.da.exception.ResultException;
 import com.da.model.*;
@@ -26,13 +23,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class UserServiceImpl implements UserService {
+public class
+UserServiceImpl implements UserService {
     private final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
@@ -60,8 +60,10 @@ public class UserServiceImpl implements UserService {
 
     private final UserLopMapperRepository userLopMapperRepository;
 
+    private final NhatcheckinRepository nhatcheckinRepository;
 
-    public UserServiceImpl(UsersRepository usersRepository, RolesRepository rolesRepository, TheRepository theRepository, LopRepository lopRepository, ModelMapper modelMapper, UserDAO userDAO, FileStorageService fileStorageService, BaivietRepository baivietRepository, MonhocRepository monhocRepository, HangMucRepository hangMucRepository, UserLopMapperRepository userLopMapperRepository) {
+
+    public UserServiceImpl(UsersRepository usersRepository, RolesRepository rolesRepository, TheRepository theRepository, LopRepository lopRepository, ModelMapper modelMapper, UserDAO userDAO, FileStorageService fileStorageService, BaivietRepository baivietRepository, MonhocRepository monhocRepository, HangMucRepository hangMucRepository, UserLopMapperRepository userLopMapperRepository, NhatcheckinRepository nhatcheckinRepository) {
         this.usersRepository = usersRepository;
         this.rolesRepository = rolesRepository;
         this.theRepository = theRepository;
@@ -73,6 +75,7 @@ public class UserServiceImpl implements UserService {
         this.monhocRepository = monhocRepository;
         this.hangMucRepository = hangMucRepository;
         this.userLopMapperRepository = userLopMapperRepository;
+        this.nhatcheckinRepository = nhatcheckinRepository;
     }
 
     @Override
@@ -181,8 +184,8 @@ public class UserServiceImpl implements UserService {
         }
         users.setName(dto.getName());
         usersRepository.save(users);
-        if (dto.getIdLop() != null){
-            UserLopMapper userLopMapper = userLopMapperRepository.findByUserAndLop(users.getId(),dto.getIdLopOld());
+        if (dto.getIdLop() != null) {
+            UserLopMapper userLopMapper = userLopMapperRepository.findByUserAndLop(users.getId(), dto.getIdLopOld());
             userLopMapper.setIdLop(dto.getIdLop());
             userLopMapperRepository.save(userLopMapper);
         }
@@ -445,5 +448,40 @@ public class UserServiceImpl implements UserService {
         the.setTrangthai(true);
         theRepository.save(the);
 
+    }
+
+    @Override
+    public CommonResult checkInUser(String maThe) {
+        log.info("start service to checkInUser with maThe :{} ", maThe);
+        Optional<The> the = theRepository.findByMaThe(maThe);
+        if (!the.isPresent()) {
+            return CommonResult.failed("Không tìm thấy thông tin user");
+        }
+        The t = the.get();
+        UserCheckinDTO userCheckinDTO = new UserCheckinDTO();
+        userCheckinDTO.setIdThe(t.getId());
+        userCheckinDTO.setMaThe(t.getMaThe());
+        Users users = usersRepository.findByMaThe(t.getId());
+        userCheckinDTO.setUserName(users.getName());
+        List<Lop> lopList = new ArrayList<>();
+        List<UserLopMapper> userLopMappers = userLopMapperRepository.findByIdUser(users.getId());
+        if (!userLopMappers.isEmpty()) {
+            userLopMappers.stream().map(ulm -> {
+                Lop lop = lopRepository.findById(ulm.getIdLop()).get();
+                lopList.add(lop);
+                return ulm;
+            }).collect(Collectors.toList());
+            userCheckinDTO.setLopList(lopList);
+        }
+        Nhatcheckin nhatcheckin = new Nhatcheckin();
+        nhatcheckin.setMaThe(t.getId());
+        nhatcheckin.setStatus(Constant.CHECKIN);
+        nhatcheckin.setThoigianvao(new Date());
+        nhatcheckinRepository.save(nhatcheckin);
+        List<Nhatcheckin> nccList  =nhatcheckinRepository.findByMaThe(t.getId());
+        if (!nccList.isEmpty()){
+            userCheckinDTO.setNhatcheckins(nccList);
+        }
+        return CommonResult.success(userCheckinDTO);
     }
 }

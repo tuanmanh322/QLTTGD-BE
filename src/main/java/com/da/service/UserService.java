@@ -1,10 +1,7 @@
 package com.da.service;
 
 import com.da.common.CommonResult;
-import com.da.dto.ForgotPassword;
-import com.da.dto.PasswordChange;
-import com.da.dto.UserDTO;
-import com.da.dto.UserSearchDTO;
+import com.da.dto.*;
 import com.da.exception.ResultException;
 import com.da.model.Users;
 
@@ -39,4 +36,6 @@ public interface UserService {
 
     void doLock(Integer idThe);
     void doUnLock(Integer idThe);
+
+    CommonResult checkInUser(String maThe);
 }

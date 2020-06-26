@@ -23,6 +23,7 @@ public class GlobalException {
 	                case RECORD_NOT_EXISTED:
 					case FORBIDDEN:
 					case FILE_UPLOAD_FAILED:
+					case USER_DOES_NOT_EXIST:
 	                    return new ResponseEntity<>(getErrorDetails(errorCode), HttpStatus.NOT_FOUND);
 	                case RECORD_EXISTED:
 					case EMAIL_EXISTED:

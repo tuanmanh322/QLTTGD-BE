@@ -8,7 +8,9 @@ public enum ErrorCode {
 	RECORD_EXISTED("041","RECORD_EXISTED"),
 	FILE_UPLOAD_FAILED("415","FILE_UPLOAD_FAILED"),
 	EMAIL_EXISTED("456","EMAIL EXISTED!"),
-	PASSWORD_MATCH("002","PASSWORD NOT MATCH!");
+	PASSWORD_MATCH("002","PASSWORD NOT MATCH!"),
+	USER_DOES_NOT_EXIST("005","USER DOES NOT EXIST!");
+
 	private String code;
 	private String message;
 	private ErrorCode(String code, String message) {

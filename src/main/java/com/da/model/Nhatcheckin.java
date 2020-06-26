@@ -21,13 +21,12 @@ public class Nhatcheckin implements Serializable {
     private String maNhatky;
 
     @Column(name = "ma_the")
-    private String maThe;
+    private Integer maThe;
+
+    @Column(name = "status")
+    private String status;
 
     @Column(name = "thoigianvao")
     private Date thoigianvao;
 
-    @Column(name = "ma_lop")
-    private String maLop;
-
-    
 }

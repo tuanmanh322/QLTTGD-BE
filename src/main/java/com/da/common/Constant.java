@@ -24,4 +24,6 @@ public interface Constant {
     String MA_THE_TEACHER = "131";
     String MA_THE_STUDENT = "151";
     String MA_THE_CUSTOMER = "202";
+
+    String CHECKIN = "CHECKIN";
 }
