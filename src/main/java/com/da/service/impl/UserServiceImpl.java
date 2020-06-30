@@ -23,6 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -451,9 +452,9 @@ UserServiceImpl implements UserService {
     }
 
     @Override
-    public CommonResult checkInUser(String maThe) {
-        log.info("start service to checkInUser with maThe :{} ", maThe);
-        Optional<The> the = theRepository.findByMaThe(maThe);
+    public CommonResult checkInUser(UserCheckinDTO dto) {
+        log.info("start service to checkInUser with dto :{} ", dto);
+        Optional<The> the = theRepository.findByMaThe(dto.getMaThe());
         if (!the.isPresent()) {
             return CommonResult.failed("Không tìm thấy thông tin user");
         }
@@ -463,6 +464,7 @@ UserServiceImpl implements UserService {
         userCheckinDTO.setMaThe(t.getMaThe());
         Users users = usersRepository.findByMaThe(t.getId());
         userCheckinDTO.setUserName(users.getName());
+        userCheckinDTO.setImagePath(users.getImagePath());
         List<Lop> lopList = new ArrayList<>();
         List<UserLopMapper> userLopMappers = userLopMapperRepository.findByIdUser(users.getId());
         if (!userLopMappers.isEmpty()) {
@@ -473,10 +475,20 @@ UserServiceImpl implements UserService {
             }).collect(Collectors.toList());
             userCheckinDTO.setLopList(lopList);
         }
+        Optional<Nhatcheckin> ncc = nhatcheckinRepository.findByMaTheWithDateAndIdLop(t.getId(),dto.getIdLop());
+        if (ncc.isPresent()){
+//            List<Nhatcheckin> nccList  =nhatcheckinRepository.findByMaThe(t.getId());
+//            if (!nccList.isEmpty()){
+//                userCheckinDTO.setNhatcheckins(nccList);
+//                return CommonResult.success(userCheckinDTO);
+//            }
+            return CommonResult.failed("Ngày hôm nay bạn đã checkin vào hệ thống rồi");
+        }
         Nhatcheckin nhatcheckin = new Nhatcheckin();
         nhatcheckin.setMaThe(t.getId());
         nhatcheckin.setStatus(Constant.CHECKIN);
-        nhatcheckin.setThoigianvao(new Date());
+        nhatcheckin.setThoigianvao(LocalDateTime.now());
+        nhatcheckin.setIdLop(dto.getIdLop());
         nhatcheckinRepository.save(nhatcheckin);
         List<Nhatcheckin> nccList  =nhatcheckinRepository.findByMaThe(t.getId());
         if (!nccList.isEmpty()){

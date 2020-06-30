@@ -6,9 +6,11 @@ import java.util.Map;
 
 import javax.persistence.criteria.Order;
 
+import com.da.dto.LopHocDTO;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.da.dao.LopHocDAO;
@@ -167,6 +169,75 @@ public class LopHocDAOImpl extends AbstractDAO implements LopHocDAO {
             sb.append(" order by lo.tenlop ");
         }
         searchAndCountTotal(dto, sb.toString(), parameter, LopHocSearchDTO.class);
+    }
+
+    @Override
+    public void searchLopHocFilter(LopHocSearchDTO dto) {
+        log.info("Start dao searchLopHocFilter with :{}", dto);
+        final StringBuilder sb = new StringBuilder();
+        Map<String, Object> parameter = new HashMap<>();
+        sb.append(" select  lo.id ,lo.ma_lop as maLop,");
+        sb.append(" lo.tenlop as tenLop,");
+        sb.append(" mh.tenmonhoc as tenMonHoc,");
+        sb.append(" lo.thoigianbatdau  as ngayKhaiGiang,");
+        sb.append(" lo.thoigianketthuc  as ngayKetThuc,");
+        sb.append(" lo.siso  as siSo,");
+        sb.append(" lo.diadiem as diaDiem,");
+        sb.append(" lo.hocphi as hocPhi");
+        sb.append(" from LOP as lo");
+        sb.append(" left join MONHOC as mh on lo.ma_monhoc = mh.ma_monhoc");
+        sb.append(" where 1=1");
+        if (StringUtils.isNotBlank(dto.getTenLop())) {
+            sb.append(" and lo.tenlop like :p_tenlop ");
+            parameter.put("p_tenlop", "%" + dto.getTenLop().trim() + "%");
+        }
+        if (dto.getEndDate() != null && dto.getStartDate() != null) {
+            sb.append(" and lo.thoigianbatdau >= :p_startdate and lo.thoigianbatdau <= :p_enddate ");
+            parameter.put("p_startdate", dto.getStartDate());
+            parameter.put("p_enddate", dto.getEndDate());
+        }
+        if (dto.getFinishLop() != null && dto.getFinishLop() == 0) {
+            sb.append(" and lo.thoigianketthuc >= SYSDATE()  ");
+            sb.append(" or day(lo.thoigianketthuc) >= day(sysdate())  and  month(lo.thoigianketthuc) >= month(sysdate()) ");
+        }
+        if (dto.getNewLop() != null && dto.getNewLop() == 1) {
+            sb.append(" and lo.thoigianbatdau >= SYSDATE() ");
+            sb.append(" and lo.thoigianketthuc > SYSDATE() ");
+        }
+        if (dto.getOrders() != null && !dto.getOrders().isEmpty()) {
+            sb.append(" order by ");
+            dto.getOrders().forEach(order -> {
+                String property = StringUtils.trimToEmpty(order.getProperty());
+                switch (property) {
+                    case "tenlop":
+                        sb.append(" lo.tenlop ").append(getOrderBy(order.isAscending())).append(",");
+                        break;
+                }
+            });
+            sb.deleteCharAt(sb.length() - 1);
+        } else {
+            sb.append(" order by lo.tenlop ");
+        }
+        searchAndCountTotal(dto, sb.toString(), parameter, LopHocSearchDTO.class);
+    }
+
+    @Override
+    public List<LopHocDTO> getLopByMaThe(String maThe) {
+        log.info("Start dao getLopByMaThe with :{}", maThe);
+        final StringBuilder sb = new StringBuilder();
+        Map<String, Object> map = new HashMap<>();
+        sb.append(" select lo.id as id,");
+        sb.append(" lo.tenlop as tenlop");
+        sb.append(" from lop as lo");
+        sb.append(" left join user_lop_mapper as ulm on ulm.id_lop = lo.id");
+        sb.append(" left join users as u on u.id = ulm.id_user");
+        sb.append(" left join the as t on t.id = u.ma_the");
+        sb.append(" where 1=1 ");
+        if (StringUtils.isNotBlank(maThe)) {
+            sb.append(" and t.ma_the like :p_mathe");
+            map.put("p_mathe", "%" + maThe.trim() + "%");
+        }
+        return namedParameterJdbcTemplate().query(sb.toString(),map,new BeanPropertyRowMapper<>(LopHocDTO.class));
     }
 
 }

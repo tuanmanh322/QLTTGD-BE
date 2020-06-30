@@ -1,5 +1,6 @@
 package com.da.service.impl;
 
+import com.da.common.Constant;
 import com.da.common.ParseDiemTB;
 import com.da.dao.DiemDAO;
 import com.da.dto.DiemActionDTO;
@@ -11,6 +12,7 @@ import com.da.exception.ResultException;
 import com.da.model.*;
 import com.da.repository.*;
 import com.da.security.SecurityUtils;
+import com.da.security.UserTypeEnum;
 import com.da.service.DiemService;
 import com.da.service.HocSinhService;
 import org.apache.poi.ss.usermodel.Cell;
@@ -26,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -35,6 +38,7 @@ import java.util.Optional;
 public class DiemServiceImpl implements DiemService {
     private final Logger log = LoggerFactory.getLogger(HocSinhService.class);
 
+    private final String PASSWORD = "123456";
 
     private final ModelMapper modelMap;
 
@@ -167,6 +171,7 @@ public class DiemServiceImpl implements DiemService {
                 }
                 Iterator cells = ro.cellIterator();
                 while (i <= workSheet.getLastRowNum()) {
+                    The t = new The();
                     Users users = new Users();
                     Diem diem = new Diem();
                     UsersDiemMap usersDiemMap = new UsersDiemMap();
@@ -217,9 +222,16 @@ public class DiemServiceImpl implements DiemService {
                             userLopMapperRepository.save(lopMapper);
                         }
                     } else {
+                        t.setIdRole(UserTypeEnum.STUDENT.getId());
+                        t.setTrangthai(true);
+                        t.setNgaycap(new Date());
+                        t.setPassword(PASSWORD);
+                        t.setMaThe(row.getCell(0).getStringCellValue().trim());
+                        theRepository.save(t);
                         users.setName(row.getCell(1).getStringCellValue().trim());
                         users.setNgaysinh(row.getCell(2).getDateCellValue());
                         users.setIsTeacher(false);
+                        users.setMaThe(t.getId());
                         usersRepository.save(users);
                         diem.setDiemmieng(row.getCell(3).getNumericCellValue());
                         diem.setDiem15p(row.getCell(4).getNumericCellValue());

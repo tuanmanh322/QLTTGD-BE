@@ -51,4 +51,8 @@ public class LopHocSearchDTO extends BaseSearch{
 	private Float diem90p;
 
 	private Float diemTB;
+
+	private Integer newLop;
+
+	private Integer finishLop;
 }

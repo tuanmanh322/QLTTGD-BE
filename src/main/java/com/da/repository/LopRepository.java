@@ -41,4 +41,10 @@ public interface LopRepository extends JpaRepository<Lop, Integer>, JpaSpecifica
             value = "select * from lop as lo where lo.id=?1"
     )
     List<Lop> findByIdLop(Integer idLop);
+
+    @Query(
+            nativeQuery = true,
+            value = "select * from lop as lo where lo.thoigianbatdau<= sysdate() and lo.thoigianketthuc >= sysdate()"
+    )
+    List<Lop> getAllUnExpired();
 }

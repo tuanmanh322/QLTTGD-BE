@@ -45,9 +45,21 @@ public class HocSinhController {
     }
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable("id")Integer id)throws ResultException{
-        log.info(" start service to delete with :{}",id);
+        log.info(" start rest to delete with :{}",id);
         hocService.delete(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/count-all-hs")
+    public ResponseEntity<Integer> countAllHS() {
+        log.info(" start rest to countHS ");
+        return new ResponseEntity<>(hocService.countAllHS(),HttpStatus.OK);
+    }
+
+    @GetMapping("/count-hs-active")
+    public ResponseEntity<Integer> countHSActive() {
+        log.info(" start rest to countHS ");
+        return new ResponseEntity<>(hocService.countHSActive(),HttpStatus.OK);
     }
 
 }

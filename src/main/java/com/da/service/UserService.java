@@ -37,5 +37,5 @@ public interface UserService {
     void doLock(Integer idThe);
     void doUnLock(Integer idThe);
 
-    CommonResult checkInUser(String maThe);
+    CommonResult checkInUser(UserCheckinDTO userCheckinDTO);
 }

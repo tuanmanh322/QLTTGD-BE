@@ -2,6 +2,7 @@ package com.da.service;
 
 import com.da.dto.CheckInDTO;
 import com.da.dto.HocSinhDTO;
+import com.da.dto.NhatKySearchDTO;
 import com.da.exception.ResultException;
 
 public interface CheckInService {
@@ -9,4 +10,5 @@ public interface CheckInService {
     void add(CheckInDTO dto) throws ResultException;
 
     void searchCheckInByProfile(CheckInDTO dto);
+
 }

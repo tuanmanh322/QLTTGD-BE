@@ -2,6 +2,7 @@ package com.da.controller;
 
 import com.da.common.CommonResult;
 import com.da.dto.PasswordChange;
+import com.da.dto.UserCheckinDTO;
 import com.da.dto.UserDTO;
 import com.da.dto.UserSearchDTO;
 import com.da.exception.ResultException;
@@ -111,9 +112,9 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/users-checkin")
-    public ResponseEntity<CommonResult> checkinUser(@RequestParam("maThe") String maThe) {
-        log.info(" start rest to checinUser with :{}", maThe);
-        return new ResponseEntity<>(userService.checkInUser(maThe), HttpStatus.OK);
+    @PostMapping("/users-checkin")
+    public ResponseEntity<CommonResult> checkinUser(@RequestBody UserCheckinDTO  dto) {
+        log.info(" start rest to checinUser with :{}", dto);
+        return new ResponseEntity<>(userService.checkInUser(dto), HttpStatus.OK);
     }
 }

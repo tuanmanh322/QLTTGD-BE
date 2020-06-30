@@ -22,4 +22,8 @@ public class UserCheckinDTO {
     private List<Lop> lopList;
 
     private List<Nhatcheckin> nhatcheckins;
+
+    private String imagePath;
+
+    private Integer idLop;
 }

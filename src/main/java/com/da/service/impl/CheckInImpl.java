@@ -3,6 +3,7 @@ package com.da.service.impl;
 import com.da.dao.CheckInDAO;
 import com.da.dto.CheckInDTO;
 
+import com.da.dto.NhatKySearchDTO;
 import com.da.exception.ResultException;
 import com.da.model.Users;
 import com.da.security.SecurityUtils;
@@ -43,4 +44,6 @@ public class CheckInImpl implements CheckInService {
         log.info(" start service to searchCheckInByProfile with :{}",dto);
         checkInDAO.searchCheckInByProfile(dto, SecurityUtils.getCurrentUserIdLogin());
     }
+
+
 }

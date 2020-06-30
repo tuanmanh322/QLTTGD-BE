@@ -9,4 +9,8 @@ public interface HocSinhService {
     void update(HocSinhDTO dto)throws ResultException;
     void delete(Integer id)throws ResultException;
     HocSinhDTO findById(Integer id);
+
+    Integer countAllHS();
+
+    Integer countHSActive();
 }

@@ -7,7 +7,12 @@ import com.da.dto.LopHocSearchDTO;
 import com.da.exception.ErrorCode;
 import com.da.exception.ResultException;
 import com.da.model.Lop;
+import com.da.model.The;
+import com.da.model.UserLopMapper;
 import com.da.model.Users;
+import com.da.repository.TheRepository;
+import com.da.repository.UserLopMapperRepository;
+import com.da.repository.UsersRepository;
 import com.da.service.HocSinhService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -16,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 @Transactional
@@ -27,10 +33,20 @@ public class HocSinhServiceImpl implements HocSinhService {
 
     private final HocSinhDao hocSinhDao;
 
-    public HocSinhServiceImpl(ModelMapper modelMap, HocSinhDao lopHocDao) {
+    private final TheRepository theRepository;
+
+    private final UserLopMapperRepository userLopMapperRepository;
+
+    private final UsersRepository usersRepository;
+
+    public HocSinhServiceImpl(ModelMapper modelMap, HocSinhDao hocSinhDao, TheRepository theRepository, UserLopMapperRepository userLopMapperRepository, UsersRepository usersRepository) {
         this.modelMap = modelMap;
-        this.hocSinhDao = lopHocDao;
+        this.hocSinhDao = hocSinhDao;
+        this.theRepository = theRepository;
+        this.userLopMapperRepository = userLopMapperRepository;
+        this.usersRepository = usersRepository;
     }
+
     @Override
     public void searchHocSinh(HocSinhDTO dto) {
         log.info(" start service to searchLopHoc with :{}",dto);
@@ -70,5 +86,17 @@ public class HocSinhServiceImpl implements HocSinhService {
         Users user = hocSinhDao.findById(id, Users.class).get();
         HocSinhDTO dto = modelMap.map(user, HocSinhDTO.class);
         return dto;
+    }
+
+    @Override
+    public Integer countAllHS() {
+        List<The> theList  = theRepository.getListAllHocSInh();
+        return theList.size();
+    }
+
+    @Override
+    public Integer countHSActive() {
+        List<The> theList  = theRepository.getListHocSInhActive();
+        return theList.size();
     }
 }
