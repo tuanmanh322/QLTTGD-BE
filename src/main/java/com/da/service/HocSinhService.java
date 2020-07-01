@@ -1,5 +1,6 @@
 package com.da.service;
 
+import com.da.common.CommonResult;
 import com.da.dto.HocSinhDTO;
 import com.da.exception.ResultException;
 
@@ -13,4 +14,12 @@ public interface HocSinhService {
     Integer countAllHS();
 
     Integer countHSActive();
+
+    CommonResult registerLop(Integer idLop);
+
+    void activeLop(Integer id);
+
+    void unActiveLop(Integer id);
+
+    void deleteULM(Integer idULM);
 }

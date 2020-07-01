@@ -22,9 +22,9 @@ public class NhatKyCheckInDAOImpl extends AbstractDAO implements NhatKyCheckInDA
         sb.append(" from the as t");
         sb.append(" left join users as u on u.ma_the = t.id");
         sb.append(" left join nhatcheckin as ck on ck.ma_the = t.id  and ck.ma_the is not null");
-        sb.append(" left join user_lop_mapper as ulm on ulm.id_user= u.id and ck.id_lop = ulm.id_lop");
+        sb.append(" left join user_lop_mapper as ulm on ulm.id_user= u.id and ck.id_lop = ulm.id_lop and ulm.trangthai = 1");
         sb.append(" left join lop as lo on lo.id = ck.id_lop");
-        sb.append(" where 1 = 1 ");
+        sb.append(" where 1 = 1   ");
         sb.append(" and ck.thoigianvao is not null");
         if (StringUtils.isNotBlank(nhatKySearchDTO.getTenLop())) {
             sb.append(" and lo.tenlop like :p_tenlop");

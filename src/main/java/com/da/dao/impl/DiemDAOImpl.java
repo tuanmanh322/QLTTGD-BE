@@ -102,7 +102,7 @@ public class DiemDAOImpl extends AbstractDAO implements DiemDAO {
         sb.append("  l.id as idLop,");
         sb.append(" l.tenlop");
         sb.append(" from users u ");
-        sb.append(" left join user_lop_mapper ulm on ulm.id_user = u.id");
+        sb.append(" left join user_lop_mapper ulm on ulm.id_user = u.id and ulm.trangthai = 1");
         sb.append(" left join lop l on l.id = ulm.id_lop");
         sb.append(" where 1 = 1   ");
         sb.append(" and  u.ma_the =" + idThe + "),");
@@ -112,7 +112,7 @@ public class DiemDAOImpl extends AbstractDAO implements DiemDAO {
         sb.append(" mh.tenmonhoc as tenMonHoc,");
         sb.append(" u.id as idHS");
         sb.append(" from users u ");
-        sb.append(" left join user_lop_mapper ulm on ulm.id_user = u.id");
+        sb.append(" left join user_lop_mapper ulm on ulm.id_user = u.id and ulm.trangthai = 1");
         sb.append(" left join lop l on l.id = ulm.id_lop");
         sb.append(" left join info_gv igv on igv.idLop = l.id");
         sb.append(" left join monhoc mh on mh.id = l.ma_monhoc");
@@ -160,7 +160,7 @@ public class DiemDAOImpl extends AbstractDAO implements DiemDAO {
         sb.append("  l.id as idLop,");
         sb.append(" l.tenlop");
         sb.append(" from users u ");
-        sb.append(" left join user_lop_mapper ulm on ulm.id_user = u.id");
+        sb.append(" left join user_lop_mapper ulm on ulm.id_user = u.id and ulm.trangthai = 1");
         sb.append(" left join lop l on l.id = ulm.id_lop");
         sb.append(" where 1 = 1   ");
         sb.append(" and  u.ma_the =" + idThe + "),");
@@ -170,7 +170,7 @@ public class DiemDAOImpl extends AbstractDAO implements DiemDAO {
         sb.append(" mh.tenmonhoc as tenMonHoc,");
         sb.append(" u.id as idHS");
         sb.append(" from users u ");
-        sb.append(" left join user_lop_mapper ulm on ulm.id_user = u.id");
+        sb.append(" left join user_lop_mapper ulm on ulm.id_user = u.id and ulm.trangthai = 1");
         sb.append(" left join lop l on l.id = ulm.id_lop");
         sb.append(" left join info_gv igv on igv.idLop = l.id");
         sb.append(" left join monhoc mh on mh.id = l.ma_monhoc");

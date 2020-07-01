@@ -1,5 +1,6 @@
 package com.da.controller;
 
+import com.da.dto.LopHocRequestDTO;
 import com.da.model.Lop;
 import com.da.repository.LopRepository;
 import org.springframework.http.HttpStatus;
@@ -107,6 +108,12 @@ public class LopController {
     public ResponseEntity<List<LopHocDTO>> getLopByMaThe(@RequestParam("maThe") String maThe) {
         log.info(" start rest to getLopByMaThe ");
         return new ResponseEntity<>(hocService.getLopByMaThe(maThe), HttpStatus.OK);
+    }
+
+    @PostMapping("/lop-request")
+    public ResponseEntity<LopHocRequestDTO> getListLOpRequest(@RequestBody LopHocRequestDTO dto) {
+        hocService.getListLopRequest(dto);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
 }

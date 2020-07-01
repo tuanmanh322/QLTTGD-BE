@@ -44,7 +44,7 @@ public interface LopRepository extends JpaRepository<Lop, Integer>, JpaSpecifica
 
     @Query(
             nativeQuery = true,
-            value = "select * from lop as lo where lo.thoigianbatdau<= sysdate() and lo.thoigianketthuc >= sysdate()"
+            value = "select * from lop as lo where lo.thoigianbatdau<= sysdate() and lo.thoigianketthuc >= sysdate() order  by lo.tenlop"
     )
     List<Lop> getAllUnExpired();
 }

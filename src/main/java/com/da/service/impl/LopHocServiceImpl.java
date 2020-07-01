@@ -1,5 +1,6 @@
 package com.da.service.impl;
 
+import com.da.dto.LopHocRequestDTO;
 import com.da.model.Monhoc;
 import com.da.model.The;
 import com.da.repository.LopRepository;
@@ -124,6 +125,11 @@ public class LopHocServiceImpl implements LopHocService {
     public List<LopHocDTO> getLopByMaThe(String maThe) {
         log.info(" start service to getLopByMaThe with :{}", maThe);
         return lopHocDao.getLopByMaThe(maThe);
+    }
+
+    @Override
+    public void getListLopRequest(LopHocRequestDTO lopHocRequestDTO) {
+        lopHocDao.getListLopRequest(lopHocRequestDTO);
     }
 
 }

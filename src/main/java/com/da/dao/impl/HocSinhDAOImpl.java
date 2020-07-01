@@ -32,7 +32,7 @@ public class HocSinhDAOImpl extends AbstractDAO implements HocSinhDao {
         sb.append(" t.ma_the as soThe");
         sb.append(" from users as u ");
         sb.append(" left join the as t on t.id = u.ma_the ");
-        sb.append(" left join user_lop_mapper as ulm on u.id = ulm.id_user ");
+        sb.append(" left join user_lop_mapper as ulm on u.id = ulm.id_user and ulm.trangthai = 1");
         sb.append(" left join Lop as l on l.id = ulm.id_lop ");
         sb.append(" where 1=1 ");
         sb.append(" and t.id_role = 3 ");

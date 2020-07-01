@@ -1,4 +1,5 @@
 package com.da.controller;
+import com.da.common.CommonResult;
 import com.da.dto.HocSinhDTO;
 import com.da.exception.ResultException;
 import com.da.service.HocSinhService;
@@ -62,4 +63,26 @@ public class HocSinhController {
         return new ResponseEntity<>(hocService.countHSActive(),HttpStatus.OK);
     }
 
+    @GetMapping("/active-lop/{idULM}")
+    public ResponseEntity<Void> activeLop(@PathVariable("idULM") Integer idULM) {
+        hocService.activeLop(idULM);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/unactive-lop/{idULM}")
+    public ResponseEntity<Void> unActiveLop(@PathVariable("idULM") Integer idULM) {
+        hocService.unActiveLop(idULM);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/register-lop/{idLop}")
+    public ResponseEntity<CommonResult> registerLop(@PathVariable("idLop") Integer idLop) {
+        return new ResponseEntity<>(hocService.registerLop(idLop),HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete-register/{idULM}")
+    public ResponseEntity<Void> deleteActiveLop(@PathVariable("idULM") Integer idULM) {
+        hocService.deleteULM(idULM);
+        return ResponseEntity.ok().build();
+    }
 }

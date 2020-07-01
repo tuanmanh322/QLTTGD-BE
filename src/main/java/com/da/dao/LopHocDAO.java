@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.da.dto.LopHocDTO;
+import com.da.dto.LopHocRequestDTO;
 import com.da.dto.LopHocSearchDTO;
 
 public interface LopHocDAO extends Serializable,BaseDAO{
@@ -17,4 +18,6 @@ public interface LopHocDAO extends Serializable,BaseDAO{
 	void searchLopHocFilter(LopHocSearchDTO dto);
 
 	List<LopHocDTO> getLopByMaThe(String maThe);
+
+	void getListLopRequest(LopHocRequestDTO lopHocRequestDTO);
 }
