@@ -20,7 +20,7 @@ public class GiaoVienDTO extends BaseSearch{
     private String GioiTinh;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private String NgaySinh;
+    private Date NgaySinh;
 
     private String socmt;
 

@@ -31,7 +31,8 @@ public class GiaoVienDAOImpl extends AbstractDAO implements GiaoVienDAO {
         sb.append(" l.kip_day as kipDay,");
         sb.append(" l.siso as siso,");
         sb.append(" l.ma_lop as maLop,");
-        sb.append(" u.ma_the as maThe");
+        sb.append(" u.ma_the as maThe,");
+        sb.append(" u.luongcoban as luongcoban");
         sb.append(" from users as u ");
         sb.append(" left join user_lop_mapper as ulm on ulm.id_user = u.id and ulm.trangthai = 1");
         sb.append(" left join lop as l on l.id = ulm.id_lop");

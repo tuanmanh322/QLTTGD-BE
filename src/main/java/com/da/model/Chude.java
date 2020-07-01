@@ -25,4 +25,7 @@ public class Chude implements Serializable {
     @Column(name = "noidung")
     private String noiDung;
 
+    @Column(name = "id_hangmuc")
+    private Integer idHangmuc;
+
 }

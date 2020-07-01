@@ -110,7 +110,12 @@ public class GiaoVienServiceImpl implements GiaoVienService {
         if (user.getId() == null) {
             throw new ResultException(ErrorCode.RECORD_NOT_EXISTED);
         }
-        user = modelMap.map(dto, Users.class);
+       user.setLuongcoban(dto.getLuongcoban());
+        user.setName(dto.getName());
+        user.setSodt(dto.getSodt());
+        user.setSocmt(dto.getCmt());
+        user.setGioitinh(dto.getSex());
+        user.setNgaysinh(dto.getNgaySinh());
         UserLopMapper  userLopMapper  = new UserLopMapper();
         userLopMapper.setIdUser(user.getId());
         userLopMapper.setIdLop(dto.getIdLop());

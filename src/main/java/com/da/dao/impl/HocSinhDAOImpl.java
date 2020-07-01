@@ -42,7 +42,7 @@ public class HocSinhDAOImpl extends AbstractDAO implements HocSinhDao {
             parameter.put("p_name", "%" + dto.getHocsinhName().trim() + "%");
         }
         if (StringUtils.isNotBlank(dto.getMaHocSinh())) {
-            sb.append(" and t.ma_the=:p_maHocS ");
+            sb.append(" and t.ma_the like :p_maHocS ");
             parameter.put("p_maHocS", "%" + dto.getMaHocSinh().trim() + "%");
         }
         if (StringUtils.isNotBlank(dto.getTenLop())) {
