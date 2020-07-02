@@ -265,18 +265,22 @@ public class LopHocDAOImpl extends AbstractDAO implements LopHocDAO {
         sb.append(" left join THE as t on t.id = u.ma_the");
         sb.append(" where 1=1 ");
 
-        if (StringUtils.isNotBlank(lopHocRequestDTO.getTenLop())){
+        if (StringUtils.isNotBlank(lopHocRequestDTO.getTenLop())) {
             sb.append("and lo.tenlop like :p_tenlop");
-            parameter.put("p_tenlop","%" + lopHocRequestDTO.getTenLop().trim() + "%");
+            parameter.put("p_tenlop", "%" + lopHocRequestDTO.getTenLop().trim() + "%");
         }
 
-        if (StringUtils.isNotBlank(lopHocRequestDTO.getUsername())){
+        if (StringUtils.isNotBlank(lopHocRequestDTO.getUsername())) {
             sb.append(" and u.name like :p_username");
-            parameter.put("p_username","%" + lopHocRequestDTO.getUsername().trim() +"%");
+            parameter.put("p_username", "%" + lopHocRequestDTO.getUsername().trim() + "%");
+        }
+        if (lopHocRequestDTO.getActive() != null) {
+            sb.append(" and ulm.trangthai=:p_active");
+            parameter.put("p_active",lopHocRequestDTO.getActive());
         }
         sb.append(" order by ulm.id desc");
 
-        searchAndCountTotal(lopHocRequestDTO,sb.toString(),parameter, LopHocRequestDTO.class);
+        searchAndCountTotal(lopHocRequestDTO, sb.toString(), parameter, LopHocRequestDTO.class);
     }
 
 }
