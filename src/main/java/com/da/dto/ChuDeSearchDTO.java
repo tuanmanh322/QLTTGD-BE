@@ -11,11 +11,13 @@ import javax.persistence.Column;
 @ToString
 public class ChuDeSearchDTO extends BaseSearch{
 
-    private String id;
+    private Integer id;
 
     private String machude;
 
     private String tenchude;
 
     private String noidung;
+
+    private String tenHangmuc;
 }

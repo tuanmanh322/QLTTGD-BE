@@ -20,17 +20,21 @@ public class ChuDeDAOImpl extends AbstractDAO implements ChuDeDAO {
         log.info("Start dao searchChuDe with :{}",dto);
         final StringBuilder sb = new StringBuilder();
         Map<String, Object> parameter = new HashMap<>();
-        sb.append(" select  cd.id ," );
+        sb.append(" select distinct cd.id ," );
         sb.append(" cd.ma_chude as maChude,");
         sb.append(" cd.tenchude as tenChude,");
         sb.append(" cd.noidung as noiDung,");
         sb.append(" hm.tenhangmuc as tenHangmuc");
         sb.append(" from CHUDE as cd");
-        sb.append(" left join HANGMUC as hm on cd.ma_hangmucbaiviet = hm.ma_hangmucbaiviet");
+        sb.append(" left join HANGMUC as hm on cd.id_hangmuc = hm.id");
         sb.append(" where 1=1");
         if (StringUtils.isNotBlank(dto.getTenchude())) {
             sb.append(" and cd.tenchude like :p_tenchude ");
-            parameter.put("p_tenchude ", "%" + dto.getTenchude().trim() + "%");
+            parameter.put("p_tenchude", "%" + dto.getTenchude().trim() + "%");
+        }
+        if (StringUtils.isNotBlank(dto.getTenHangmuc())) {
+            sb.append(" and hm.tenhangmuc like :p_tenhangmuc ");
+            parameter.put("p_tenhangmuc", "%" + dto.getTenHangmuc().trim() + "%");
         }
         if (dto.getOrders() != null && !dto.getOrders().isEmpty()) {
             sb.append(" order by ");
