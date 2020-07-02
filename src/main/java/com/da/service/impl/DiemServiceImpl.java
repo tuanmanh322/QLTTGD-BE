@@ -23,6 +23,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -58,7 +59,9 @@ public class DiemServiceImpl implements DiemService {
 
     private final TheRepository theRepository;
 
-    public DiemServiceImpl(ModelMapper modelMap, DiemDAO diemDAO, UsersRepository usersRepository, LopRepository lopRepository, UsersDiemMapRepository usersDiemMapRepository, UserLopMapperRepository userLopMapperRepository, DiemRepository diemRepository, MonhocRepository monhocRepository, TheRepository theRepository) {
+    private final PasswordEncoder passwordEncoder;
+
+    public DiemServiceImpl(ModelMapper modelMap, DiemDAO diemDAO, UsersRepository usersRepository, LopRepository lopRepository, UsersDiemMapRepository usersDiemMapRepository, UserLopMapperRepository userLopMapperRepository, DiemRepository diemRepository, MonhocRepository monhocRepository, TheRepository theRepository, PasswordEncoder passwordEncoder) {
         this.modelMap = modelMap;
         this.diemDAO = diemDAO;
         this.usersRepository = usersRepository;
@@ -68,6 +71,7 @@ public class DiemServiceImpl implements DiemService {
         this.diemRepository = diemRepository;
         this.monhocRepository = monhocRepository;
         this.theRepository = theRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -194,10 +198,12 @@ public class DiemServiceImpl implements DiemService {
                         if (lo.isPresent()) {
                             userLopMapper.setIdLop(lo.get().getId());
                             userLopMapper.setIdUser(u.getId());
+                            userLopMapper.setActive(true);
                             userLopMapperRepository.save(userLopMapper);
                             UserLopMapper lopMapper = new UserLopMapper();
                             lopMapper.setIdUser(idUser);
                             lopMapper.setIdLop(lo.get().getId());
+                            lopMapper.setActive(true);
                             userLopMapperRepository.save(lopMapper);
                         } else {
                             lop.setTenlop(row.getCell(9).getStringCellValue().trim());
@@ -215,18 +221,22 @@ public class DiemServiceImpl implements DiemService {
                             lopRepository.save(lop);
                             userLopMapper.setIdUser(idUser);
                             userLopMapper.setIdLop(lop.getId());
+                            userLopMapper.setActive(true);
                             userLopMapperRepository.save(userLopMapper);
                             UserLopMapper lopMapper = new UserLopMapper();
                             lopMapper.setIdUser(idUser);
                             lopMapper.setIdLop(lop.getId());
+                            lopMapper.setActive(true);
                             userLopMapperRepository.save(lopMapper);
                         }
                     } else {
+                        String maThe = "" + row.getCell(0).getNumericCellValue();
+                        String newMaThe = maThe.replace(".","");
                         t.setIdRole(UserTypeEnum.STUDENT.getId());
                         t.setTrangthai(true);
                         t.setNgaycap(new Date());
-                        t.setPassword(PASSWORD);
-                        t.setMaThe(row.getCell(0).getStringCellValue().trim());
+                        t.setPassword(passwordEncoder.encode(PASSWORD.trim()));
+                        t.setMaThe(newMaThe.substring(0,newMaThe.indexOf("E")));
                         theRepository.save(t);
                         users.setName(row.getCell(1).getStringCellValue().trim());
                         users.setNgaysinh(row.getCell(2).getDateCellValue());
@@ -245,10 +255,12 @@ public class DiemServiceImpl implements DiemService {
                         if (lo.isPresent()) {
                             userLopMapper.setIdLop(lo.get().getId());
                             userLopMapper.setIdUser(users.getId());
+                            userLopMapper.setActive(true);
                             userLopMapperRepository.save(userLopMapper);
                             UserLopMapper lopMapper = new UserLopMapper();
                             lopMapper.setIdUser(idUser);
                             lopMapper.setIdLop(lo.get().getId());
+                            lopMapper.setActive(true);
                             userLopMapperRepository.save(lopMapper);
                         } else {
                             lop.setTenlop(row.getCell(9).getStringCellValue().trim());
@@ -266,10 +278,12 @@ public class DiemServiceImpl implements DiemService {
                             lopRepository.save(lop);
                             userLopMapper.setIdLop(lop.getId());
                             userLopMapper.setIdUser(users.getId());
+                            userLopMapper.setActive(true);
                             userLopMapperRepository.save(userLopMapper);
                             UserLopMapper lopMapper = new UserLopMapper();
                             lopMapper.setIdUser(idUser);
                             lopMapper.setIdLop(lop.getId());
+                            lopMapper.setActive(true);
                             userLopMapperRepository.save(lopMapper);
                         }
                     }
