@@ -31,6 +31,14 @@ public class HangMucDAOImpl extends AbstractDAO implements HangMucDAO {
            sb.append(" and hm.ma_hangmucbaiviet like :p_ma_hangmucbaiviet ");
            parameter.put("p_ma_hangmucbaiviet", "%" + dto.getMaHangmucbaiviet().trim() + "%");
        }
+       if (StringUtils.isNotBlank(dto.getTenhangmuc())) {
+           sb.append(" and hm.tenhangmuc like :p_tenhangmuc ");
+           parameter.put("p_tenhangmuc", "%" + dto.getTenhangmuc().trim() + "%");
+       }
+       if (StringUtils.isNotBlank(dto.getTenMonHoc())) {
+           sb.append(" and mh.tenmonhoc like :p_tenmonhoc ");
+           parameter.put("p_tenmonhoc", "%" + dto.getTenMonHoc().trim() + "%");
+       }
        if (dto.getOrders() != null && !dto.getOrders().isEmpty()) {
            sb.append(" order by ");
            dto.getOrders().forEach(order ->{
