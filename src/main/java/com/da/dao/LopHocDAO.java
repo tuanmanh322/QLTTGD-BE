@@ -20,4 +20,6 @@ public interface LopHocDAO extends Serializable,BaseDAO{
 	List<LopHocDTO> getLopByMaThe(String maThe);
 
 	void getListLopRequest(LopHocRequestDTO lopHocRequestDTO);
+
+	List<LopHocDTO> getLopUnexpired();
 }

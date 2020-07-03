@@ -116,4 +116,8 @@ public class LopController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
+    @GetMapping("/get-lop-unexpired")
+    public ResponseEntity<List<LopHocDTO>> getListLopUnexpired() {
+        return new ResponseEntity<>(hocService.getLopUnexpiredDao(), HttpStatus.OK);
+    }
 }

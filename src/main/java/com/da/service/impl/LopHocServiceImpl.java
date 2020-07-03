@@ -132,4 +132,9 @@ public class LopHocServiceImpl implements LopHocService {
         lopHocDao.getListLopRequest(lopHocRequestDTO);
     }
 
+    @Override
+    public List<LopHocDTO> getLopUnexpiredDao() {
+        return lopHocDao.getLopUnexpired();
+    }
+
 }

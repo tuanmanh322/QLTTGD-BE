@@ -24,4 +24,7 @@ public class UserLopMapper implements Serializable {
 
     @Column(name = "trangthai")
     private Boolean active;
+
+    @Column(name = "is_teach")
+    private Boolean isTeach;
 }

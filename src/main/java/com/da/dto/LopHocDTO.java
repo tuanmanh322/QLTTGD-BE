@@ -30,4 +30,8 @@ public class LopHocDTO {
 
 	private Integer maMonhoc;
 
+	private Integer kipDay;
+
+	private Integer countSiSo;
+
 }

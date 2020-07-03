@@ -28,17 +28,19 @@ public class LopHocDAOImpl extends AbstractDAO implements LopHocDAO {
         log.info("Start dao searchLopHoc with :{}", dto);
         final StringBuilder sb = new StringBuilder();
         Map<String, Object> parameter = new HashMap<>();
-        sb.append(" select  lo.id ,lo.ma_lop as maLop,");
+        sb.append(" select distinct lo.id ,lo.ma_lop as maLop,");
         sb.append(" lo.tenlop as tenLop,");
         sb.append(" mh.tenmonhoc as tenMonHoc,");
         sb.append(" lo.thoigianbatdau  as ngayKhaiGiang,");
         sb.append(" lo.thoigianketthuc  as ngayKetThuc,");
         sb.append(" lo.siso  as siSo,");
         sb.append(" lo.diadiem as diaDiem,");
-        sb.append(" lo.hocphi as hocPhi");
+        sb.append(" lo.hocphi as hocPhi,");
+        sb.append(" count(ulm.id_lop) as countSiSo");
         sb.append(" from LOP as lo");
         sb.append(" left join MONHOC as mh on lo.ma_monhoc = mh.ma_monhoc");
-        sb.append(" where 1=1");
+        sb.append(" left join user_lop_mapper as ulm on lo.id = ulm.id_lop and  ulm.is_teach = 0");
+        sb.append(" where 1=1 ");
         if (StringUtils.isNotBlank(dto.getTenLop())) {
             sb.append(" and lo.tenlop like :p_tenlop ");
             parameter.put("p_tenlop", "%" + dto.getTenLop().trim() + "%");
@@ -48,6 +50,14 @@ public class LopHocDAOImpl extends AbstractDAO implements LopHocDAO {
             parameter.put("p_startdate", dto.getStartDate());
             parameter.put("p_enddate", dto.getEndDate());
         }
+        sb.append(" group by lo.id ,lo.ma_lop,");
+        sb.append(" lo.tenlop,");
+        sb.append(" mh.tenmonhoc ,");
+        sb.append(" lo.thoigianbatdau,");
+        sb.append(" lo.thoigianketthuc,");
+        sb.append(" lo.siso ,");
+        sb.append(" lo.diadiem,");
+        sb.append(" lo.hocphi");
         if (dto.getOrders() != null && !dto.getOrders().isEmpty()) {
             sb.append(" order by ");
             dto.getOrders().forEach(order -> {
@@ -276,11 +286,42 @@ public class LopHocDAOImpl extends AbstractDAO implements LopHocDAO {
         }
         if (lopHocRequestDTO.getActive() != null) {
             sb.append(" and ulm.trangthai=:p_active");
-            parameter.put("p_active",lopHocRequestDTO.getActive());
+            parameter.put("p_active", lopHocRequestDTO.getActive());
         }
         sb.append(" order by ulm.id desc");
 
         searchAndCountTotal(lopHocRequestDTO, sb.toString(), parameter, LopHocRequestDTO.class);
+    }
+
+    @Override
+    public List<LopHocDTO> getLopUnexpired() {
+        final StringBuilder sb = new StringBuilder();
+        Map<String, Object> param = new HashMap<>();
+        sb.append(" select lo.id as id,");
+        sb.append(" lo.ma_lop as maLop,");
+        sb.append(" lo.tenlop as tenlop,");
+        sb.append(" lo.siso as siso,");
+        sb.append(" lo.thoigianbatdau as thoigianbatdau,");
+        sb.append(" lo.thoigianketthuc as thoigianketthuc,");
+        sb.append(" lo.diadiem as diadiem,");
+        sb.append(" lo.hocphi as hocphi,");
+        sb.append(" lo.kip_day as kipDay,");
+        sb.append("   count(ulm.id_lop) as countSiSo ");
+        sb.append(" from Lop as lo");
+        sb.append(" left join user_lop_mapper as ulm on lo.id = ulm.id_lop and ulm.is_teach = 0");
+        sb.append(" where 1 = 1");
+        sb.append(" and lo.thoigianbatdau<= sysdate() and lo.thoigianketthuc >= sysdate() ");
+        sb.append(" group by lo.id ,lo.ma_lop,");
+        sb.append(" lo.tenlop,");
+        sb.append(" lo.thoigianbatdau,");
+        sb.append(" lo.thoigianketthuc,");
+        sb.append(" lo.siso ,");
+        sb.append(" lo.diadiem,");
+        sb.append(" lo.hocphi,");
+        sb.append(" lo.kip_day ");
+        sb.append(" order by lo.tenlop ");
+
+        return namedParameterJdbcTemplate().query(sb.toString(),param,new BeanPropertyRowMapper<>(LopHocDTO.class));
     }
 
 }

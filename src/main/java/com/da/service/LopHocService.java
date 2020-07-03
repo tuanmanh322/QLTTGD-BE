@@ -30,4 +30,6 @@ public interface LopHocService {
 	List<LopHocDTO> getLopByMaThe(String maThe);
 
 	void getListLopRequest(LopHocRequestDTO lopHocRequestDTO);
+
+	List<LopHocDTO> getLopUnexpiredDao();
 }

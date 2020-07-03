@@ -219,14 +219,16 @@ public class DiemServiceImpl implements DiemService {
                                 lop.setMaMonhoc(monhoc.getId());
                             }
                             lopRepository.save(lop);
-                            userLopMapper.setIdUser(idUser);
+                            userLopMapper.setIdUser(u.getId());
                             userLopMapper.setIdLop(lop.getId());
                             userLopMapper.setActive(true);
+                            userLopMapper.setIsTeach(false);
                             userLopMapperRepository.save(userLopMapper);
                             UserLopMapper lopMapper = new UserLopMapper();
                             lopMapper.setIdUser(idUser);
                             lopMapper.setIdLop(lop.getId());
                             lopMapper.setActive(true);
+                            lopMapper.setIsTeach(true);
                             userLopMapperRepository.save(lopMapper);
                         }
                     } else {
@@ -256,11 +258,13 @@ public class DiemServiceImpl implements DiemService {
                             userLopMapper.setIdLop(lo.get().getId());
                             userLopMapper.setIdUser(users.getId());
                             userLopMapper.setActive(true);
+                            userLopMapper.setIsTeach(false);
                             userLopMapperRepository.save(userLopMapper);
                             UserLopMapper lopMapper = new UserLopMapper();
                             lopMapper.setIdUser(idUser);
                             lopMapper.setIdLop(lo.get().getId());
                             lopMapper.setActive(true);
+                            lopMapper.setIsTeach(true);
                             userLopMapperRepository.save(lopMapper);
                         } else {
                             lop.setTenlop(row.getCell(9).getStringCellValue().trim());
@@ -279,11 +283,13 @@ public class DiemServiceImpl implements DiemService {
                             userLopMapper.setIdLop(lop.getId());
                             userLopMapper.setIdUser(users.getId());
                             userLopMapper.setActive(true);
+                            userLopMapper.setIsTeach(false);
                             userLopMapperRepository.save(userLopMapper);
                             UserLopMapper lopMapper = new UserLopMapper();
                             lopMapper.setIdUser(idUser);
                             lopMapper.setIdLop(lop.getId());
                             lopMapper.setActive(true);
+                            lopMapper.setIsTeach(true);
                             userLopMapperRepository.save(lopMapper);
                         }
                     }
