@@ -17,4 +17,8 @@ public interface NhatcheckinRepository extends JpaRepository<Nhatcheckin, Intege
 
     @Query(nativeQuery = true,value = "SELECT * FROM nhatcheckin as ncc where ncc.ma_the=?1 and DAY(ncc.thoigianvao) = DAY(SYSDATE()) and ncc.id_lop=?2")
     Optional<Nhatcheckin> findByMaTheWithDateAndIdLop(Integer idThe, Integer idLop);
+
+
+    @Query(nativeQuery = true, value = "SELECT * FROM nhatcheckin as ncc where ncc.ma_the=?1 and MONTH(ncc.thoigianvao) = MONTH(SYSDATE())")
+    List<Nhatcheckin> getListByIDtHE(Integer idThe);
 }

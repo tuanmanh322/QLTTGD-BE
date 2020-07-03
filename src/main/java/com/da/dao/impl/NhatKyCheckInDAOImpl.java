@@ -18,7 +18,8 @@ public class NhatKyCheckInDAOImpl extends AbstractDAO implements NhatKyCheckInDA
         sb.append(" t.id as idThe,");
         sb.append(" t.ma_the as maThe,");
         sb.append(" lo.tenlop as tenLop,");
-        sb.append(" ck.thoigianvao as ngayCheckIn");
+        sb.append(" ck.thoigianvao as ngayCheckIn,");
+        sb.append(" t.id_role as idRole");
         sb.append(" from the as t");
         sb.append(" left join users as u on u.ma_the = t.id");
         sb.append(" left join nhatcheckin as ck on ck.ma_the = t.id  and ck.ma_the is not null");
@@ -36,6 +37,10 @@ public class NhatKyCheckInDAOImpl extends AbstractDAO implements NhatKyCheckInDA
             params.put("p_tungay", nhatKySearchDTO.getTuNgay());
             sb.append(" and ck.thoigianvao <= :p_denngay");
             params.put("p_denngay", nhatKySearchDTO.getDenNgay());
+        }
+        if (nhatKySearchDTO.getIdRole() != null) {
+            sb.append(" and t.id_role = :p_idrole");
+            params.put("p_idrole", nhatKySearchDTO.getIdRole());
         }
         sb.append(" order by ck.thoigianvao desc");
 

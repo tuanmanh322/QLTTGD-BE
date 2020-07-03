@@ -1,6 +1,7 @@
 package com.da.controller;
 
 import com.da.dto.CheckInDTO;
+import com.da.dto.CheckInDetailDTO;
 import com.da.dto.NhatKySearchDTO;
 import com.da.exception.ResultException;
 import com.da.service.CheckInService;
@@ -8,10 +9,7 @@ import com.da.service.NhatKyCheckInService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/checkin")
@@ -45,5 +43,11 @@ public class CheckInController {
         log.info(" start rest to searchCheckInByManager with {}", dto);
         nhatKyCheckInService.searchNkAdmin(dto);
         return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+
+    @GetMapping("/load-checkin/{idThe}")
+    public ResponseEntity<CheckInDetailDTO> loadCheckIn(@PathVariable("idThe") Integer idThe) {
+        log.info(" start rest to loadCheckIn with {}", idThe);
+        return new ResponseEntity<>(checkInService.getCheckinByIdThe(idThe), HttpStatus.OK);
     }
 }

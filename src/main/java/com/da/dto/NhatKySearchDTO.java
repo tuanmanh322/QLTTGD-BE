@@ -24,4 +24,6 @@ public class NhatKySearchDTO extends BaseSearch {
     private Date denNgay;
 
     private LocalDateTime ngayCheckIn;
+
+    private Integer idRole;
 }
