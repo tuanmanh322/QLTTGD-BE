@@ -20,14 +20,34 @@ public class BaiVietDAOImpl extends AbstractDAO implements BaiVietDAO {
         log.info("Start dao searchBaiViet with :{}", dto);
         final StringBuilder sb = new StringBuilder();
         Map<String, Object> parameter = new HashMap<>();
-        sb.append(" select  cd.id ,");
-        sb.append(" bv.ma_baiviet as maBaiviet,");
-        sb.append(" bv.noidung as noiDung,");
-        sb.append(" bv.luotthich as luotThich,");
-        sb.append(" cd.luotkhongthich as luotKhongthich,");
+        sb.append(" select distinct  bv.id ,");
+        sb.append(" bv.ma_baiviet as mabaiviet,");
+        sb.append(" bv.title as titleBV,");
+        sb.append(" bv.noidung as noidung,");
+        sb.append(" bv.luotthich as luotthich,");
+        sb.append(" bv.luotkhongthich as luotkhongthich,");
+        sb.append(" bv.trangthai as active,");
+        sb.append(" bv.created_date as createDate,");
+        sb.append(" u.name as username,");
+        sb.append(" cd.tenchude as tenChuDe,");
+        sb.append(" t.ma_the as maThe");
         sb.append(" from BAIVIET as bv");
-        sb.append(" left join CHUDE as cd on bv.ma_chude = cd.ma_chude");
+        sb.append(" left join CHUDE as cd on bv.ma_chude = cd.id");
+        sb.append(" left join the as t on t.id = bv.id_the");
+        sb.append(" left join users as  u on u.ma_the = t.id");
         sb.append(" where 1=1");
+        if (StringUtils.isNotBlank(dto.getTenChuDe())){
+            sb.append(" and cd.tenchude like :p_tencd");
+            parameter.put("p_tencd","%" + dto.getTenChuDe() + "%");
+        }
+        if (dto.getActive() != null) {
+            sb.append(" and bv.trangthai=:p_active");
+            parameter.put("p_active", dto.getActive());
+        }
+        if (StringUtils.isNotBlank(dto.getTitleBV())) {
+            sb.append(" and bv.title like :p_title");
+            parameter.put("p_title ", "%" + dto.getTitleBV().trim() + "%");
+        }
         if (StringUtils.isNotBlank(dto.getNoidung())) {
             sb.append(" and bv.noidung like :p_noidung");
             parameter.put("p_noidung ", "%" + dto.getNoidung().trim() + "%");
@@ -79,7 +99,7 @@ public class BaiVietDAOImpl extends AbstractDAO implements BaiVietDAO {
         sb.append(" left outer JOIN chude as cd on cd.id = bv.ma_chude");
         sb.append("  left outer JOIN comment as cm on cm.id_baiviet = bv.id   or cm.id_baiviet is  null");
         sb.append(" left outer JOIN repcomment as rcm on rcm.id_comment = cm.id or rcm.id_comment is  null");
-        sb.append(" where 1 = 1 ");
+        sb.append(" where 1 = 1 and bv.trangthai = 1");
         if (StringUtils.isNotBlank(searchDTO.getTitleBV())) {
             sb.append(" and bv.title like :p_title");
             param.put("p_title", "%" + searchDTO.getTitleBV().trim() + "%");
@@ -124,7 +144,7 @@ public class BaiVietDAOImpl extends AbstractDAO implements BaiVietDAO {
         sb.append(" left outer JOIN chude as cd on cd.id = bv.ma_chude");
         sb.append("  left outer JOIN comment as cm on cm.id_baiviet = bv.id   or cm.id_baiviet is  null");
         sb.append(" left outer JOIN repcomment as rcm on rcm.id_comment = cm.id or rcm.id_comment is  null");
-        sb.append(" where 1 = 1 ");
+        sb.append(" where 1 = 1 and bv.trangthai = 1");
         if (idCd != null) {
             sb.append(" and cd.id =:p_idCd");
             param.put("p_idCd", idCd);
@@ -158,9 +178,9 @@ public class BaiVietDAOImpl extends AbstractDAO implements BaiVietDAO {
         sb.append(" from baiviet as bv");
         sb.append(" left join users as u on u.ma_the = bv.id_the");
         sb.append(" where 1 = 1 ");
-        if (idThe !=null){
+        if (idThe != null) {
             sb.append(" and u.ma_the=:p_maThe ");
-            params.put("p_maThe",idThe);
+            params.put("p_maThe", idThe);
         }
         if (searchDTO.getStartDate() != null && searchDTO.getEndDate() != null) {
             sb.append(" and bv.created_date >= :p_startdate and bv.created_date <= :p_enddate ");

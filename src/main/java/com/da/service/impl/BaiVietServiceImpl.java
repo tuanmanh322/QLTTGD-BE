@@ -88,6 +88,7 @@ public class BaiVietServiceImpl implements BaiVietService {
         baiviet.setCreatedDate(LocalDateTime.now());
         baiviet.setLuotthich(0);
         baiviet.setLuotkhongthich(0);
+        baiviet.setTrangthai(false);
         baiVietDao.save(baiviet);
 
     }
@@ -109,6 +110,16 @@ public class BaiVietServiceImpl implements BaiVietService {
         Baiviet baiviet = baiVietDao.findById(id, Baiviet.class).get();
         if (baiviet.getId() == null) {
             throw new ResultException(ErrorCode.RECORD_NOT_EXISTED);
+        }
+        List<Comment> comments =  commentRepository.findByIdBaiViet(id);
+        if (!comments.isEmpty()){
+           for (Comment cm: comments) {
+               List<Repcomment> repcomments  = repcommentRepository.findByIdComment(cm.getId());
+               if (!repcomments.isEmpty()){
+                   repcommentRepository.deleteAll(repcomments);
+               }
+           }
+           commentRepository.deleteAll(comments);
         }
         baiVietDao.delete(baiviet);
     }
@@ -395,5 +406,35 @@ public class BaiVietServiceImpl implements BaiVietService {
     public void searchTuongTac(BaiVietTotalSearchDTO searchDTO) {
         log.info(" start service to searchTuongTac with searchDTO :{}  ", searchDTO);
         baiVietDao.searchTuongTac(searchDTO,SecurityUtils.getCurrentUserIdLogin());
+    }
+
+    @Override
+    public void activeBV(Integer idbv) {
+        Baiviet baiviet = baivietRepository.getOne(idbv);
+        Notification notification  = new Notification();
+        notification.setRead(0);
+        notification.setCreatedDate(LocalDateTime.now());
+        notification.setIdBaiViet(idbv);
+        notification.setMessage(Constant.ACCEPT);
+        notification.setIdAction(Constant.ACCEPTBV);
+        notification.setIdThe(SecurityUtils.getCurrentUserIdLogin());
+        notificationRepository.save(notification);
+        baiviet.setTrangthai(true);
+        baivietRepository.save(baiviet);
+    }
+
+    @Override
+    public void unActiveBV(Integer idBV) {
+        Baiviet baiviet = baivietRepository.getOne(idBV);
+        baiviet.setTrangthai(false);
+        Notification notification  = new Notification();
+        notification.setRead(0);
+        notification.setCreatedDate(LocalDateTime.now());
+        notification.setIdBaiViet(idBV);
+        notification.setMessage(Constant.DECIDE);
+        notification.setIdAction(Constant.DECIDEBV);
+        notification.setIdThe(SecurityUtils.getCurrentUserIdLogin());
+        notificationRepository.save(notification);
+        baivietRepository.save(baiviet);
     }
 }

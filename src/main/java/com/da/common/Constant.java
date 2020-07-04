@@ -19,6 +19,9 @@ public interface Constant {
     Integer DISLIKE = 2;
     Integer COMMENT = 3;
     Integer REPCOMMENT = 4;
+    Integer ACCEPTBV = 5;
+    Integer DECIDEBV = 6;
+
 
     String MA_THE_ADMIN = "111";
     String MA_THE_TEACHER = "131";
@@ -26,4 +29,8 @@ public interface Constant {
     String MA_THE_CUSTOMER = "202";
 
     String CHECKIN = "CHECKIN";
+
+    String ACCEPT = "BÀI VIÊT CỦA BẠN ĐÃ ĐƯỢC DUYỆT!";
+
+    String DECIDE = "BÀI VIÊT CỦA BẠN ĐÃ BỊ TỪ CHỐI!!";
 }

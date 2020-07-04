@@ -113,5 +113,15 @@ public class BaiVietController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
+    @GetMapping("/active-bv/{idBV}")
+    public ResponseEntity<Void> activeBV(@PathVariable("idBV")Integer idBV){
+        baiVietService.activeBV(idBV);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @GetMapping("/un-active-bv/{idBV}")
+    public ResponseEntity<Void> unActiveBV(@PathVariable("idBV")Integer idBV){
+        baiVietService.unActiveBV(idBV);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 }

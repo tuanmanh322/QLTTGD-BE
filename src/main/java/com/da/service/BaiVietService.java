@@ -35,4 +35,8 @@ public interface BaiVietService {
     Baiviet findByIdModel(Integer idBV);
 
     void searchTuongTac(BaiVietTotalSearchDTO searchDTO);
+
+    void activeBV(Integer idbv);
+
+    void unActiveBV(Integer idBV);
 }
