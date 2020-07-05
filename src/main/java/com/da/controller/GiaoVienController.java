@@ -53,4 +53,13 @@ public class GiaoVienController {
         giaoVienService.delete(id);
         return ResponseEntity.ok().build();
     }
+    @GetMapping("/count-all-gv")
+    public ResponseEntity<Integer> countAllGV() {
+        return new ResponseEntity<>(giaoVienService.countGVALL(),HttpStatus.OK);
+    }
+
+    @GetMapping("/count-all-gv-ac")
+    public ResponseEntity<Integer> countAllGVAc() {
+        return new ResponseEntity<>(giaoVienService.countGVActive(),HttpStatus.OK);
+    }
 }

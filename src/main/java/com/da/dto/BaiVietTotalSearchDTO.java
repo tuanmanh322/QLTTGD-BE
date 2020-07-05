@@ -56,4 +56,5 @@ public class BaiVietTotalSearchDTO extends BaseSearch {
 
     private Integer viewCounts;
 
+
 }

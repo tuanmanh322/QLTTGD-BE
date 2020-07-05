@@ -1,5 +1,6 @@
 package com.da.controller;
 
+import com.da.dto.AutoCompleteContentSet;
 import com.da.dto.AutoCompleteTitleSet;
 import com.da.dto.AutocompleteSearchDTO;
 import com.da.service.AutoCompleteService;
@@ -35,5 +36,15 @@ public class AutoCompleteController {
     public ResponseEntity<List<AutoCompleteTitleSet>> autoCompleteCD(@RequestBody AutocompleteSearchDTO autocompleteSearchDTO) {
         log.info(" start rest  to autoCompleteCD with :{}", autocompleteSearchDTO);
         return new ResponseEntity<>(autoCompleteService.autoCompleteTitleCD(autocompleteSearchDTO), HttpStatus.OK);
+    }
+    @PostMapping("/bv-content")
+    public ResponseEntity<List<AutoCompleteContentSet>> autoCompleteBVContent(@RequestBody AutocompleteSearchDTO autocompleteSearchDTO) {
+        log.info(" start rest  to autoCompleteBV with :{}", autocompleteSearchDTO);
+        return new ResponseEntity<>(autoCompleteService.autoCompleteContentBV(autocompleteSearchDTO), HttpStatus.OK);
+    }
+    @PostMapping("/cd-content")
+    public ResponseEntity<List<AutoCompleteContentSet>> autoCompleteCDContent(@RequestBody AutocompleteSearchDTO autocompleteSearchDTO) {
+        log.info(" start rest  to autoCompleteCD with :{}", autocompleteSearchDTO);
+        return new ResponseEntity<>(autoCompleteService.autoCompleteContentCD(autocompleteSearchDTO), HttpStatus.OK);
     }
 }

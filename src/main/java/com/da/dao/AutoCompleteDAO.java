@@ -1,5 +1,6 @@
 package com.da.dao;
 
+import com.da.dto.AutoCompleteContentSet;
 import com.da.dto.AutoCompleteTitleSet;
 import com.da.dto.AutocompleteSearchDTO;
 
@@ -11,4 +12,7 @@ public interface AutoCompleteDAO extends Serializable,BaseDAO {
 
     List<AutoCompleteTitleSet> searchTitleCD(AutocompleteSearchDTO autocompleteSearchDTO);
 
+    List<AutoCompleteContentSet> searchContentBV(AutocompleteSearchDTO autocompleteSearchDTO);
+
+    List<AutoCompleteContentSet> searchsearchContentCD(AutocompleteSearchDTO autocompleteSearchDTO);
 }

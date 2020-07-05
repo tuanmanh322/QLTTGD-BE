@@ -108,6 +108,10 @@ public class BaiVietDAOImpl extends AbstractDAO implements BaiVietDAO {
             sb.append(" and cd.id =:p_idcd");
             param.put("p_idcd", searchDTO.getIdChuDe());
         }
+        if (StringUtils.isNotBlank(searchDTO.getNoidungBV())) {
+            sb.append(" and bv.noidung like :p_noidung");
+            param.put("p_noidung", "%" + searchDTO.getNoidungBV().trim() + "%");
+        }
         sb.append("  group by bv.id, bv.ma_baiviet, bv.noidung, bv.title, bv.luotthich, bv.luotkhongthich,");
         sb.append(" bv.id_the, bv.ma_chude, bv.created_date , bv.image_path, u.image_path, u.id, u.name, t.id");
         sb.append(" order by bv.created_date desc");
@@ -148,6 +152,10 @@ public class BaiVietDAOImpl extends AbstractDAO implements BaiVietDAO {
         if (idCd != null) {
             sb.append(" and cd.id =:p_idCd");
             param.put("p_idCd", idCd);
+        }
+        if (StringUtils.isNotBlank(searchDTO.getNoidungBV())) {
+            sb.append(" and bv.noidung like :p_noidung");
+            param.put("p_noidung", "%" + searchDTO.getNoidungBV().trim() + "%");
         }
         if (StringUtils.isNotBlank(searchDTO.getTitleBV())) {
             sb.append(" and bv.title like :p_title");

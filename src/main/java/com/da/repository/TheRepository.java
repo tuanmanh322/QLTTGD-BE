@@ -23,4 +23,10 @@ public interface TheRepository extends JpaRepository<The, Integer>, JpaSpecifica
 
     @Query(nativeQuery = true, value = "select * from the as t where t.id_role = 3")
     List<The> getListAllHocSInh();
+
+    @Query(nativeQuery = true, value = "select * from the as t where t.id_role = 2")
+    List<The> countALLGV();
+
+    @Query(nativeQuery = true, value = "select * from the as t where t.id_role = 2 and t.trangthai = 1")
+    List<The> countALLGVActive();
 }

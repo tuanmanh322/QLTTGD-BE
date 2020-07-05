@@ -28,17 +28,21 @@ public class DiemDAOImpl extends AbstractDAO implements DiemDAO {
         sb.append(" d.diemmieng as diemHS1 ,");
         sb.append(" d.diem15p as diemHS2,");
         sb.append(" d.diem90p as diemHS3, ");
-        sb.append(" d.id_user as MaHocSinh, ");
-        sb.append(" u.name as Name, ");
+        sb.append(" u.name as username, ");
+        sb.append(" u.id as idUser,");
+        sb.append(" t.ma_the as maThe");
         sb.append(" from diem as d ");
-        sb.append(" left join (users as u left join lop l ) on u.id_user = d.id_user and l.ma_lop = u.ma_lop where 1=1");
-        if (StringUtils.isNotBlank(dto.getName())) {
+        sb.append(" left join users_diem_map as udm on udm.id_diem = d.id");
+        sb.append(" left join users as u on u.id = udm.id_user");
+        sb.append(" left join the as t on t.id = u.ma_the ");
+        sb.append(" where 1 = 1");
+        if (StringUtils.isNotBlank(dto.getUsername())) {
             sb.append(" and u.name like :p_name ");
-            parameter.put("p_name", "%" + dto.getName().trim() + "%");
+            parameter.put("p_name", "%" + dto.getUsername().trim() + "%");
         }
-        if (StringUtils.isNotBlank(dto.getTenLop())) {
-            sb.append(" and l.tenlop like :p_tenlop ");
-            parameter.put("p_tenlop", "%" + dto.getTenLop().trim() + "%");
+        if (StringUtils.isNotBlank(dto.getMaThe())) {
+            sb.append(" and t.ma_the like :pma_the ");
+            parameter.put("pma_the", "%" + dto.getMaThe().trim() + "%");
         }
         if (dto.getOrders() != null && !dto.getOrders().isEmpty()) {
             sb.append(" order by ");
@@ -52,7 +56,7 @@ public class DiemDAOImpl extends AbstractDAO implements DiemDAO {
             });
             sb.deleteCharAt(sb.length() - 1);
         } else {
-            sb.append(" order by d.ma_diem ");
+            sb.append(" order by u.name ");
         }
         searchAndCountTotal(dto, sb.toString(), parameter, DiemDTO.class);
     }

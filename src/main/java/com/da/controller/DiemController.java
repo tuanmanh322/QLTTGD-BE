@@ -28,6 +28,7 @@ public class DiemController {
         this.diemService = diemService;
     }
 
+    @PostMapping("/search")
     public ResponseEntity<DiemDTO> searchAndGetAll(@RequestBody DiemDTO dto) {
         log.info(" start rest to searchAndGetAll with :{}", dto);
         diemService.searchDiem(dto);

@@ -1,6 +1,7 @@
 package com.da.service.impl;
 
 import com.da.dao.AutoCompleteDAO;
+import com.da.dto.AutoCompleteContentSet;
 import com.da.dto.AutoCompleteTitleSet;
 import com.da.dto.AutocompleteSearchDTO;
 import com.da.repository.BaivietRepository;
@@ -40,5 +41,17 @@ public class AutoCompleteServiceImpl implements AutoCompleteService {
     public List<AutoCompleteTitleSet> autoCompleteTitleCD(AutocompleteSearchDTO autocompleteSearchDTO) {
         log.info(" start service to autoCompleteTitleCD with {}",autocompleteSearchDTO);
         return autoCompleteDAO.searchTitleCD(autocompleteSearchDTO);
+    }
+
+    @Override
+    public List<AutoCompleteContentSet> autoCompleteContentBV(AutocompleteSearchDTO autocompleteSearchDTO) {
+        log.info(" start service to autoCompleteContentBV with {}",autocompleteSearchDTO);
+        return autoCompleteDAO.searchContentBV(autocompleteSearchDTO);
+    }
+
+    @Override
+    public List<AutoCompleteContentSet> autoCompleteContentCD(AutocompleteSearchDTO autocompleteSearchDTO) {
+        log.info(" start service to autoCompleteContentCD with {}",autocompleteSearchDTO);
+        return autoCompleteDAO.searchsearchContentCD(autocompleteSearchDTO);
     }
 }

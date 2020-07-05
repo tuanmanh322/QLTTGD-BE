@@ -62,17 +62,17 @@ public class GiaoVienServiceImpl implements GiaoVienService {
 
     @Override
     public void searchGiaoVien(GiaoVienDTO dto) {
-        log.info(" start service to searchLopHoc with :{}",dto);
+        log.info(" start service to searchLopHoc with :{}", dto);
         giaoVienDAO.searchGiaoVien(dto);
     }
 
     @Override
     public CommonResult add(GiaoVienDTO dto) throws ResultException {
-        log.info(" start service to addLopHoc with :{}",dto);
-        The the  = new The();
+        log.info(" start service to addLopHoc with :{}", dto);
+        The the = new The();
         String maThe = RandomString.rdMaThe("1212");
-        Optional<The>  t  = theRepository.findByMaThe(maThe);
-        if (!t.isPresent()){
+        Optional<The> t = theRepository.findByMaThe(maThe);
+        if (!t.isPresent()) {
             the.setMaThe(maThe);
             the.setPassword(passwordEncoder.encode("123456"));
             the.setNgaycap(new Date());
@@ -91,11 +91,11 @@ public class GiaoVienServiceImpl implements GiaoVienService {
             user.setIdUser(maGV);
             user.setSocmt(dto.getCmt());
             giaoVienDAO.save(user);
-            UserLopMapper userLopMapper  = new UserLopMapper();
+            UserLopMapper userLopMapper = new UserLopMapper();
             userLopMapper.setIdUser(user.getId());
             userLopMapper.setIdLop(dto.getIdLop());
             userLopMapperRepository.save(userLopMapper);
-            CardDTO cardDTO = modelMap.map(the,CardDTO.class);
+            CardDTO cardDTO = modelMap.map(the, CardDTO.class);
             cardDTO.setPassword("123456");
             cardDTO.setMaGV(maGV);
             return CommonResult.success(cardDTO);
@@ -105,18 +105,18 @@ public class GiaoVienServiceImpl implements GiaoVienService {
 
     @Override
     public void update(GiaoVienDTO dto) throws ResultException {
-        log.info(" start service to editLopHoc with :{}",dto);
+        log.info(" start service to editLopHoc with :{}", dto);
         Users user = giaoVienDAO.findById(dto.getId(), Users.class).get();
         if (user.getId() == null) {
             throw new ResultException(ErrorCode.RECORD_NOT_EXISTED);
         }
-       user.setLuongcoban(dto.getLuongcoban());
+        user.setLuongcoban(dto.getLuongcoban());
         user.setName(dto.getName());
         user.setSodt(dto.getSodt());
         user.setSocmt(dto.getCmt());
         user.setGioitinh(dto.getSex());
         user.setNgaysinh(dto.getNgaySinh());
-        UserLopMapper  userLopMapper  = new UserLopMapper();
+        UserLopMapper userLopMapper = new UserLopMapper();
         userLopMapper.setIdUser(user.getId());
         userLopMapper.setIdLop(dto.getIdLop());
         userLopMapperRepository.save(userLopMapper);
@@ -125,26 +125,26 @@ public class GiaoVienServiceImpl implements GiaoVienService {
 
     @Override
     public void delete(Integer id) throws ResultException {
-        log.info(" start service to delete Lop with id:{}",id);
+        log.info(" start service to delete Lop with id:{}", id);
         Users user = giaoVienDAO.findById(id, Users.class).get();
         if (user.getId() == null) {
             throw new ResultException(ErrorCode.RECORD_NOT_EXISTED);
         }
         The the = theRepository.getOne(user.getMaThe());
         List<UserLopMapper> lopMapper = userLopMapperRepository.findByIdUser(user.getId());
-        if (!lopMapper.isEmpty()){
+        if (!lopMapper.isEmpty()) {
             userLopMapperRepository.deleteAll(lopMapper);
         }
-        List<Baiviet> baiviets  = baivietRepository.getListBVByIdUser(user.getId());
-        if (!baiviets.isEmpty()){
+        List<Baiviet> baiviets = baivietRepository.getListBVByIdUser(user.getId());
+        if (!baiviets.isEmpty()) {
             baivietRepository.deleteAll(baiviets);
         }
         List<Comment> comments = commentRepository.findByIdUser(user.getId());
-        if (!comments.isEmpty()){
+        if (!comments.isEmpty()) {
             commentRepository.deleteAll(comments);
         }
-        List<Repcomment> repcomments  = repcommentRepository.findByIdUser(user.getId());
-        if (!repcomments.isEmpty()){
+        List<Repcomment> repcomments = repcommentRepository.findByIdUser(user.getId());
+        if (!repcomments.isEmpty()) {
             repcommentRepository.deleteAll(repcomments);
         }
         theRepository.delete(the);
@@ -161,5 +161,15 @@ public class GiaoVienServiceImpl implements GiaoVienService {
     @Override
     public boolean checkMaGV(String maGV) {
         return false;
+    }
+
+    @Override
+    public Integer countGVALL() {
+        return theRepository.countALLGV().size();
+    }
+
+    @Override
+    public Integer countGVActive() {
+        return theRepository.countALLGVActive().size();
     }
 }

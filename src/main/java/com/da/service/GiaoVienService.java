@@ -13,4 +13,8 @@ public interface GiaoVienService {
     GiaoVienDTO findById(Integer id);
 
     boolean checkMaGV(String maGV);
+
+    Integer countGVALL();
+
+    Integer countGVActive();
 }
