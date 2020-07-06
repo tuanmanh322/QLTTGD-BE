@@ -89,6 +89,7 @@ HangMucServiceImpl implements HangMucService {
         hmList.stream().map(hm -> {
             HangMucCDDTO cddto = new HangMucCDDTO();
 //            cddto.set
+            return hm;
         }).collect(Collectors.toList());
         return null;
     }
