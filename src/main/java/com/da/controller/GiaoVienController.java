@@ -36,7 +36,7 @@ public class GiaoVienController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<CommonResult> add(@RequestBody GiaoVienDTO dto) throws ResultException {
+    public ResponseEntity<CommonResult> add(@ModelAttribute GiaoVienDTO dto) throws ResultException {
         log.info(" start rest to add lop hoc with :{}", dto);
         return new ResponseEntity<>( giaoVienService.add(dto),HttpStatus.OK);
     }

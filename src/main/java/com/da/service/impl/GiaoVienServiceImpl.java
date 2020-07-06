@@ -12,6 +12,7 @@ import com.da.exception.ResultException;
 import com.da.model.*;
 import com.da.repository.*;
 import com.da.security.UserTypeEnum;
+import com.da.service.FileStorageService;
 import com.da.service.GiaoVienService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -20,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -47,8 +49,9 @@ public class GiaoVienServiceImpl implements GiaoVienService {
 
     private final RepcommentRepository repcommentRepository;
 
+    private final FileStorageService fileStorageService;
 
-    public GiaoVienServiceImpl(ModelMapper modelMap, GiaoVienDAO giaoVienDAO, PasswordEncoder passwordEncoder, TheRepository theRepository, UserLopMapperRepository userLopMapperRepository, UsersRepository usersRepository, BaivietRepository baivietRepository, CommentRepository commentRepository, RepcommentRepository repcommentRepository) {
+    public GiaoVienServiceImpl(ModelMapper modelMap, GiaoVienDAO giaoVienDAO, PasswordEncoder passwordEncoder, TheRepository theRepository, UserLopMapperRepository userLopMapperRepository, UsersRepository usersRepository, BaivietRepository baivietRepository, CommentRepository commentRepository, RepcommentRepository repcommentRepository, FileStorageService fileStorageService) {
         this.modelMap = modelMap;
         this.giaoVienDAO = giaoVienDAO;
         this.passwordEncoder = passwordEncoder;
@@ -58,6 +61,7 @@ public class GiaoVienServiceImpl implements GiaoVienService {
         this.baivietRepository = baivietRepository;
         this.commentRepository = commentRepository;
         this.repcommentRepository = repcommentRepository;
+        this.fileStorageService = fileStorageService;
     }
 
     @Override
@@ -70,7 +74,7 @@ public class GiaoVienServiceImpl implements GiaoVienService {
     public CommonResult add(GiaoVienDTO dto) throws ResultException {
         log.info(" start service to addLopHoc with :{}", dto);
         The the = new The();
-        String maThe = RandomString.rdMaThe("1212");
+        String maThe = RandomString.rdMaThe(Constant.MA_THE_TEACHER);
         Optional<The> t = theRepository.findByMaThe(maThe);
         if (!t.isPresent()) {
             the.setMaThe(maThe);
@@ -90,6 +94,13 @@ public class GiaoVienServiceImpl implements GiaoVienService {
             String maGV = "GV_" + the.getId();
             user.setIdUser(maGV);
             user.setSocmt(dto.getCmt());
+            if (dto.getImageGV() != null) {
+                try {
+                    user.setImagePath(fileStorageService.storeFile(dto.getImageGV()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
             giaoVienDAO.save(user);
             UserLopMapper userLopMapper = new UserLopMapper();
             userLopMapper.setIdUser(user.getId());

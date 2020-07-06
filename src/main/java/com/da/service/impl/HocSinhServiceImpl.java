@@ -1,6 +1,8 @@
 package com.da.service.impl;
 
 import com.da.common.CommonResult;
+import com.da.common.Constant;
+import com.da.common.RandomString;
 import com.da.dao.HocSinhDao;
 import com.da.dto.HocSinhDTO;
 import com.da.exception.ErrorCode;
@@ -12,13 +14,17 @@ import com.da.repository.TheRepository;
 import com.da.repository.UserLopMapperRepository;
 import com.da.repository.UsersRepository;
 import com.da.security.SecurityUtils;
+import com.da.service.FileStorageService;
 import com.da.service.HocSinhService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,12 +44,18 @@ public class HocSinhServiceImpl implements HocSinhService {
 
     private final UsersRepository usersRepository;
 
-    public HocSinhServiceImpl(ModelMapper modelMap, HocSinhDao hocSinhDao, TheRepository theRepository, UserLopMapperRepository userLopMapperRepository, UsersRepository usersRepository) {
+    private final PasswordEncoder passwordEncoder;
+
+    private final FileStorageService fileStorageService;
+
+    public HocSinhServiceImpl(ModelMapper modelMap, HocSinhDao hocSinhDao, TheRepository theRepository, UserLopMapperRepository userLopMapperRepository, UsersRepository usersRepository, PasswordEncoder passwordEncoder, FileStorageService fileStorageService) {
         this.modelMap = modelMap;
         this.hocSinhDao = hocSinhDao;
         this.theRepository = theRepository;
         this.userLopMapperRepository = userLopMapperRepository;
         this.usersRepository = usersRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.fileStorageService = fileStorageService;
     }
 
     @Override
@@ -53,10 +65,37 @@ public class HocSinhServiceImpl implements HocSinhService {
     }
 
     @Override
-    public void add(HocSinhDTO dto) throws ResultException {
+    public CommonResult add(HocSinhDTO dto) throws ResultException {
+        String maThe = RandomString.rdMaThe(Constant.MA_THE_STUDENT);
         log.info(" start service to addLopHoc with :{}", dto);
-        Users user = modelMap.map(dto, Users.class);
+        Optional<The> t = theRepository.findByMaThe(maThe);
+        if (t.isPresent()){
+            maThe = RandomString.rdMaThe(Constant.MA_THE_STUDENT);
+        }
+        The the = new The();
+        the.setMaThe(maThe);
+        the.setPassword(passwordEncoder.encode("123456"));
+        the.setNgaycap(new Date());
+        the.setTrangthai(true);
+        the.setIdRole(3);
+        theRepository.save(the);
+        Users user  = new Users();
+        user.setNgaysinh(dto.getBirthday());
+        user.setName(dto.getTenhocsinh());
+        user.setSodt(dto.getSodt());
+//        user.setEmail(dto.getEmail());
+        user.setQuequan(dto.getDiachi());
+        user.setIsTeacher(false);
+        user.setGioitinh(dto.getSex());
+        if (dto.getImageHS() != null){
+            try {
+                user.setImagePath(fileStorageService.storeFile(dto.getImageHS()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         hocSinhDao.save(user);
+        return CommonResult.success(the);
     }
 
     @Override

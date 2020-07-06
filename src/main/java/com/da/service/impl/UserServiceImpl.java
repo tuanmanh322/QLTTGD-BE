@@ -254,7 +254,7 @@ UserServiceImpl implements UserService {
         String maThe = "";
         // ROLE_ANONYMOUS
 //        if (dto.getIdRole() == 4){
-        maThe = RandomString.rdMaThe("1111");
+        maThe = RandomString.rdMaThe(Constant.MA_THE_CUSTOMER);
         Optional<The> the = theRepository.findByMaThe(maThe);
         if (the.isPresent()) {
             switch ((int) (Math.random() * 4) + 1) {

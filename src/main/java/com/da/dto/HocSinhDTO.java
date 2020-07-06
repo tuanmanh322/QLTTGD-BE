@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Date;
 
 @Getter
 @Setter
@@ -36,4 +39,16 @@ public class HocSinhDTO extends BaseSearch {
     private String hocsinhName;
 
     private String soThe;
+
+    private MultipartFile imageHS;
+
+    private String tenhocsinh;
+
+    private String email;
+
+    private String diachi;
+
+    private Date birthday;
+
+    private String sex;
 }
