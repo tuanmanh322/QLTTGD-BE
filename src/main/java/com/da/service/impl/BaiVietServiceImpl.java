@@ -219,6 +219,7 @@ public class BaiVietServiceImpl implements BaiVietService {
             int viewCount = baiviets.getViewCount();
             baiviets.setViewCount(viewCount + 1);
         }
+        Integer countRep= 0;
         Users users = usersRepository.findByMaThe(baiviets.getIdThe());
         BaiVietDTO baiVietDTO = modelMap.map(baiviets, BaiVietDTO.class);
         baiVietDTO.setImageBV(baiviets.getImageBV());
@@ -233,11 +234,11 @@ public class BaiVietServiceImpl implements BaiVietService {
             baiVietDTO.setIdCD(chude.get().getId());
         }
         List<CommentDTO> commentDTOList = new ArrayList<>();
-        List<RepCommentDTO> repCommentDTOList = new ArrayList<>();
         // get list comment by id
         List<Comment> comments = commentRepository.findByIdBaiViet(baiviets.getId());
         // add list comment
-        comments.stream().map(cm -> {
+        for(Comment cm : comments){
+            List<RepCommentDTO> repCommentDTOList = new ArrayList<>();
             Users usersCM = usersRepository.findByMaThe(cm.getIdUser());
             CommentDTO commentDTO = modelMap.map(cm, CommentDTO.class);
             commentDTO.setImageCM(cm.getImageCM());
@@ -245,8 +246,9 @@ public class BaiVietServiceImpl implements BaiVietService {
             commentDTO.setImageAvatarCM(usersCM.getImagePath());
             commentDTO.setCommentDate(cm.getCommentDate());
             List<Repcomment> repcomments = repcommentRepository.findByIdComment(cm.getId());
+            countRep = repcomments.size() + countRep;
             // add list repcomment
-            repcomments.stream().map(rep -> {
+            for (Repcomment rep: repcomments){
                 Users usersRCM = usersRepository.findByMaThe(rep.getIdUser());
                 RepCommentDTO repCommentDTO = modelMap.map(rep, RepCommentDTO.class);
                 repCommentDTO.setImageRCM(rep.getImageRCM());
@@ -254,14 +256,12 @@ public class BaiVietServiceImpl implements BaiVietService {
                 repCommentDTO.setImageAvatarRCM(usersRCM.getImagePath());
                 repCommentDTO.setRepDate(rep.getRepDate());
                 repCommentDTOList.add(repCommentDTO);
-                return repCommentDTOList;
-            }).collect(Collectors.toList());
+            }
             commentDTO.setRepCommentDTOS(repCommentDTOList);
             commentDTOList.add(commentDTO);
-            return commentDTOList;
-        }).collect(Collectors.toList());
-        baiVietDTO.setCommentDTOS(commentDTOList);
-        baiVietDTO.setTotalComment(repCommentDTOList.size() + comments.size());
+            baiVietDTO.setCommentDTOS(commentDTOList);
+        }
+        baiVietDTO.setTotalComment(comments.size() + countRep);
         baiVietDTO.setViewCounts(baiviets.getViewCount());
         baivietRepository.save(baiviets);
         return baiVietDTO;
