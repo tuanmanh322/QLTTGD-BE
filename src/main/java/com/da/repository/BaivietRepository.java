@@ -17,4 +17,7 @@ public interface BaivietRepository extends JpaRepository<Baiviet, Integer>, JpaS
 
     @Query(nativeQuery = true, value = "SELECT * from baiviet as bv where bv.id_the=?1")
     List<Baiviet> getListBVByIdUser(Integer idUser);
+
+    @Query(nativeQuery = true, value = "SELECT * from baiviet as bv where bv.trangthai=1")
+    List<Baiviet> countBV();
 }

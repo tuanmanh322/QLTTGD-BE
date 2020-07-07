@@ -107,7 +107,7 @@ public class RepCommentServiceImpl implements RepCommentService {
     }
 
     @Override
-    public boolean repcomment(Integer idComment, RepCommentDTO repCommentDTO) {
+    public boolean repcomment(Integer idComment,Integer idBV, RepCommentDTO repCommentDTO) {
         log.info(" start service to repcomment with idCM:{} and dto : {}", idComment, repCommentDTO);
         Optional<Comment> comment = commentRepository.findById(idComment);
         if (comment.isPresent()) {
@@ -131,6 +131,7 @@ public class RepCommentServiceImpl implements RepCommentService {
             notifycation.setIdThe(SecurityUtils.getCurrentUserIdLogin());
             notifycation.setCreatedDate(LocalDateTime.now());
             notifycation.setRead(0);
+            notifycation.setIdBaiViet(idBV);
             notificationRepository.save(notifycation);
             /*
              * This block is used to

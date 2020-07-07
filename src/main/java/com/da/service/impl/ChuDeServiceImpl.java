@@ -54,7 +54,7 @@ public class ChuDeServiceImpl implements ChuDeService {
     @Override
     public List<ChuDeCountDTO> getChuDeAndCount() {
         log.info(" start service to getChuDeAndCount");
-        return chuDeDao.getChuAndCount();
+        return chuDeDao.getChuAndCount(null);
     }
 
     @Override

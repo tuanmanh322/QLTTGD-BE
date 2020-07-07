@@ -9,5 +9,5 @@ import java.util.List;
 public interface ChuDeDAO extends Serializable,BaseDAO{
     void searchChuDe(ChuDeSearchDTO dto);
 
-    List<ChuDeCountDTO> getChuAndCount();
+    List<ChuDeCountDTO> getChuAndCount(Integer idHm);
 }

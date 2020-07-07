@@ -11,5 +11,5 @@ public interface RepCommentService {
     void delete(Integer id)throws ResultException;
     RepCommentDTO findById(Integer id);
 
-    boolean repcomment(Integer idComment,RepCommentDTO repCommentDTO);
+    boolean repcomment(Integer idComment,Integer idBV,RepCommentDTO repCommentDTO);
 }

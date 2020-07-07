@@ -71,7 +71,6 @@ public class BaiVietController {
     }
 
     @GetMapping("/all")
-    @PreAuthorize("ADMIN")
     public ResponseEntity<List<BaiVietDTO>> getAllBVandCm(){
         log.info("start res to get getAllBVandCm");
         return new ResponseEntity<>(baiVietService.getBaiVietWithComment(),HttpStatus.OK);
@@ -122,6 +121,11 @@ public class BaiVietController {
     public ResponseEntity<Void> unActiveBV(@PathVariable("idBV")Integer idBV){
         baiVietService.unActiveBV(idBV);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/count-all-bv")
+    public ResponseEntity<Integer> countAllBv(){
+        return new ResponseEntity<>(baiVietService.countBV(),HttpStatus.OK);
     }
 
 }

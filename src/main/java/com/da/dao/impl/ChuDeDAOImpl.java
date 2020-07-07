@@ -54,7 +54,7 @@ public class ChuDeDAOImpl extends AbstractDAO implements ChuDeDAO {
     }
 
     @Override
-    public List<ChuDeCountDTO> getChuAndCount() {
+    public List<ChuDeCountDTO> getChuAndCount(Integer idHM) {
         log.info("Start dao getChuAndCount ");
         StringBuilder sb = new StringBuilder();
         sb.append(" select new ").append(ChuDeCountDTO.class.getName());
@@ -65,8 +65,14 @@ public class ChuDeDAOImpl extends AbstractDAO implements ChuDeDAO {
         sb.append(" from Chude as cd");
         sb.append(" left join Baiviet as bv");
         sb.append(" on (bv.ma_chude = cd.id or bv.id is  null)");
+        sb.append(" left join Hangmuc as hm on hm.id = cd.idHangmuc or hm.id is null");
+        sb.append(" where 1= 1");
+        if (idHM != null){
+            sb.append(" and hm.id=:p_hm");
+        }
         sb.append("  group by cd.id, cd.maChude,cd.tenChude");
         TypedQuery<ChuDeCountDTO> query = getSession().createQuery(sb.toString(),ChuDeCountDTO.class);
+        query.setParameter("p_hm",idHM);
         return query.getResultList();
     }
 

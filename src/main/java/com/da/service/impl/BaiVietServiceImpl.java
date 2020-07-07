@@ -437,4 +437,9 @@ public class BaiVietServiceImpl implements BaiVietService {
         notificationRepository.save(notification);
         baivietRepository.save(baiviet);
     }
+
+    @Override
+    public Integer countBV() {
+        return baivietRepository.countBV().size();
+    }
 }

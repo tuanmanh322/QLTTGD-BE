@@ -1,5 +1,6 @@
 package com.da.controller;
 
+import com.da.dto.HangMucCDDTO;
 import com.da.dto.HangMucDTO;
 import com.da.dto.HangMucSearchDTO;
 import com.da.exception.ResultException;
@@ -72,5 +73,10 @@ public class HangMucController {
     public ResponseEntity<List<Hangmuc>> getAll() {
         log.info(" start service to getAll");
         return new ResponseEntity<>(hangMucRepository.findAll(),HttpStatus.OK);
+    }
+
+    @GetMapping("/hm-cd")
+    public ResponseEntity<List<HangMucCDDTO>> getHMCD() {
+        return new ResponseEntity<>(hangMucService.getListHMwithCD(),HttpStatus.OK);
     }
 }

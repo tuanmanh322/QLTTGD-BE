@@ -39,4 +39,6 @@ public interface BaiVietService {
     void activeBV(Integer idbv);
 
     void unActiveBV(Integer idBV);
+
+    Integer countBV();
 }

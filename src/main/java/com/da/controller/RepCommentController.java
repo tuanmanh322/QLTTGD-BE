@@ -55,9 +55,9 @@ public class RepCommentController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/rep-comment/{idCM}")
-    public ResponseEntity<Boolean> repComment(@PathVariable("idCM") Integer idCM, @ModelAttribute RepCommentDTO repCommentDTO) {
+    @PostMapping("/rep-comment/{idCM}/{idBV}")
+    public ResponseEntity<Boolean> repComment(@PathVariable("idCM") Integer idCM,@PathVariable("idBV") Integer idBV, @ModelAttribute RepCommentDTO repCommentDTO) {
         log.info(" start rest to repComment with idCM:{} and dto : {}", idCM, repCommentDTO);
-        return new ResponseEntity<>(repCommentService.repcomment(idCM, repCommentDTO), HttpStatus.OK);
+        return new ResponseEntity<>(repCommentService.repcomment(idCM,idBV, repCommentDTO), HttpStatus.OK);
     }
 }

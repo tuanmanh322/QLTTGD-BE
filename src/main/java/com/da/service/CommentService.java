@@ -12,4 +12,8 @@ public interface CommentService {
     CommentDTO findById(Integer id);
 
     boolean isCommentBV(Integer idBV, CommentDTO commentDTO);
+
+    boolean isLikeCM(CommentDTO commentDTO);
+
+    boolean isDisLikeCM(CommentDTO  commentDTO);
 }

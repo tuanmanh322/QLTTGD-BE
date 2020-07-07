@@ -1,11 +1,14 @@
 package com.da.service.impl;
 
+import com.da.dao.ChuDeDAO;
 import com.da.dao.HangMucDAO;
+import com.da.dto.ChuDeCountDTO;
 import com.da.dto.HangMucCDDTO;
 import com.da.dto.HangMucDTO;
 import com.da.dto.HangMucSearchDTO;
 import com.da.exception.ErrorCode;
 import com.da.exception.ResultException;
+import com.da.model.Chude;
 import com.da.model.Hangmuc;
 import com.da.repository.ChudeRepository;
 import com.da.repository.HangMucRepository;
@@ -34,11 +37,14 @@ HangMucServiceImpl implements HangMucService {
 
     private final HangMucRepository hangMucRepository;
 
-    public HangMucServiceImpl(ModelMapper modelMap, HangMucDAO hangMucDao, ChudeRepository chudeRepository, HangMucRepository hangMucRepository) {
+    private final ChuDeDAO chuDeDAO;
+
+    public HangMucServiceImpl(ModelMapper modelMap, HangMucDAO hangMucDao, ChudeRepository chudeRepository, HangMucRepository hangMucRepository, ChuDeDAO chuDeDAO) {
         this.modelMap = modelMap;
         this.hangMucDao = hangMucDao;
         this.chudeRepository = chudeRepository;
         this.hangMucRepository = hangMucRepository;
+        this.chuDeDAO = chuDeDAO;
     }
 
     @Override
@@ -86,11 +92,14 @@ HangMucServiceImpl implements HangMucService {
     public List<HangMucCDDTO> getListHMwithCD() {
         List<HangMucCDDTO> hangMucCDDTOS = new ArrayList<>();
         List<Hangmuc> hmList = hangMucRepository.findAll();
-        hmList.stream().map(hm -> {
+        for (Hangmuc hm : hmList){
             HangMucCDDTO cddto = new HangMucCDDTO();
-//            cddto.set
-            return hm;
-        }).collect(Collectors.toList());
-        return null;
+            cddto.setTenHM(hm.getTenhangmuc());
+            cddto.setIdHM(hm.getId());
+            List<ChuDeCountDTO> chudeList = chuDeDAO.getChuAndCount(hm.getId());
+            cddto.setChudes(chudeList);
+            hangMucCDDTOS.add(cddto);
+        }
+        return hangMucCDDTOS;
     }
 }

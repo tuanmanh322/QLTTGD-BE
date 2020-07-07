@@ -16,5 +16,5 @@ public class HangMucCDDTO {
 
     private String tenHM;
 
-    private List<Chude> chudes;
+    private List<ChuDeCountDTO> chudes;
 }

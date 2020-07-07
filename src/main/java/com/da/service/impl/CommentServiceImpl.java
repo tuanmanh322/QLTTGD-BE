@@ -10,6 +10,7 @@ import com.da.model.Actions;
 import com.da.model.Comment;
 import com.da.model.Notification;
 import com.da.repository.ActionsRepository;
+import com.da.repository.CommentRepository;
 import com.da.repository.NotificationRepository;
 import com.da.security.SecurityUtils;
 import com.da.service.CommentService;
@@ -48,7 +49,10 @@ public class CommentServiceImpl implements CommentService {
 
     private final SimpMessagingTemplate simpMessagingTemplate;
 
-    public CommentServiceImpl(ModelMapper modelMap, CommentDAO commentDao, FileStorageService fileStorageService, NotificationRepository notificationRepository, ActionsRepository actionsRepository, UserService userService, SimpMessagingTemplate simpMessagingTemplate) {
+    private final CommentRepository commentRepository;
+
+
+    public CommentServiceImpl(ModelMapper modelMap, CommentDAO commentDao, FileStorageService fileStorageService, NotificationRepository notificationRepository, ActionsRepository actionsRepository, UserService userService, SimpMessagingTemplate simpMessagingTemplate, CommentRepository commentRepository) {
         this.modelMap = modelMap;
         this.commentDao = commentDao;
         this.fileStorageService = fileStorageService;
@@ -56,6 +60,7 @@ public class CommentServiceImpl implements CommentService {
         this.actionsRepository = actionsRepository;
         this.userService = userService;
         this.simpMessagingTemplate = simpMessagingTemplate;
+        this.commentRepository = commentRepository;
     }
 
     @Override
@@ -142,6 +147,18 @@ public class CommentServiceImpl implements CommentService {
             simpMessagingTemplate.convertAndSendToUser(userService.getUserNameLogin(),"/queue/feed", notifycation.getMessage(),messageHeaders);
             return true;
         }
+        return false;
+    }
+
+    @Override
+    public boolean isLikeCM(CommentDTO commentDTO) {
+        Comment comment = commentRepository.getOne(commentDTO.getId());
+
+        return false;
+    }
+
+    @Override
+    public boolean isDisLikeCM(CommentDTO commentDTO) {
         return false;
     }
 }
