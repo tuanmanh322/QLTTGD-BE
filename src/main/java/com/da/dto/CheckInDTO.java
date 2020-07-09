@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -26,9 +27,7 @@ public class CheckInDTO extends BaseSearch{
 
     private String tenHocSinh;
 
-    private Date ngayVao;
-
-    private Date thoiGianRa;
+    private LocalDateTime ngayVao;
 
     private Integer idUser;
 

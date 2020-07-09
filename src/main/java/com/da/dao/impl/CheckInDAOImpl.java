@@ -58,7 +58,6 @@ public class CheckInDAOImpl extends AbstractDAO implements CheckInDAO  {
         Map<String, Object> parameter = new HashMap<>();
         sb.append(" select nc.id,");
         sb.append(" nc.thoigianvao as ngayVao,");
-        sb.append(" nc.thoigianra as thoiGianRa,");
         sb.append(" u.id as idUser,");
         sb.append(" u.name as name,");
         sb.append(" t.trangthai");
