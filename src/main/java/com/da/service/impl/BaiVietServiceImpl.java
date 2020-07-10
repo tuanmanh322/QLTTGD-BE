@@ -331,7 +331,7 @@ public class BaiVietServiceImpl implements BaiVietService {
         if (baiviet.isPresent()) {
             Notification notifycation = new Notification();
             Baiviet bv = baiviet.get();
-            if (bv.getLuotthich() < baiVietDTO.getLuotthich() || bv.getLuotthich() == null){
+//            if (bv.getLuotthich() < baiVietDTO.getLuotthich() || bv.getLuotthich() == null){
                 notifycation.setCreatedDate(LocalDateTime.now());
                 notifycation.setIdAction(Constant.LIKE);
                 notifycation.setIdThe(SecurityUtils.getCurrentUserIdLogin());
@@ -340,7 +340,7 @@ public class BaiVietServiceImpl implements BaiVietService {
                 notifycation.setRead(0);
                 notifycation.setIdBaiViet(idBV);
                 notificationRepository.save(notifycation);
-            }
+//            }
             bv.setLuotthich(baiVietDTO.getLuotthich());
             baivietRepository.save(bv);
 
@@ -368,7 +368,7 @@ public class BaiVietServiceImpl implements BaiVietService {
         if (bv !=null){
             Notification notifycation = new Notification();
             bv.setLuotkhongthich(baiVietDTO.getLuotkhongthich());
-            if (bv.getLuotkhongthich() < baiVietDTO.getLuotkhongthich() || bv.getLuotkhongthich() == null){
+//            if (bv.getLuotkhongthich() < baiVietDTO.getLuotkhongthich() || bv.getLuotkhongthich() == null){
                 notifycation.setCreatedDate(LocalDateTime.now());
                 notifycation.setIdAction(Constant.DISLIKE);
                 notifycation.setIdThe(SecurityUtils.getCurrentUserIdLogin());
@@ -377,7 +377,7 @@ public class BaiVietServiceImpl implements BaiVietService {
                 notifycation.setRead(0);
                 notifycation.setIdBaiViet(idBV);
                 notificationRepository.save(notifycation);
-            }
+//            }
             baivietRepository.save(bv);
             /*
              * This block is used to

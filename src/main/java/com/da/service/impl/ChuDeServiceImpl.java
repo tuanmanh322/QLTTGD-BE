@@ -74,6 +74,7 @@ public class ChuDeServiceImpl implements ChuDeService {
     public void add(ChuDeDTO dto) throws ResultException {
         log.info(" start service to searchChuDe with :{}",dto);
         Chude chude = modelMap.map(dto, Chude.class);
+        chude.setIdHangmuc(dto.getIdHangMuc());
         chuDeDao.save(chude);
     }
     @Override

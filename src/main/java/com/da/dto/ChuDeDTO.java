@@ -18,6 +18,8 @@ public class ChuDeDTO {
     private String maHangmucbaiviet;
 
     private Integer baiVietCount;
+
+    private Integer idHangMuc;
 }
 
 
