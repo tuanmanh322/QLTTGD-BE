@@ -124,6 +124,11 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public void readWithIdBV(Integer idBV) {
         log.info("start service to readWithIdBV notification");
+        List<Notification> notification  = notificationRepository.readIdBV(idBV);
+        for (Notification no : notification){
+            no.setRead(1);
+            notificationRepository.saveAll(notification);
+        }
 
     }
 

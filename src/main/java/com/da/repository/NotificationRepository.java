@@ -27,4 +27,6 @@ public interface NotificationRepository extends JpaRepository<Notification, Inte
     @Query(nativeQuery = true, value = "select  * from notification as noti where noti.id_the=?1 and noti.id_action =2 and noti.id_baiviet=?2")
     List<Notification> checkAlreadyDisLike(Integer idThe, Integer idBV);
 
+    @Query(nativeQuery = true, value = "select  * from notification as noti where noti.id_the=?1 and noti.id_baiviet=?2")
+    List<Notification> readIdBV(Integer idBV);
 }

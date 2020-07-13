@@ -39,6 +39,7 @@ public class GiaoVienDTO extends BaseSearch{
 
     private Integer idLop;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
 
     private Integer cmt;

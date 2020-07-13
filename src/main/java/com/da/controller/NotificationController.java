@@ -72,4 +72,10 @@ public class NotificationController {
         log.info("start rest to checkAlreadyDislike with idBV: {}",idBV);
         return new ResponseEntity<>(notificationService.checkAlreadyDisLike(idBV), HttpStatus.OK);
     }
+
+//    @GetMapping("/is-read-bv/{idBV}")
+    public ResponseEntity<Void> isReadBV(@PathVariable("idBV")Integer idBV){
+        notificationService.readWithIdBV(idBV);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

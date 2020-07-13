@@ -32,9 +32,8 @@ public class HocSinhController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<CommonResult> add(@ModelAttribute HocSinhDTO dto) throws ResultException {
+    public ResponseEntity<CommonResult> add(@ModelAttribute HocSinhDTO dto){
         log.info(" start rest to add lop hoc with :{}", dto);
-        hocService.add(dto);
         return new ResponseEntity<>( hocService.add(dto),HttpStatus.OK);
     }
 

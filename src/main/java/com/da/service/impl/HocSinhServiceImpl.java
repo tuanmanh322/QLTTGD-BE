@@ -65,7 +65,7 @@ public class HocSinhServiceImpl implements HocSinhService {
     }
 
     @Override
-    public CommonResult add(HocSinhDTO dto) throws ResultException {
+    public CommonResult add(HocSinhDTO dto) {
         String maThe = RandomString.rdMaThe(Constant.MA_THE_STUDENT);
         log.info(" start service to addLopHoc with :{}", dto);
         Optional<The> t = theRepository.findByMaThe(maThe);
@@ -87,6 +87,7 @@ public class HocSinhServiceImpl implements HocSinhService {
         user.setQuequan(dto.getDiachi());
         user.setIsTeacher(false);
         user.setGioitinh(dto.getSex());
+        user.setMaThe(the.getId());
         if (dto.getImageHS() != null){
             try {
                 user.setImagePath(fileStorageService.storeFile(dto.getImageHS()));

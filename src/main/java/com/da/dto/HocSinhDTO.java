@@ -48,6 +48,7 @@ public class HocSinhDTO extends BaseSearch {
 
     private String diachi;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
 
     private String sex;
