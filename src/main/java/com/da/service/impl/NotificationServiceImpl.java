@@ -136,13 +136,13 @@ public class NotificationServiceImpl implements NotificationService {
     public boolean checkAlreadyLike(Integer idBV) {
         log.info("start service to checkAlreadyLike notification");
         List<Notification> notification = notificationRepository.checkAlreadyLike(SecurityUtils.getCurrentUserIdLogin(), idBV);
-        return notification.size() >= 1;
+        return notification.size() > 0;
     }
 
     @Override
     public boolean checkAlreadyDisLike(Integer idBV) {
         log.info("start service to checkAlreadyDisLike notification");
         List<Notification> notification = notificationRepository.checkAlreadyDisLike(SecurityUtils.getCurrentUserIdLogin(), idBV);
-        return notification.size() >= 1;
+        return notification.size() > 0;
     }
 }

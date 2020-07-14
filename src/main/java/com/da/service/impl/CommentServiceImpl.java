@@ -219,12 +219,12 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public boolean checkLikeCM(int idCM, int idBV) {
         List<Notification> notifications = notificationRepository.checkAlreadyLikeCM(SecurityUtils.getCurrentUserIdLogin(), idBV, idCM);
-        return notifications.size() > 1;
+        return notifications.size() > 0;
     }
 
     @Override
     public boolean checkDisLikeCM(int idCM, int idBV) {
         List<Notification> notifications = notificationRepository.checkAlreadyDisLikeCM(SecurityUtils.getCurrentUserIdLogin(), idBV, idCM);
-        return notifications.size() > 1;
+        return notifications.size() > 0;
     }
 }
