@@ -21,6 +21,10 @@ public interface Constant {
     Integer REPCOMMENT = 4;
     Integer ACCEPTBV = 5;
     Integer DECIDEBV = 6;
+    Integer LIKE_COMMENT = 7;
+    Integer DISLIKE_COMMENT = 8;
+    Integer LIKE_RECM = 9;
+    Integer DISLIKE_REPCM= 10;
 
 
     String MA_THE_ADMIN = "111";
@@ -33,4 +37,10 @@ public interface Constant {
     String ACCEPT = "BÀI VIÊT CỦA BẠN ĐÃ ĐƯỢC DUYỆT!";
 
     String DECIDE = "BÀI VIÊT CỦA BẠN ĐÃ BỊ TỪ CHỐI!!";
+
+
+    String LIKECM = "ĐÃ THÍCH BÌNH LUẬN CỦA ";
+
+    String DISLIKECM ="ĐẪ KHÔNG THÍCH BÌNH LUẬN CỦA";
+
 }

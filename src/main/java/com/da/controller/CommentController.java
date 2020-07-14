@@ -3,11 +3,11 @@ package com.da.controller;
 import com.da.dto.CommentDTO;
 import com.da.dto.CommentSearchDTO;
 import com.da.exception.ResultException;
-import org.springframework.web.bind.annotation.*;
 import com.da.service.CommentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/comment")
@@ -31,7 +31,7 @@ public class CommentController {
     public ResponseEntity<CommentDTO> findByID(@PathVariable("id") Integer id) {
         log.info("start rest to findByID WITH ID:{}", id);
         CommentDTO dto = commentService.findById(id);
-        return new ResponseEntity<CommentDTO>(dto, HttpStatus.OK);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     @PostMapping("/add")
@@ -61,8 +61,23 @@ public class CommentController {
         return new ResponseEntity<>(commentService.isCommentBV(idBV, commentDTO), HttpStatus.OK);
     }
 
-    @GetMapping("/is-like-cm")
+    @PostMapping("/is-like-cm")
     public ResponseEntity<Boolean> likeComment(@RequestBody CommentDTO commentDTO) {
-        return new ResponseEntity<>(commentService.isLikeCM(commentDTO),HttpStatus.OK);
+        return new ResponseEntity<>(commentService.isLikeCM(commentDTO), HttpStatus.OK);
+    }
+
+    @PostMapping("/is-dislike-cm")
+    public ResponseEntity<Boolean> disLikeComment(@RequestBody CommentDTO commentDTO) {
+        return new ResponseEntity<>(commentService.isDisLikeCM(commentDTO), HttpStatus.OK);
+    }
+
+    @GetMapping("/check-like-cm/{idCM}/{idBV}")
+    public ResponseEntity<Boolean> checkLikeCM(@PathVariable("idCM") Integer idCM, @PathVariable("idBV") Integer idBV) {
+        return new ResponseEntity<>(commentService.checkLikeCM(idCM, idBV), HttpStatus.OK);
+    }
+
+    @GetMapping("/check-dislike-cm/{idCM}/{idBV}")
+    public ResponseEntity<Boolean> checkDisLikeCM(@PathVariable("idCM") Integer idCM, @PathVariable("idBV") Integer idBV) {
+        return new ResponseEntity<>(commentService.checkDisLikeCM(idCM, idBV), HttpStatus.OK);
     }
 }

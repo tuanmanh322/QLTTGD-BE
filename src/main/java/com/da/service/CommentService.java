@@ -16,4 +16,9 @@ public interface CommentService {
     boolean isLikeCM(CommentDTO commentDTO);
 
     boolean isDisLikeCM(CommentDTO  commentDTO);
+
+
+    boolean checkLikeCM(int idCM, int idBV);
+
+    boolean checkDisLikeCM(int idCM, int idBV);
 }

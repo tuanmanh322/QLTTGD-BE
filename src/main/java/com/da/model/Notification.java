@@ -1,9 +1,6 @@
 package com.da.model;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,9 +8,7 @@ import java.time.LocalDateTime;
 
 @Table(name = "notification")
 @Entity
-@Getter
-@Setter
-@ToString
+@Data
 public class Notification implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -40,14 +35,9 @@ public class Notification implements Serializable {
     @Column(name = "id_baiviet")
     private Integer idBaiViet;
 
-    public Notification() {
-    }
+    @Column(name = "id_comment")
+    private Integer idComment;
 
-    public Notification(Integer idThe, Integer idAction, Integer read, String message, LocalDateTime createdDate) {
-        this.idThe = idThe;
-        this.idAction = idAction;
-        this.read = read;
-        this.message = message;
-        this.createdDate = createdDate;
-    }
+    @Column(name = "id_rep_comment")
+    private Integer idRepComment;
 }

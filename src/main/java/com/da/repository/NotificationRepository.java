@@ -29,4 +29,17 @@ public interface NotificationRepository extends JpaRepository<Notification, Inte
 
     @Query(nativeQuery = true, value = "select  * from notification as noti where noti.id_the=?1 and noti.id_baiviet=?2")
     List<Notification> readIdBV(Integer idBV);
+
+    @Query(nativeQuery = true, value = "select  * from notification as noti where noti.id_the=?1 and noti.id_action =7 and noti.id_baiviet=?2 and noti.id_comment=?3")
+    List<Notification> checkAlreadyLikeCM(Integer idThe, Integer idBV, Integer idCM);
+
+    @Query(nativeQuery = true, value = "select  * from notification as noti where noti.id_the=?1 and noti.id_action =8 and noti.id_baiviet=?2 and noti.id_comment=?3")
+    List<Notification> checkAlreadyDisLikeCM(Integer idThe, Integer idBV, Integer idCM);
+
+    @Query(nativeQuery = true, value = "select  * from notification as noti where noti.id_the=?1 and noti.id_action =9 and noti.id_baiviet=?2 and noti.id_rep_comment=?3")
+    List<Notification> checkAlreadyLikeRECM(Integer idThe, Integer idBV, Integer idRECM);
+
+    @Query(nativeQuery = true, value = "select  * from notification as noti where noti.id_the=?1 and noti.id_action =10 and noti.id_baiviet=?2 and noti.id_rep_comment=?3")
+    List<Notification> checkAlreadyDisLikeRECM(Integer idThe, Integer idBV, Integer idRECM);
+
 }

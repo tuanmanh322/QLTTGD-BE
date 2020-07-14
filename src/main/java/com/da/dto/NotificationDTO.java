@@ -24,6 +24,10 @@ public class NotificationDTO {
 
     private Integer idBaiViet;
 
+    private Integer idCm;
+
+    private Integer idReCm;
+
     private String titleBV;
 
     private String userName;

@@ -28,6 +28,8 @@ import org.springframework.util.MimeTypeUtils;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -65,13 +67,13 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void searchComment(CommentSearchDTO dto) {
-        log.info(" start service to searchHangMuc with :{}",dto);
+        log.info(" start service to searchHangMuc with :{}", dto);
         commentDao.searchComment(dto);
     }
 
     @Override
     public void add(CommentDTO dto) throws ResultException {
-        log.info(" start service to searchChuDe with :{}",dto);
+        log.info(" start service to searchChuDe with :{}", dto);
         Comment comment = modelMap.map(dto, Comment.class);
         comment.setIdUser(SecurityUtils.getCurrentUserIdLogin());
         comment.setLuotthich(0);
@@ -81,7 +83,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void update(CommentDTO dto) throws ResultException {
-        log.info(" start service to update with :{}",dto);
+        log.info(" start service to update with :{}", dto);
         Comment comment = commentDao.findById(dto.getId(), Comment.class).get();
         if (comment.getId() == null) {
             throw new ResultException(ErrorCode.RECORD_NOT_EXISTED);
@@ -92,30 +94,30 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void delete(Integer id) throws ResultException {
-            log.info(" start service to delete with :{}",id);
-            Comment comment = commentDao.findById(id, Comment.class).get();
-            if (comment.getId() == null) {
-                throw new ResultException(ErrorCode.RECORD_NOT_EXISTED);
-            }
-            commentDao.delete(comment);
+        log.info(" start service to delete with :{}", id);
+        Comment comment = commentDao.findById(id, Comment.class).get();
+        if (comment.getId() == null) {
+            throw new ResultException(ErrorCode.RECORD_NOT_EXISTED);
+        }
+        commentDao.delete(comment);
     }
 
     @Override
     public CommentDTO findById(Integer id) {
-                Comment comment = commentDao.findById(id, Comment.class).get();
-                CommentDTO dto = modelMap.map(comment, CommentDTO.class);
-                return dto;
+        Comment comment = commentDao.findById(id, Comment.class).get();
+        CommentDTO dto = modelMap.map(comment, CommentDTO.class);
+        return dto;
     }
 
     @Override
     public boolean isCommentBV(Integer idBV, CommentDTO commentDTO) {
         log.info(" start service to isCommentBV with id :{} and dto : {}", idBV, commentDTO);
 
-        if (idBV !=null){
+        if (idBV != null) {
             Comment comment = new Comment();
             comment.setIdBaiViet(idBV);
             comment.setIdUser(SecurityUtils.getCurrentUserIdLogin());
-            if(commentDTO.getFileCM() != null){
+            if (commentDTO.getFileCM() != null) {
                 try {
                     comment.setImageCM(fileStorageService.storeFile(commentDTO.getFileCM()));
                 } catch (IOException e) {
@@ -144,7 +146,7 @@ public class CommentServiceImpl implements CommentService {
             simpMessageHeaderAccessor.setContentType(MimeTypeUtils.APPLICATION_JSON);
             simpMessageHeaderAccessor.setLeaveMutable(true);
             MessageHeaders messageHeaders = simpMessageHeaderAccessor.getMessageHeaders();
-            simpMessagingTemplate.convertAndSendToUser(userService.getUserNameLogin(),"/queue/feed", notifycation.getMessage(),messageHeaders);
+            simpMessagingTemplate.convertAndSendToUser(userService.getUserNameLogin(), "/queue/feed", notifycation.getMessage(), messageHeaders);
             return true;
         }
         return false;
@@ -153,12 +155,76 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public boolean isLikeCM(CommentDTO commentDTO) {
         Comment comment = commentRepository.getOne(commentDTO.getId());
+        if (comment != null) {
+            comment.setLuotthich(commentDTO.getLuotThich());
+            commentRepository.save(comment);
 
+            Notification notification = new Notification();
+            notification.setRead(0);
+            notification.setIdBaiViet(commentDTO.getIdBaiViet());
+            notification.setIdComment(comment.getId());
+            notification.setIdThe(SecurityUtils.getCurrentUserIdLogin());
+            notification.setIdAction(Constant.LIKE_COMMENT);
+            notification.setCreatedDate(LocalDateTime.now());
+            notification.setMessage(Constant.LIKECM);
+            notificationRepository.save(notification);
+            /*
+             * This block is used to
+             * send the notification the
+             * users for whom, the event was
+             * generated.
+             */
+            SimpMessageHeaderAccessor simpMessageHeaderAccessor = SimpMessageHeaderAccessor.create();
+            simpMessageHeaderAccessor.setContentType(MimeTypeUtils.APPLICATION_JSON);
+            simpMessageHeaderAccessor.setLeaveMutable(true);
+            MessageHeaders messageHeaders = simpMessageHeaderAccessor.getMessageHeaders();
+            simpMessagingTemplate.convertAndSendToUser(userService.getUserNameLogin(), "/queue/feed", notification.getMessage(), messageHeaders);
+            return true;
+        }
         return false;
     }
 
     @Override
     public boolean isDisLikeCM(CommentDTO commentDTO) {
+        Comment comment = commentRepository.getOne(commentDTO.getId());
+        if (comment != null) {
+            comment.setLoutkhongthich(commentDTO.getLuotKhongthich());
+            commentRepository.save(comment);
+
+            Notification notification = new Notification();
+            notification.setRead(0);
+            notification.setIdBaiViet(commentDTO.getIdBaiViet());
+            notification.setIdComment(comment.getId());
+            notification.setIdThe(SecurityUtils.getCurrentUserIdLogin());
+            notification.setIdAction(Constant.DISLIKE_COMMENT);
+            notification.setCreatedDate(LocalDateTime.now());
+            notification.setMessage(Constant.DISLIKECM);
+            notificationRepository.save(notification);
+            /*
+             * This block is used to
+             * send the notification the
+             * users for whom, the event was
+             * generated.
+             */
+            SimpMessageHeaderAccessor simpMessageHeaderAccessor = SimpMessageHeaderAccessor.create();
+            simpMessageHeaderAccessor.setContentType(MimeTypeUtils.APPLICATION_JSON);
+            simpMessageHeaderAccessor.setLeaveMutable(true);
+            MessageHeaders messageHeaders = simpMessageHeaderAccessor.getMessageHeaders();
+            simpMessagingTemplate.convertAndSendToUser(userService.getUserNameLogin(), "/queue/feed", notification.getMessage(), messageHeaders);
+            return true;
+        }
         return false;
+    }
+
+    @Override
+    public boolean checkLikeCM(int idCM, int idBV) {
+        List<Notification> notifications = notificationRepository.checkAlreadyLikeCM(SecurityUtils.getCurrentUserIdLogin(), idBV, idCM);
+        return notifications.size() > 1;
+    }
+
+    @Override
+    public boolean checkDisLikeCM(int idCM, int idBV) {
+        List<Notification> notifications = notificationRepository.checkAlreadyDisLikeCM(SecurityUtils.getCurrentUserIdLogin(), idBV, idCM);
+        return notifications.size() > 1;
     }
 }
