@@ -1,5 +1,6 @@
 package com.da.service.impl;
 
+import com.da.common.TitleFilter;
 import com.da.dao.AutoCompleteDAO;
 import com.da.dto.AutoCompleteContentSet;
 import com.da.dto.AutoCompleteTitleSet;
@@ -53,5 +54,11 @@ public class AutoCompleteServiceImpl implements AutoCompleteService {
     public List<AutoCompleteContentSet> autoCompleteContentCD(AutocompleteSearchDTO autocompleteSearchDTO) {
         log.info(" start service to autoCompleteContentCD with {}",autocompleteSearchDTO);
         return autoCompleteDAO.searchsearchContentCD(autocompleteSearchDTO);
+    }
+
+    @Override
+    public List<String> fetchTitleBV() {
+        List<String>  strings = TitleFilter.xauConChung(null,"b");
+        return null;
     }
 }

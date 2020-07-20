@@ -40,4 +40,7 @@ public class Notification implements Serializable {
 
     @Column(name = "id_rep_comment")
     private Integer idRepComment;
+
+    @Column(name = "id_diem")
+    private Integer idDiem;
 }

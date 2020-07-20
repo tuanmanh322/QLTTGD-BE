@@ -25,7 +25,7 @@ public interface Constant {
     Integer DISLIKE_COMMENT = 8;
     Integer LIKE_RECM = 9;
     Integer DISLIKE_REPCM= 10;
-
+    Integer POINTS= 11;
 
     String MA_THE_ADMIN = "111";
     String MA_THE_TEACHER = "131";
@@ -43,4 +43,5 @@ public interface Constant {
 
     String DISLIKECM ="ĐẪ KHÔNG THÍCH BÌNH LUẬN CỦA";
 
+    String POINT_SS = "CẬP NHẬT ĐIỂM";
 }

@@ -16,4 +16,5 @@ public interface AutoCompleteService {
 
     List<AutoCompleteContentSet> autoCompleteContentCD(AutocompleteSearchDTO autocompleteSearchDTO);
 
+    List<String> fetchTitleBV();
 }

@@ -29,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -61,7 +62,9 @@ public class DiemServiceImpl implements DiemService {
 
     private final PasswordEncoder passwordEncoder;
 
-    public DiemServiceImpl(ModelMapper modelMap, DiemDAO diemDAO, UsersRepository usersRepository, LopRepository lopRepository, UsersDiemMapRepository usersDiemMapRepository, UserLopMapperRepository userLopMapperRepository, DiemRepository diemRepository, MonhocRepository monhocRepository, TheRepository theRepository, PasswordEncoder passwordEncoder) {
+    private final NotificationRepository notificationRepository;
+
+    public DiemServiceImpl(ModelMapper modelMap, DiemDAO diemDAO, UsersRepository usersRepository, LopRepository lopRepository, UsersDiemMapRepository usersDiemMapRepository, UserLopMapperRepository userLopMapperRepository, DiemRepository diemRepository, MonhocRepository monhocRepository, TheRepository theRepository, PasswordEncoder passwordEncoder, NotificationRepository notificationRepository) {
         this.modelMap = modelMap;
         this.diemDAO = diemDAO;
         this.usersRepository = usersRepository;
@@ -72,6 +75,7 @@ public class DiemServiceImpl implements DiemService {
         this.monhocRepository = monhocRepository;
         this.theRepository = theRepository;
         this.passwordEncoder = passwordEncoder;
+        this.notificationRepository = notificationRepository;
     }
 
     @Override
@@ -182,6 +186,7 @@ public class DiemServiceImpl implements DiemService {
                     UserLopMapper userLopMapper = new UserLopMapper();
                     Lop lop = new Lop();
                     Monhoc monhoc = new Monhoc();
+                    Notification notification = new Notification();
                     XSSFRow row = workSheet.getRow(i++);
                     Optional<The> the = theRepository.findByMaTheExcel((int)row.getCell(0).getNumericCellValue());
                     if (the.isPresent()) {
@@ -231,6 +236,13 @@ public class DiemServiceImpl implements DiemService {
                             lopMapper.setIsTeach(true);
                             userLopMapperRepository.save(lopMapper);
                         }
+                        notification.setIdThe(idUser);
+                        notification.setIdDiem(usersDiemMap.getId());
+                        notification.setIdAction(Constant.POINTS);
+                        notification.setMessage(Constant.POINT_SS);
+                        notification.setRead(0);
+                        notification.setCreatedDate(LocalDateTime.now());
+                        notificationRepository.save(notification);
                     } else {
                         String maThe = "" + row.getCell(0).getNumericCellValue();
                         String newMaThe = maThe.replace(".","");
@@ -291,6 +303,13 @@ public class DiemServiceImpl implements DiemService {
                             lopMapper.setActive(true);
                             lopMapper.setIsTeach(true);
                             userLopMapperRepository.save(lopMapper);
+                            notification.setIdThe(idUser);
+                            notification.setIdDiem(usersDiemMap.getId());
+                            notification.setIdAction(Constant.POINTS);
+                            notification.setMessage(Constant.POINT_SS);
+                            notification.setRead(0);
+                            notification.setCreatedDate(LocalDateTime.now());
+                            notificationRepository.save(notification);
                         }
                     }
                 }
