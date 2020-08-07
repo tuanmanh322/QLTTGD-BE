@@ -24,6 +24,13 @@ public class UserSearchDTO extends BaseSearch {
 
     private String sex;
 
+    private Float luongcoban;
+
+    private boolean isTeacher;
+
+    private Integer sodt;
+
+    private String quequan;
 
 
 }

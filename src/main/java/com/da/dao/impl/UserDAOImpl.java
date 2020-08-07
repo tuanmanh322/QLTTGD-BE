@@ -27,7 +27,11 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
         sb.append(" t.trangthai as active,");
         sb.append(" u.name as userName,");
         sb.append(" u.email as emailUser,");
-        sb.append(" u.gioitinh as sex");
+        sb.append(" u.gioitinh as sex,");
+        sb.append(" u.luongcoban as luongcoban,");
+        sb.append(" u.is_teacher as isTeacher,");
+        sb.append(" u.sodt as sodt,");
+        sb.append(" u.quequan as quequan");
         sb.append(" from the as t ");
         sb.append(" left join users as u on t.id = u.ma_the");
         sb.append(" where 1 = 1");

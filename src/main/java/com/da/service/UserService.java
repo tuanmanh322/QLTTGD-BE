@@ -38,4 +38,6 @@ public interface UserService {
     void doUnLock(Integer idThe);
 
     CommonResult checkInUser(UserCheckinDTO userCheckinDTO);
+
+    UserDTO loadUserEdit(int idThe);
 }

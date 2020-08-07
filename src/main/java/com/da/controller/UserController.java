@@ -117,4 +117,9 @@ public class UserController {
         log.info(" start rest to checinUser with :{}", dto);
         return new ResponseEntity<>(userService.checkInUser(dto), HttpStatus.OK);
     }
+
+    @GetMapping("/load-user-by-edit/{idThe}")
+    public ResponseEntity<UserDTO> loadUserByEdit(@PathVariable("idThe") int idThe){
+        return new ResponseEntity<>(userService.loadUserEdit(idThe), HttpStatus.OK);
+    }
 }

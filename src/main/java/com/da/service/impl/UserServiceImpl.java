@@ -185,11 +185,11 @@ UserServiceImpl implements UserService {
         }
         users.setName(dto.getName());
         usersRepository.save(users);
-        if (dto.getIdLop() != null) {
-            UserLopMapper userLopMapper = userLopMapperRepository.findByUserAndLop(users.getId(), dto.getIdLopOld());
-            userLopMapper.setIdLop(dto.getIdLop());
-            userLopMapperRepository.save(userLopMapper);
-        }
+//        if (dto.getIdLop() != null) {
+//            UserLopMapper userLopMapper = userLopMapperRepository.findByUserAndLop(users.getId(), dto.getIdLopOld());
+//            userLopMapper.setIdLop(dto.getIdLop());
+//            userLopMapperRepository.save(userLopMapper);
+//        }
     }
 
     @Override
@@ -334,7 +334,16 @@ UserServiceImpl implements UserService {
             users.setQuoctich(dto.getQuoctich());
             users.setSocmt(dto.getSocmt());
             users.setNgaysinh(dto.getNgaysinh());
-            users.setGioitinh(dto.getGioitinh());
+            if (dto.getGioitinh().equals("Nam")){
+                users.setGioitinh("NAM");
+            }else{
+                users.setGioitinh(dto.getGioitinh());
+            }
+            if (dto.getGioitinh().equals("Nu")){
+                users.setGioitinh("NỮ");
+            }else{
+                users.setGioitinh(dto.getGioitinh());
+            }
             users.setSodt(dto.getSodt());
             Roles roles = rolesRepository.findById(the.get().getIdRole()).get();
             if (roles.getNameRole().equals(UserTypeEnum.TEACHER.getName()) && roles.getId() == 2) {
@@ -495,5 +504,15 @@ UserServiceImpl implements UserService {
             userCheckinDTO.setNhatcheckins(nccList);
         }
         return CommonResult.success(userCheckinDTO);
+    }
+
+    @Override
+    public UserDTO loadUserEdit(int idThe) {
+        UserDTO dto = new UserDTO();
+        The the = theRepository.findById(idThe).get();
+        Users users = usersRepository.findByMaThe(the.getId());
+
+
+        return null;
     }
 }

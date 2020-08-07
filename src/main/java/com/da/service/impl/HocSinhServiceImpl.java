@@ -86,7 +86,12 @@ public class HocSinhServiceImpl implements HocSinhService {
 //        user.setEmail(dto.getEmail());
         user.setQuequan(dto.getDiachi());
         user.setIsTeacher(false);
-        user.setGioitinh(dto.getSex());
+        if (dto.getSex().equals("Nam")){
+            user.setGioitinh("NAM");
+        }
+        if (dto.getSex().equals("Nu")){
+            user.setGioitinh("NỮ");
+        }
         user.setMaThe(the.getId());
         if (dto.getImageHS() != null){
             try {
@@ -107,6 +112,12 @@ public class HocSinhServiceImpl implements HocSinhService {
             throw new ResultException(ErrorCode.RECORD_NOT_EXISTED);
         }
         user = modelMap.map(dto, Users.class);
+        if (dto.getGioiTinh().equals("Nam")){
+            user.setGioitinh("NAM");
+        }
+        if (dto.getGioiTinh().equals("Nu")){
+            user.setGioitinh("NỮ");
+        }
         hocSinhDao.update(user);
     }
 

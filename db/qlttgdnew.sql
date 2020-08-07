@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.12, for Win64 (x86_64)
 --
 -- Host: localhost    Database: qlttgd
 -- ------------------------------------------------------
@@ -28,7 +28,7 @@ CREATE TABLE `actions` (
   `name_actions` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `statuss` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +37,7 @@ CREATE TABLE `actions` (
 
 LOCK TABLES `actions` WRITE;
 /*!40000 ALTER TABLE `actions` DISABLE KEYS */;
-INSERT INTO `actions` VALUES (1,'ACTION','LIKE','LIKE BAI VIẾT'),(2,'ACTION','DISLIKE','DISLIKE BÀI VIẾT'),(3,'ACTION','COMMENT','BÌNH LUẬN'),(4,'ACTION','REPCOMMENT','TRẢ LỜI BÌNH LUẬN'),(5,'ACTION','ACCEPT','DUYỆT BÀI'),(6,'ACTION','DECIDE','TỪ CHỐI DUYỆT BÀI'),(7,'ACTION','LIKE COMMENT','LIKE COMMENT'),(8,'ACTION','DISLIKE COMMENT','DISLIKE COMMENT'),(9,'ACTION','LIKE_REPCOMMENT','LIKE COMMENT'),(10,'ACTION','DISLIKE_REPCOMMENT','DISLIKE COMMENT'),(11,'ACTION','POINTS','CẬP NHẬT ĐIỂM');
+INSERT INTO `actions` VALUES (1,'ACTION','LIKE','LIKE BAI VIẾT'),(2,'ACTION','DISLIKE','DISLIKE BÀI VIẾT'),(3,'ACTION','COMMENT','BÌNH LUẬN'),(4,'ACTION','REPCOMMENT','TRẢ LỜI BÌNH LUẬN'),(5,'AC_5','TEST5','TEST5'),(6,'AC_6','TEST6','TEST6'),(7,'AC_7','TEST7','TEST7'),(8,'AC_8','TEST8','TEST8'),(9,'AC_9','TEST9','TEST9'),(10,'AC_10','TEST10','TEST10');
 /*!40000 ALTER TABLE `actions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -71,7 +71,7 @@ CREATE TABLE `baiviet` (
 
 LOCK TABLES `baiviet` WRITE;
 /*!40000 ALTER TABLE `baiviet` DISABLE KEYS */;
-INSERT INTO `baiviet` VALUES (3,'BV_3','Cho hình bình hành ABCD. Phép tịnh tiến TAB→ + AD→ biến điểm A thành điểm:',12,4,3,2,'2020-02-04 00:00:00','cho 1 ',NULL,1,5),(4,'BV_4','Cho đường tròn (C) có tâm O và đường kính AB. Gọi ∆ là tiếp tuyến của (C) tại điểm A. Phép tịnh tiến TAB→ biến ∆ thành:',3,5,4,2,'2020-04-14 00:00:00','cho 2',NULL,1,7),(5,'BV_5','Cho v→(3;3) và đường tròn (C): x2 + y2 - 2x + 4y - 4 = 0. ảnh của (C) qua Tv→ là (C’).',77,5,5,3,'2020-01-23 00:00:00','cho 3',NULL,1,1),(6,'BV_6','Cho​​ a→​​ và​​ b→​​ là hai vectơ cùng hướng và đều khác vectơ​​ 0→. Mệnh đề nào sau đây đúng?',4,3,6,1,'2020-01-07 00:00:00','cho test cho',NULL,1,1),(7,'BV_7','Cho hai vectơ​​ a→​​ và​​ b→​​ khác​​ 0→. Xác định góc​​ α​​ giữa hai vectơ​​ a→​​ và​​ b→​​ khi​​ a→.b→=-a→.b→.',4,79,7,1,'2020-04-30 00:00:00','cho test cho',NULL,1,1),(8,'BV_8','Cho hai vectơ​​ a→​​ và​​ b→​​ thỏa mãn​​ a→=3,​​ b→=2​​ và​​ a→.b→=-3.​​ Xác định góc​​ α​​ giữa hai vectơ​​ a→​​ và​​ b→.',7,55,8,2,'2020-03-31 00:00:00','cho test cho',NULL,1,21),(9,'BV_9','Cho hai vectơ​​ a→​​ và​​ b→. Đẳng thức nào sau đây sai?',89,44,1,3,'2020-03-30 00:00:00','cho test cho',NULL,1,2),(22,NULL,'<p>test test test</p><figure class=\"image\"><img src=\"http://localhost:1234/api/media/1592149820124_ongbut-removebg-preview.png\"></figure>',2,1,1,5,'2020-06-14 22:50:29','cho test cho',NULL,1,2),(23,NULL,'<figure class=\"image\"><img src=\"http://localhost:1234/api/media/1592216025759_ongbut-image.png\"></figure>',0,0,1,5,'2020-06-15 17:13:48','teeeeees',NULL,0,1),(24,NULL,'<h2>123123</h2><figure class=\"image\"><img src=\"http://localhost:1234/api/media/1592360559777_87047440_10158217486053969_159800546079801344_n.jpg\"></figure>',7,5,8,1,'2020-06-17 09:22:42','tessst',NULL,1,16),(25,NULL,'<h2>123</h2><figure class=\"image\"><img src=\"http://localhost:1234/api/media/1592360605613_hoa1.jpg\"></figure>',17,7,6,9,'2020-06-17 09:23:28','test',NULL,1,18),(26,NULL,'<figure class=\"image\"><img src=\"http://localhost:1234/api/media/1592361423739_86971839_10158217485938969_9135951903144804352_n.jpg\"></figure>',32,16,8,5,'2020-06-17 09:37:05','wwww',NULL,1,91),(28,NULL,'<figure class=\"image\"><img src=\"http://localhost:1234/api/media/1594131302132_maths-ftr.jpg\"></figure><p>undefined</p>',36,22,4,3,'2020-07-07 21:15:03','dsfsdfweqw',NULL,1,53);
+INSERT INTO `baiviet` VALUES (1,'BV_1','Trong kì thi tốt nghiệp THCS, mỗi phòng thi đều có 24 thí sinh được xếp vào 6 dãy bàn, mỗi dãy có 4 thí sinh. Có 24 tờ giấy nháp với 3 loại màu Xanh, Đỏ, Tím sẽ đuocẹ phát cho 24 thí sinh trong phòng thi. Hãy viết chương trình giúp cho Giám thị phát giất nháp sao cho mỗi thí sinh sử dụng một màu giấy nháp không trùng với mày của các bạn ngồi ở vị trí sau, phải, trái đối với thí sinh đó.\r\n\r\n1. Yêu cầu :\r\n\r\n+ In ra màn hình tất cả sơ đồ phát giấy nháp có thể thực hiện được.\r\n\r\n+ Tổng số giấy nháp mỗi loại được sử dụng.\r\n\r\nLưu ý : Các bạn có thể giải theo file hoặc không cần. Nhưng mình cần file hơn ạ. Mong mọi người giúp đỡ.',2,1,1,1,'2020-06-02 00:00:00','Anh chị giúp em bài này với ạ',NULL,1,17),(3,'BV_3','Cho hình bình hành ABCD. Phép tịnh tiến TAB→ + AD→ biến điểm A thành điểm:',0,0,3,2,'2020-02-04 00:00:00','Help me please',NULL,1,4),(4,'BV_4','Cho đường tròn (C) có tâm O và đường kính AB. Gọi ∆ là tiếp tuyến của (C) tại điểm A. Phép tịnh tiến TAB→ biến ∆ thành:',1,0,4,2,'2020-04-14 00:00:00','Hình học lớp 7',NULL,1,6),(5,'BV_5','Cho tam giác ABC vuông tại A , đường cao AH , biết AB = 21cm ; AC = 28cm .\r\n\r\na/Tính AH\r\n\r\nb/ Kẻ HD AB; HE AC .Tính diện tích tam giác AED.',0,0,5,3,'2020-01-23 00:00:00','Tam giác đồng dạng',NULL,1,1),(6,'BV_6','Một trường học có 1000 học sinh gồm 23 lớp. Chứng minh rằng phải có ít nhất một lớp có từ 44 học sinh trở lên',1,0,6,1,'2020-01-07 00:00:00','Định lý Diricle',NULL,1,1),(7,'BV_7','1 - 3 + 5 - 7 + ... + 2005 - 2007 + 2009 - 2011',1,0,7,1,'2020-04-30 00:00:00','Tính giá trị của biểu thức',NULL,1,1),(8,'BV_8','Một người đi xe đạp từ A đến B với vận tốc 20km/h ; Lúc quay về đi với vận tốc 15km/h nên thời gian về hơn thời gian đi 10 phút . Tính quãng đường AB ?​​ a→​​ và​​ b→.',0,0,8,2,'2020-03-31 00:00:00','Giải toán đố',NULL,1,23),(9,'BV_9','Cho hai vectơ​​ a→​​ và​​ b→. Đẳng thức nào sau đây sai?',0,0,1,3,'2020-03-30 00:00:00','cho test cho',NULL,1,2),(28,NULL,'<p>&nbsp;</p><figure class=\"image\"><img src=\"http://localhost:1234/api/media/1596640778550_image.png\"></figure>',0,0,3,5,'2020-08-05 22:19:55','Giúp em câu hỏi này với',NULL,1,1);
 /*!40000 ALTER TABLE `baiviet` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -116,7 +116,7 @@ CREATE TABLE `chude` (
   `noidung` text,
   `id_hangmuc` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -125,7 +125,7 @@ CREATE TABLE `chude` (
 
 LOCK TABLES `chude` WRITE;
 /*!40000 ALTER TABLE `chude` DISABLE KEYS */;
-INSERT INTO `chude` VALUES (1,'CD_1','Hình học không gian','Hình học không gian',1),(2,'CD_2','HỆ THỨC VI-ET VÀ ỨNG DỤNG','HỆ THỨC VI-ET VÀ ỨNG DỤNG',2),(3,'CD_3','CĂN THỨC – BIẾN ĐỔI CĂN THỨC.','CĂN THỨC – BIẾN ĐỔI CĂN THỨC.',4),(4,'CD_4','PHƯƠNG TRÌNH BẬC HAI – ĐỊNH LÝ VI-ÉT.','PHƯƠNG TRÌNH BẬC HAI – ĐỊNH LÝ VI-ÉT.',4),(5,'CD_5','HỆ PHƯƠNG TRÌNH','HỆ PHƯƠNG TRÌNH',2),(6,'CD_6','HÀM SỐ ĐỒ TH','HÀM SỐ ĐỒ TH',1),(7,'CD_7','CHỨNG MINH HAI TAM GIÁC ĐỒNG DẠNG','CHỨNG MINH HAI TAM GIÁC ĐỒNG DẠNG',2),(8,'CD_8','CHỨNG MINH TỨ GIÁC NỘI TIẾP','CHỨNG MINH TỨ GIÁC NỘI TIẾP',3),(9,'CD_9','Chứng minh các điểm thẳng hàng, các đường thẳng đồng quy.','Chứng minh các điểm thẳng hàng, các đường thẳng đồng quy.',4),(13,'CD_13','HÌNH HỌC KHÔNG GIAN','tetst',6);
+INSERT INTO `chude` VALUES (1,'CD_1','ƯCLN, BCNN','Ước chung lớn nhất, bội chung nhỏ nhất',1),(2,'CD_2','Thực hiện phép tính với số nguyên','Thực hiện phép tính trên tập hợp số nguyên',1),(3,'CD_3','CĂN THỨC – BIẾN ĐỔI CĂN THỨC.','CĂN THỨC – BIẾN ĐỔI CĂN THỨC.',10),(4,'CD_4','Thực hiện phép tính','Các bài toán liên quan đến thực hiện phép tính',1),(5,'CD_5','Điểm, Tia','Hỏi đáp các bài toán liên quan đến điểm và tia ',2),(6,'CD_6','Số nguyên tố','Bài tập về số nguyên tố',3),(7,'CD_7','Một số bài toán khác','Dạng khác',3),(8,'CD_8','Định lý Diricle','Bài toán chuồng thỏ',3),(9,'CD_9','Chứng minh các điểm thẳng hàng, các đường thẳng đồng quy.','Chứng minh các điểm thẳng hàng, các đường thẳng đồng quy.',11),(10,'CD_10','Số chính phương','Bài tập số chính phương',6),(11,'CD_11','Tam giác bằng nhau','Bài tập về tam giác bằng nhau',5),(12,'CD_12','Tam giác đồng dạng','Bài tập về tam giác đồng dạng',8),(13,'CD_13','Rút gọn biểu thức','Bài tập rút gọn',10),(14,'CD_14','Giải bài toán bằng cách lập phương trình','Giải bài toán bằng cách lập pt',7),(15,'CD_15','Giải bài toán bằng cách lập pt hoặc hệ pt','Giải bài toán bằng cách lập pt hoặc hệ pt',10),(16,'CD_16','Phương trình nghiệm nguyên','Phương trình nghiệm nguyên',12),(17,'CD_17','Phương trình vô tỉ','Phương trình vô tỉ',12),(18,'CD_18','Bất đẳng thức','Bất đẳng thức',10);
 /*!40000 ALTER TABLE `chude` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -147,7 +147,7 @@ CREATE TABLE `comment` (
   `created_date` datetime DEFAULT NULL,
   `image_path` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -156,7 +156,7 @@ CREATE TABLE `comment` (
 
 LOCK TABLES `comment` WRITE;
 /*!40000 ALTER TABLE `comment` DISABLE KEYS */;
-INSERT INTO `comment` VALUES (2,'CM_2','Đáp án B đúng',772,1,1,2,NULL,NULL),(4,'CM_4','Đáp án D đúng',773,1,1,2,NULL,NULL),(6,'CM_6','Câu này khó quá',77,1,1,2,NULL,NULL),(7,'CM_7','Đáp án mình làm ra không giống',772,1,1,3,NULL,NULL),(32,NULL,'<p>sdasd</p>',NULL,NULL,34,26,'2020-06-24 09:51:15',NULL),(33,NULL,'<figure class=\"image\"><img src=\"http://localhost:1234/api/media/1594049047033_1592216025759_ongbut-image.png\"></figure>',NULL,NULL,1,26,'2020-07-06 22:24:09',NULL),(34,NULL,'<p>test</p>',NULL,NULL,3,28,'2020-07-10 09:50:06',NULL),(35,NULL,'<p>aaa</p>',2,NULL,1,28,'2020-07-10 11:31:05',NULL),(36,NULL,'<p>â</p>',2,NULL,1,28,'2020-07-10 11:40:32',NULL),(37,NULL,'<p>sss</p>',NULL,NULL,1,26,'2020-07-10 11:49:35',NULL),(38,NULL,'<p>qq</p>',1,NULL,1,28,'2020-07-10 15:57:08',NULL);
+INSERT INTO `comment` VALUES (1,'CM_1','Mình cũng muốn hỏi câu như thế này.',1,0,1,1,NULL,NULL),(2,'CM_2','Đáp án B đúng',0,0,1,2,NULL,NULL),(3,'CM_3','Đáp án C đúng',1,0,1,1,NULL,NULL),(4,'CM_4','Đáp án D đúng',0,0,1,2,NULL,NULL),(5,'CM_5','Đáp án A đúng',1,0,1,1,NULL,NULL),(6,'CM_6','Câu này khó quá',0,0,1,2,NULL,NULL),(7,'CM_7','Đáp án mình làm ra không giống',0,0,1,3,NULL,NULL),(32,NULL,'<p>sdasd</p>',NULL,NULL,34,26,'2020-06-24 09:51:15',NULL),(33,NULL,'<p>câu hỏi hay quá</p>',1,NULL,3,8,'2020-08-05 22:18:05',NULL);
 /*!40000 ALTER TABLE `comment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -174,7 +174,7 @@ CREATE TABLE `contact` (
   `sdt` varchar(15) DEFAULT NULL,
   `status` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -183,7 +183,6 @@ CREATE TABLE `contact` (
 
 LOCK TABLES `contact` WRITE;
 /*!40000 ALTER TABLE `contact` DISABLE KEYS */;
-INSERT INTO `contact` VALUES (2,'Contact','cc@gmail.com','0316548971','test');
 /*!40000 ALTER TABLE `contact` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -237,7 +236,7 @@ CREATE TABLE `diem` (
 
 LOCK TABLES `diem` WRITE;
 /*!40000 ALTER TABLE `diem` DISABLE KEYS */;
-INSERT INTO `diem` VALUES (9,'MD_9',2,4,5,4),(47,NULL,6,7,8,6),(48,NULL,6,8,8.2,7.6),(51,NULL,9,8,8,8),(52,NULL,6,7,8,6),(53,NULL,6,8,8.2,7.6),(56,NULL,9,8,8,8),(72,NULL,6,7,8,6),(73,NULL,6,8,8.2,7.6),(74,NULL,9,8,8,8),(76,NULL,9,8,8,8),(77,NULL,10,10,5,7.5),(96,NULL,6,7,8,6),(97,NULL,6,8,8.2,7.6),(98,NULL,9,8,8,8),(100,NULL,9,8,8,8),(101,NULL,10,10,5,7.5),(107,NULL,10,10,5,7.5),(108,NULL,8,7,8,6),(109,NULL,7,8,8.2,7.6),(110,NULL,9,8,8,8),(111,NULL,7,10,5,7.5),(112,NULL,8,8,8,8),(113,NULL,10,10,5,7.5);
+INSERT INTO `diem` VALUES (1,'MD_1',6,7,8,6),(3,'MD_3',6,7,8,6),(4,'MD_4',6,7,8,6),(5,'MD_5',6,7,8,6),(6,'MD_6',9,7,8,8),(7,'MD_7',9,8,8,8),(9,'MD_9',2,4,5,4),(47,'MD_10',6,7,8,6),(48,'MD_11',6,8,8.2,7.6),(49,'MD_12',9,8,8,8),(50,'MD_13',10,10,5,7.5),(51,'MD_14',9,8,8,8),(52,'MD_15',6,7,8,6),(53,'MD_16',6,8,8.2,7.6),(54,'MD_17',9,8,8,8),(55,'MD_18',10,10,5,7.5),(56,'MD_19',9,8,8,8),(72,'MD_20',6,7,8,6),(73,'MD_21',6,8,8.2,7.6),(74,'MD_22',9,8,8,8),(75,'MD_23',10,10,5,7.5),(76,'MD_24',9,8,8,8),(77,'MD_25',10,10,5,7.5),(96,'MD_26',6,7,8,6),(97,'MD_27',6,8,8.2,7.6),(98,'MD_28',9,8,8,8),(99,'MD_29',10,10,5,7.5),(100,'MD_30',9,8,8,8),(101,'MD_31',10,10,5,7.5),(107,'MD_32',10,10,5,7.5),(108,'MD_33',8,7,8,6),(109,'MD_34',7,8,8.2,7.6),(110,'MD_35',9,8,8,8),(111,'MD_36',7,10,5,7.5),(112,'MD_37',8,8,8,8),(113,'MD_38',10,10,5,7.5),(114,'MD_39',6,7,8,6),(115,'MD_40',6,8,8.2,7.6),(116,'MD_41',9,8,8,8),(117,'MD_42',10,10,5,7.5),(118,'MD_43',9,8,8,8),(119,'MD_44',10,10,5,7.5),(120,'MD_45',6,7,8,6),(121,'MD_46',6,8,8.2,7.6),(122,'MD_47',9,8,8,8),(123,'MD_48',10,10,5,7.5),(124,'MD_49',9,8,8,8),(125,'MD_50',10,10,5,7.5),(126,'MD_51',6,7,8,6),(127,'MD_52',6,8,8.2,7.6),(128,'MD_53',9,8,8,8),(129,'MD_54',10,10,5,7.5),(130,'MD_55',9,8,8,8),(131,'MD_56',10,10,5,7.5),(132,'MD_57',6,7,8,6),(133,'MD_58',6,8,8.2,7.6),(134,'MD_59',9,8,8,8),(135,'MD_60',10,10,5,7.5),(136,'MD_61',9,8,8,8),(137,'MD_62',10,10,5,7.5),(138,'MD_63',6,7,8,6),(139,'MD_64',6,8,8.2,7.6),(140,'MD_65',9,8,8,8),(141,'MD_66',10,10,5,7.5),(142,'MD_67',9,8,8,8),(143,'MD_68',10,10,5,7.5),(144,'MD_69',6,7,8,6),(145,'MD_70',6,8,8.2,7.6),(146,'MD_71',9,8,8,8),(147,'MD_72',10,10,5,7.5),(148,'MD_73',9,8,8,8),(149,'MD_74',10,10,5,7.5);
 /*!40000 ALTER TABLE `diem` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -359,7 +358,7 @@ CREATE TABLE `hangmuc` (
   `mota` text,
   `ma_monhoc` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -368,7 +367,7 @@ CREATE TABLE `hangmuc` (
 
 LOCK TABLES `hangmuc` WRITE;
 /*!40000 ALTER TABLE `hangmuc` DISABLE KEYS */;
-INSERT INTO `hangmuc` VALUES (1,'HM_1','Đại số 6','HM T1',5),(2,'HM_2','Đại số 8','HM T2',2),(3,'HM_3','Hình học 7','HM T3',3),(4,'HM_4','Hình học 8','HM T4',4),(5,'HM_5','Hình học 9','HM T5',5),(6,'HM_6','Hình học 10','HM T6',6),(7,'HM_7','Đại số 7','HM T7',7),(8,'HM_8','Đại số 8','HM T8',8),(9,'HM_9','Đại số 9','HM T9',9);
+INSERT INTO `hangmuc` VALUES (1,'HM_T6_DS','Đại số 6','HM T1',2),(2,'HM_T6_HH','Hình học 6','HM T2',2),(3,'HM_T6_SH','Số học 6','HM T3',2),(4,'HM_T7_DS','Đại số 7','HM T4',2),(5,'HM_T7_HH','Hình học 7','HM T5',2),(6,'HM_T7_SH','Số học 7','HM T6',2),(7,'HM_T8_DS','Đại số 8','HM T7',2),(8,'HM_T8_HH','Hình học 8','HM T8',2),(9,'HM_T8_SH','Số học 8','HM T9',2),(10,'HM_T9_DS','Đại số 9','HM T10',2),(11,'HM_T9_HH','Hình học 9','HM T11',2),(12,'HM_T9_SH','Số học 9','HM T12',2);
 /*!40000 ALTER TABLE `hangmuc` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -419,7 +418,7 @@ CREATE TABLE `lop` (
   `giobatdau` time DEFAULT NULL,
   `gioketthuc` time DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -428,7 +427,7 @@ CREATE TABLE `lop` (
 
 LOCK TABLES `lop` WRITE;
 /*!40000 ALTER TABLE `lop` DISABLE KEYS */;
-INSERT INTO `lop` VALUES (29,'ML_1','toán 9 k10',30,'2020-06-26','2020-05-30','HN',3000000.00,1,'1',NULL,NULL,NULL),(36,'ML_2','toán 9 123',30,'2020-05-12','2020-05-26','HN',3000000.00,2,'2',NULL,NULL,NULL),(37,'ML_3','toán 9 k9',30,'2020-05-12','2020-05-12','HN',3000000.00,3,'3',NULL,NULL,NULL),(38,'ML_4','ôn luyện đề',30,'2020-05-12','2020-07-21','HN',3000000.00,4,'4',NULL,NULL,NULL),(39,'ML_5','ôn cấp tốc vào 10',30,'2020-05-12','2020-07-21','HN',3000000.00,5,'5',NULL,NULL,NULL),(41,'ML_6','ôn thi quốc gia 12',30,'2020-05-12','2020-07-21','HN',3000000.00,6,'2',NULL,NULL,NULL),(45,'ML_7','toán 8 k12',30,'2020-05-05','2020-07-21','HN',3000000.00,7,'1',NULL,NULL,NULL),(46,'ML_8','toán 8 k10',30,'2020-06-28','2020-07-21','HN',3000000.00,8,'3',NULL,NULL,NULL),(49,'ML_9','toán 8 k9',30,'2020-06-28','2020-07-21','HN',3000000.00,4,'4',NULL,NULL,NULL),(54,'ML_10','toán 7',30,'2020-06-28','2020-07-21','HN',3000000.00,1,'5',NULL,NULL,NULL),(55,'ML_11','toán 7 k10',30,'2020-06-28','2020-07-21','HN',3000000.00,2,'1',NULL,NULL,NULL),(56,'ML_12','toán 7 k12',30,'2020-06-28','2020-07-21','HN',3000000.00,3,'1',NULL,NULL,NULL),(74,'ML_13','toán 6',NULL,NULL,NULL,NULL,NULL,1,'4',NULL,NULL,NULL);
+INSERT INTO `lop` VALUES (29,'ML_1','toán 6 Đại ',30,'2020-06-26','2020-05-30','HN',3000000.00,1,'1',NULL,NULL,NULL),(36,'ML_2','toán 6 Hình',30,'2020-05-12','2020-05-26','HN',3000000.00,1,'2',NULL,NULL,NULL),(37,'ML_3','toán 7 Đại ',30,'2020-05-12','2020-05-12','HN',3000000.00,1,'3',NULL,NULL,NULL),(38,'ML_4','toán 7 Hình',30,'2020-05-12','2020-07-21','HN',3000000.00,1,'4',NULL,NULL,NULL),(39,'ML_5','toán 8 Đại ',30,'2020-05-12','2020-07-21','HN',3000000.00,1,'5',NULL,NULL,NULL),(41,'ML_6','toán 8 Hình',30,'2020-05-12','2020-07-21','HN',3000000.00,1,'2',NULL,NULL,NULL),(45,'ML_7','toán 9 Đại ',30,'2020-05-05','2020-07-21','HN',3000000.00,1,'1',NULL,NULL,NULL),(46,'ML_8','toán 9 Hình',30,'2020-06-28','2020-07-21','HN',3000000.00,1,'3',NULL,NULL,NULL),(76,'ML_9','toán 6 Số',30,'2020-06-28','2020-07-21','HN',3000000.00,1,NULL,NULL,NULL,NULL),(77,'ML_10','toán 7 Số',30,'2020-06-28','2020-07-21','HN',3000000.00,1,NULL,NULL,NULL,NULL),(78,'ML_11','toán 8 Số',30,'2020-06-28','2020-07-21','HN',3000000.00,1,NULL,NULL,NULL,NULL),(79,'ML_12','toán 9 Số',30,'2020-06-28','2020-07-21','HN',3000000.00,1,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `lop` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -453,7 +452,7 @@ CREATE TABLE `monhoc` (
 
 LOCK TABLES `monhoc` WRITE;
 /*!40000 ALTER TABLE `monhoc` DISABLE KEYS */;
-INSERT INTO `monhoc` VALUES (1,'MH_1','toán 6'),(2,'MH_2','toán 6'),(3,'MH_3','toán 8'),(4,'MH_4','toán 9'),(5,'MH_5','toán 10'),(6,'MH_6','toán 11');
+INSERT INTO `monhoc` VALUES (1,'MH_1','Toán'),(2,'MH_2','Tin');
 /*!40000 ALTER TABLE `monhoc` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -472,7 +471,7 @@ CREATE TABLE `nhatcheckin` (
   `status` text,
   `id_lop` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -481,7 +480,7 @@ CREATE TABLE `nhatcheckin` (
 
 LOCK TABLES `nhatcheckin` WRITE;
 /*!40000 ALTER TABLE `nhatcheckin` DISABLE KEYS */;
-INSERT INTO `nhatcheckin` VALUES (53,NULL,3,'2020-07-01 15:02:36','CHECKIN',37),(54,NULL,3,'2020-07-02 15:02:36','CHECKIN',36),(55,NULL,18,'2020-06-30 22:48:09','CHECKIN',46),(56,NULL,4,'2020-06-30 22:51:12','CHECKIN',39),(57,NULL,63,'2020-07-02 15:02:36','CHECKIN',37),(58,NULL,3,'2020-07-03 12:25:13','CHECKIN',36),(59,NULL,4,'2020-07-10 10:03:44','CHECKIN',37),(60,NULL,4,'2020-07-10 10:04:01','CHECKIN',36);
+INSERT INTO `nhatcheckin` VALUES (53,NULL,3,'2020-07-01 15:02:36','CHECKIN',37),(54,NULL,3,'2020-07-02 15:02:36','CHECKIN',36),(55,NULL,18,'2020-06-30 22:48:09','CHECKIN',46),(56,NULL,4,'2020-06-30 22:51:12','CHECKIN',39),(57,NULL,63,'2020-07-02 15:02:36','CHECKIN',37),(58,NULL,3,'2020-07-03 12:25:13','CHECKIN',36),(59,NULL,4,'2020-07-03 22:16:42','CHECKIN',36);
 /*!40000 ALTER TABLE `nhatcheckin` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -504,7 +503,7 @@ CREATE TABLE `notification` (
   `id_rep_comment` int(11) DEFAULT NULL,
   `id_diem` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=303 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=224 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -513,7 +512,7 @@ CREATE TABLE `notification` (
 
 LOCK TABLES `notification` WRITE;
 /*!40000 ALTER TABLE `notification` DISABLE KEYS */;
-INSERT INTO `notification` VALUES (240,1,2,1,'DISLIKE BÀI VIẾT','2020-07-10 10:38:24',28,NULL,NULL,NULL),(241,1,1,1,'LIKE BAI VIẾT','2020-07-10 10:38:25',28,NULL,NULL,NULL),(243,1,2,0,'DISLIKE BÀI VIẾT','2020-07-10 10:43:00',25,NULL,NULL,NULL),(244,1,1,0,'LIKE BAI VIẾT','2020-07-10 10:43:01',25,NULL,NULL,NULL),(254,1,1,1,'LIKE BAI VIẾT','2020-07-10 10:50:22',26,NULL,NULL,NULL),(255,1,1,1,'LIKE BAI VIẾT','2020-07-10 10:50:23',26,NULL,NULL,NULL),(256,1,1,1,'LIKE BAI VIẾT','2020-07-10 10:50:25',26,NULL,NULL,NULL),(257,1,1,1,'LIKE BAI VIẾT','2020-07-10 10:50:25',26,NULL,NULL,NULL),(258,1,1,1,'LIKE BAI VIẾT','2020-07-10 10:50:26',26,NULL,NULL,NULL),(259,1,1,1,'LIKE BAI VIẾT','2020-07-10 10:50:26',26,NULL,NULL,NULL),(260,1,1,1,'LIKE BAI VIẾT','2020-07-10 10:50:26',26,NULL,NULL,NULL),(261,1,1,1,'LIKE BAI VIẾT','2020-07-10 10:50:27',26,NULL,NULL,NULL),(262,1,1,1,'LIKE BAI VIẾT','2020-07-10 10:50:27',26,NULL,NULL,NULL),(263,1,1,1,'LIKE BAI VIẾT','2020-07-10 10:52:10',28,NULL,NULL,NULL),(264,1,1,1,'LIKE BAI VIẾT','2020-07-10 10:52:13',28,NULL,NULL,NULL),(265,1,1,1,'LIKE BAI VIẾT','2020-07-10 10:52:14',28,NULL,NULL,NULL),(266,1,1,1,'LIKE BAI VIẾT','2020-07-10 10:52:15',28,NULL,NULL,NULL),(267,1,1,1,'LIKE BAI VIẾT','2020-07-10 10:53:54',22,NULL,NULL,NULL),(268,1,2,1,'DISLIKE BÀI VIẾT','2020-07-10 10:53:55',22,NULL,NULL,NULL),(269,1,1,1,'LIKE BAI VIẾT','2020-07-10 10:53:56',22,NULL,NULL,NULL),(270,1,2,0,'DISLIKE BÀI VIẾT','2020-07-10 10:54:01',7,NULL,NULL,NULL),(271,1,2,0,'DISLIKE BÀI VIẾT','2020-07-10 10:54:03',7,NULL,NULL,NULL),(272,1,1,1,'LIKE BAI VIẾT','2020-07-10 11:14:11',9,NULL,NULL,NULL),(273,1,2,1,'DISLIKE BÀI VIẾT','2020-07-10 11:14:11',9,NULL,NULL,NULL),(274,1,1,1,'LIKE BAI VIẾT','2020-07-10 11:22:01',24,NULL,NULL,NULL),(275,1,1,1,'LIKE BAI VIẾT','2020-07-10 11:22:02',24,NULL,NULL,NULL),(276,1,2,1,'DISLIKE BÀI VIẾT','2020-07-10 11:22:16',4,NULL,NULL,NULL),(277,1,1,1,'LIKE BAI VIẾT','2020-07-10 11:22:17',8,NULL,NULL,NULL),(278,1,1,1,'LIKE BAI VIẾT','2020-07-10 11:22:18',8,NULL,NULL,NULL),(279,1,3,1,'BÌNH LUẬN','2020-07-10 11:31:05',28,NULL,NULL,NULL),(280,1,3,1,'BÌNH LUẬN','2020-07-10 11:40:32',28,NULL,NULL,NULL),(281,8,4,1,'TRẢ LỜI BÌNH LUẬN','2020-07-10 11:43:51',28,NULL,NULL,NULL),(282,1,3,1,'BÌNH LUẬN','2020-07-10 11:49:35',26,NULL,NULL,NULL),(283,8,2,1,'DISLIKE BÀI VIẾT','2020-07-10 15:54:23',28,NULL,NULL,NULL),(284,8,2,1,'DISLIKE BÀI VIẾT','2020-07-10 15:54:23',28,NULL,NULL,NULL),(285,1,3,0,'BÌNH LUẬN','2020-07-10 15:57:08',28,NULL,NULL,NULL),(290,1,7,0,'ĐÃ THÍCH BÌNH LUẬN CỦA ','2020-07-14 11:26:26',28,38,NULL,NULL),(291,1,7,0,'ĐÃ THÍCH BÌNH LUẬN CỦA ','2020-07-14 11:26:26',28,38,NULL,NULL),(292,1,8,0,'ĐẪ KHÔNG THÍCH BÌNH LUẬN CỦA','2020-07-14 11:26:36',28,38,NULL,NULL),(293,1,8,0,'ĐẪ KHÔNG THÍCH BÌNH LUẬN CỦA','2020-07-14 11:26:44',28,38,NULL,NULL),(294,1,8,0,'ĐẪ KHÔNG THÍCH BÌNH LUẬN CỦA','2020-07-14 11:27:00',28,35,NULL,NULL),(295,1,7,0,'ĐÃ THÍCH BÌNH LUẬN CỦA ','2020-07-14 11:27:01',28,35,NULL,NULL),(296,1,7,0,'ĐÃ THÍCH BÌNH LUẬN CỦA ','2020-07-14 11:27:02',28,35,NULL,NULL),(297,1,8,0,'ĐẪ KHÔNG THÍCH BÌNH LUẬN CỦA','2020-07-14 11:27:03',28,35,NULL,NULL),(298,1,8,0,'ĐẪ KHÔNG THÍCH BÌNH LUẬN CỦA','2020-07-14 11:27:04',28,35,NULL,NULL),(299,1,8,0,'ĐẪ KHÔNG THÍCH BÌNH LUẬN CỦA','2020-07-14 11:27:10',28,36,NULL,NULL),(300,1,8,0,'ĐẪ KHÔNG THÍCH BÌNH LUẬN CỦA','2020-07-14 11:27:10',28,36,NULL,NULL),(301,1,7,0,'ĐÃ THÍCH BÌNH LUẬN CỦA ','2020-07-14 11:27:11',28,36,NULL,NULL),(302,1,7,0,'ĐÃ THÍCH BÌNH LUẬN CỦA ','2020-07-14 11:27:12',28,36,NULL,NULL);
+INSERT INTO `notification` VALUES (220,3,1,0,'LIKE BAI VIẾT','2020-08-05 23:02:57',1,NULL,NULL,NULL),(221,3,1,0,'LIKE BAI VIẾT','2020-08-05 23:03:00',7,NULL,NULL,NULL),(222,3,1,0,'LIKE BAI VIẾT','2020-08-05 23:03:03',6,NULL,NULL,NULL),(223,3,2,0,'DISLIKE BÀI VIẾT','2020-08-05 23:03:23',1,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `notification` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -560,7 +559,7 @@ CREATE TABLE `repcomment` (
   `created_date` datetime DEFAULT NULL,
   `image_path` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -569,7 +568,7 @@ CREATE TABLE `repcomment` (
 
 LOCK TABLES `repcomment` WRITE;
 /*!40000 ALTER TABLE `repcomment` DISABLE KEYS */;
-INSERT INTO `repcomment` VALUES (7,'CM_7','Cảm ơn bạn',22,1,4,3,NULL,NULL),(10,NULL,'<p>www</p>',NULL,NULL,32,1,'2020-07-06 22:01:12',NULL),(11,NULL,'<p>www</p>',NULL,NULL,32,1,'2020-07-06 22:10:03',NULL),(12,NULL,'<p>s</p>',NULL,NULL,33,1,'2020-07-06 22:33:47',NULL),(13,NULL,'<figure class=\"image\"><img src=\"http://localhost:1234/api/media/1594131069175_guitar.jpg\"></figure><p>&nbsp;</p>',NULL,NULL,33,4,'2020-07-07 21:11:12',NULL),(14,NULL,'<p>test</p>',NULL,NULL,34,3,'2020-07-10 09:50:10',NULL),(15,NULL,'<p>aaaaa</p>',NULL,NULL,35,8,'2020-07-10 11:43:51',NULL);
+INSERT INTO `repcomment` VALUES (1,'CM_1','hay quá',22,1,1,1,NULL,NULL),(3,'CM_3','Mình nghĩ là đáp án khác',22,1,3,3,NULL,NULL),(4,'CM_4','Rất hay',22,1,1,1,NULL,NULL),(7,'CM_7','Cảm ơn bạn',22,1,4,3,NULL,NULL),(8,'CM_8','Cảm ơn bạn',22,1,1,4,NULL,NULL);
 /*!40000 ALTER TABLE `repcomment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -665,7 +664,7 @@ CREATE TABLE `the` (
   `password` varchar(100) DEFAULT NULL,
   `id_role` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -674,7 +673,7 @@ CREATE TABLE `the` (
 
 LOCK TABLES `the` WRITE;
 /*!40000 ALTER TABLE `the` DISABLE KEYS */;
-INSERT INTO `the` VALUES (1,'admin','2020-05-01','1','LT_1','$2a$10$YO.97h5NV0ioJwMF/L4xZusY4jnBefM2u2YdjKNlWnyPravWNj2Ly',1),(3,'hocsinh','2020-05-01','1','LT_3','$2a$10$YO.97h5NV0ioJwMF/L4xZusY4jnBefM2u2YdjKNlWnyPravWNj2Ly',3),(4,'giaovien1','2020-05-01','1','LT_4','$2a$10$YO.97h5NV0ioJwMF/L4xZusY4jnBefM2u2YdjKNlWnyPravWNj2Ly',2),(5,'giaovien2','2020-05-01','1','LT_5','$2a$10$YO.97h5NV0ioJwMF/L4xZusY4jnBefM2u2YdjKNlWnyPravWNj2Ly',4),(6,'giaovien3','2020-05-01','1','LT_6','$2a$10$YO.97h5NV0ioJwMF/L4xZusY4jnBefM2u2YdjKNlWnyPravWNj2Ly',3),(7,'giaovien4','2020-05-01','1','LT_7','$2a$10$YO.97h5NV0ioJwMF/L4xZusY4jnBefM2u2YdjKNlWnyPravWNj2Ly',3),(8,'giaovien5','2020-05-01','1','LT_8','$2a$10$YO.97h5NV0ioJwMF/L4xZusY4jnBefM2u2YdjKNlWnyPravWNj2Ly',3),(9,'customer','2020-05-01','1','LT_9','$2a$10$YO.97h5NV0ioJwMF/L4xZusY4jnBefM2u2YdjKNlWnyPravWNj2Ly',4),(18,'15150287','2020-06-21','1','LT_10','$2a$10$YO.97h5NV0ioJwMF/L4xZusY4jnBefM2u2YdjKNlWnyPravWNj2Ly',3),(31,'12127622','2020-06-23','1',NULL,'$2a$10$eyyNZpbGcX7qpGAs.Xejx.OxsBWRsXyd2XnbxSe/YAzqSbfeHKOIG',2),(32,'12129688','2020-06-23','0',NULL,'$2a$10$MzYB9xsGeLweCijqmeGBy.ZGJ1lqV1EJLMK6VJ32EwJyKS1nWM6q2',2),(34,'11112151','2020-06-24','1',NULL,'$2a$10$Qn9vzeGPw9l.0r//x7YeSuUf2xvOTHynpwvrEK4BvjapQns7zXHoa',4),(37,'15114519','2020-06-30','0',NULL,'$2a$10$7x1Fk.xwF6HQM1QlV9spSe804LRy/LYNlhkaDLo0fwZ15SGYkxXHu',3),(68,'15166137','2020-07-13','1',NULL,'$2a$10$dnjVSBIG3nvQv7sdN.iJH.X/JD16rSr.wMzUkYvlIfSqqV07G2kGO',3),(69,'15172850','2020-07-13','1',NULL,'$2a$10$KH5KrubKf/ReQDVfM.0dE.SU/Ix56kf0UihSp4k3vC11xk4yvL49S',3),(70,'15136824','2020-07-13','1',NULL,'$2a$10$I7oJ2LibCnCMAiYRTgByXetv91Arx197nCs69PsEb0.GmEzn2weVm',3),(71,'15169323','2020-07-13','1',NULL,'$2a$10$zxMzz7Lkk/VWsls4zvuupeiuyYX48QXi4P0Z9VhEqV6ipjlqoZcEm',3),(72,'15193858','2020-07-13','1',NULL,'$2a$10$USZ7C0DiLt/nOsiQuXCMZeYM/XuvS9ukYpruezYPCjgOXoYiK9L/K',3),(73,'15162840','2020-07-13','1',NULL,'$2a$10$SCFLug5t2B.p8oPsytFm/OOVog8z3Ap6cXqBLnJgmZR7yk8sUAF2u',3),(74,'15190097','2020-07-13','1',NULL,'$2a$10$T.6mgjTXxmZ1CkGWjTejw.biQu7cS52cfUl4B5ivb3zfOW4DJv.5a',3),(75,'15120329','2020-07-13','1',NULL,'$2a$10$2AXfFwbM0nw2DPFiEeuB2uohC3jqb7XludMgfrGmX44EmNVApThFS',3),(76,'15146324','2020-07-13','1',NULL,'$2a$10$MARoyL7kQKBDUNmorsdyfuLsTT/Sm8EppQ0/pVQHp/pkqsN9Syby2',3),(77,'15132912','2020-07-13','1',NULL,'$2a$10$3eZ6l3BPyIrcqJrVMKT4D.E.8MVnsSIypDeemMVIcG4R.dTKDN5Wu',3),(78,'15171625','2020-07-13','1',NULL,'$2a$10$vToGjLHTldFKcyQKV2Mo9.MlLamb5j4eKQ1cmZ.0oiswMjJMw2BJa',3),(79,'15170712','2020-07-13','1',NULL,'$2a$10$yV.AyKO5BxlpXE4CvYjcA.9iTD9nR4tap2czP2ki5hZlZkqv8PA4i',3);
+INSERT INTO `the` VALUES (1,'admin','2020-05-01','1','LT_1','$2a$10$YO.97h5NV0ioJwMF/L4xZusY4jnBefM2u2YdjKNlWnyPravWNj2Ly',1),(3,'hocsinh','2020-05-01','1','LT_3','$2a$10$YO.97h5NV0ioJwMF/L4xZusY4jnBefM2u2YdjKNlWnyPravWNj2Ly',3),(4,'giaovien1','2020-05-01','1','LT_4','$2a$10$YO.97h5NV0ioJwMF/L4xZusY4jnBefM2u2YdjKNlWnyPravWNj2Ly',2),(5,'giaovien2','2020-05-01','1','LT_5','$2a$10$YO.97h5NV0ioJwMF/L4xZusY4jnBefM2u2YdjKNlWnyPravWNj2Ly',4),(6,'giaovien3','2020-05-01','1','LT_6','$2a$10$YO.97h5NV0ioJwMF/L4xZusY4jnBefM2u2YdjKNlWnyPravWNj2Ly',3),(7,'giaovien4','2020-05-01','1','LT_7','$2a$10$YO.97h5NV0ioJwMF/L4xZusY4jnBefM2u2YdjKNlWnyPravWNj2Ly',3),(8,'giaovien5','2020-05-01','1','LT_8','$2a$10$YO.97h5NV0ioJwMF/L4xZusY4jnBefM2u2YdjKNlWnyPravWNj2Ly',3),(9,'customer','2020-05-01','1','LT_9','$2a$10$YO.97h5NV0ioJwMF/L4xZusY4jnBefM2u2YdjKNlWnyPravWNj2Ly',4),(18,'15150287','2020-06-21','1','LT_10','$2a$10$YO.97h5NV0ioJwMF/L4xZusY4jnBefM2u2YdjKNlWnyPravWNj2Ly',3),(31,'12127622','2020-06-23','1',NULL,'$2a$10$eyyNZpbGcX7qpGAs.Xejx.OxsBWRsXyd2XnbxSe/YAzqSbfeHKOIG',2),(32,'12129688','2020-06-23','0',NULL,'$2a$10$MzYB9xsGeLweCijqmeGBy.ZGJ1lqV1EJLMK6VJ32EwJyKS1nWM6q2',2),(33,'12122624','2020-06-23','1',NULL,'$2a$10$rU.yFiohfB/4dgrvZEqFvO3BFMZ6FHVRShPpKT1CXBQATrdF.ea86',2),(34,'11112151','2020-06-24','1',NULL,'$2a$10$Qn9vzeGPw9l.0r//x7YeSuUf2xvOTHynpwvrEK4BvjapQns7zXHoa',4),(35,'13120691','2020-06-26','1',NULL,'$2a$10$d0Q6lrA8q7epevxdYt.PMuZEBga/OsTExsp5n0LNaTE.sULPgKiGa',2),(37,'15114519','2020-06-30','0',NULL,'$2a$10$7x1Fk.xwF6HQM1QlV9spSe804LRy/LYNlhkaDLo0fwZ15SGYkxXHu',3);
 /*!40000 ALTER TABLE `the` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -692,7 +691,7 @@ CREATE TABLE `user_lop_mapper` (
   `trangthai` tinyint(4) DEFAULT NULL,
   `is_teach` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=245 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=246 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -701,7 +700,7 @@ CREATE TABLE `user_lop_mapper` (
 
 LOCK TABLES `user_lop_mapper` WRITE;
 /*!40000 ALTER TABLE `user_lop_mapper` DISABLE KEYS */;
-INSERT INTO `user_lop_mapper` VALUES (5,3,46,1,0),(6,3,49,1,0),(7,9,36,1,0),(8,3,36,1,0),(9,4,37,1,0),(10,5,37,1,0),(13,9,37,1,0),(14,3,38,1,0),(15,9,29,1,0),(16,9,38,1,0),(17,3,49,1,0),(18,3,37,1,0),(19,3,38,1,0),(20,3,39,1,0),(27,4,29,1,1),(28,4,36,1,1),(29,4,37,1,1),(30,4,38,1,1),(31,4,39,1,1),(32,4,29,1,1),(33,4,36,1,1),(34,4,37,1,1),(35,4,38,1,1),(36,4,39,1,1),(38,4,29,1,1),(40,4,36,1,1),(42,4,37,1,1),(44,4,38,1,1),(46,4,39,1,1),(142,8,36,1,0),(143,8,37,1,0),(144,8,38,1,0),(145,8,39,1,0),(209,4,29,1,1),(211,4,36,1,1),(213,4,37,1,1),(215,4,38,1,1),(217,4,39,1,1),(219,4,41,1,1),(221,4,29,1,1),(223,4,36,1,1),(225,4,37,1,1),(227,4,38,1,1),(229,4,39,1,1),(231,4,41,1,1),(233,4,29,1,1),(235,4,36,1,1),(237,4,37,1,1),(239,4,38,1,1),(241,4,39,1,1),(243,4,41,1,1),(244,113,54,NULL,NULL);
+INSERT INTO `user_lop_mapper` VALUES (5,83,76,1,0),(6,81,76,1,0),(7,80,76,1,0),(8,76,76,1,0),(9,75,76,1,0),(10,74,76,1,0),(13,73,76,1,0),(14,72,76,1,0),(15,71,76,1,0),(16,69,76,1,0),(17,4,45,1,0),(18,5,45,1,0),(19,6,45,1,0),(20,7,45,1,0),(27,8,45,1,1),(28,9,45,1,1),(29,39,45,1,1),(30,40,45,1,1),(31,41,45,1,1),(32,42,45,1,1),(33,79,45,1,1),(34,70,45,1,1),(35,43,45,1,1),(36,44,45,1,1),(38,45,45,1,1),(40,50,37,1,1),(42,51,37,1,1),(44,52,37,1,1),(46,53,37,1,1),(142,54,37,1,0),(143,55,37,1,0),(144,56,37,1,0),(145,57,37,1,0),(209,58,37,1,1),(211,59,37,1,1),(213,60,37,1,1),(215,62,37,1,1),(217,45,36,1,1),(219,44,36,1,1),(221,43,36,1,1),(223,42,36,1,1),(225,41,36,1,1),(227,40,36,1,1),(229,39,36,1,1),(231,9,36,1,1),(233,8,36,1,1),(235,7,36,1,1),(237,6,36,1,1),(239,5,36,1,1),(241,56,38,1,1),(243,57,38,1,1),(244,59,38,0,NULL),(245,60,38,0,NULL);
 /*!40000 ALTER TABLE `user_lop_mapper` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -732,7 +731,7 @@ CREATE TABLE `users` (
   `image_path` text,
   `is_teacher` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=126 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=113 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -741,7 +740,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'USER_1','Nguyễn Đình Đức12','NAM','1999-02-15',3123133,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,'TEST1@gMAIL.COM','231231233',NULL,1,29,'http://localhost:1234/api/media/1591953037216_85244311_10158217486263969_7350014023686946816_n.jpg',0),(4,'USER_4','Lê Tuấn Anh','NAM','1999-02-22',3123133,'Việt Nam','NAM ĐỊNH','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI','12/12','TEST4@gMAIL.COM','231231233',0,4,37,NULL,1),(5,'USER_5','Lê Văn Nhật','NAM','1999-02-22',3123133,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI','12/12','TEST5@gMAIL.COM','231231233',0,5,37,NULL,0),(6,'USER_6','Hoàng Tuấn Anh','NAM','1999-02-22',3123133,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI','12/12','TEST6@gMAIL.COM','231231233',0,6,37,NULL,0),(7,'USER_7','Lê Văn Hoàng','NAM','1999-02-22',3123133,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI','12/12','TEST7@gMAIL.COM','231231233',0,7,39,NULL,0),(8,'USER_8','Lê Diệu hà','Nu','1999-02-22',3123133,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI','12/12','TEST8@gMAIL.COM','231231233',0,8,41,NULL,0),(9,'USER_9','Lâm Quang Huy','NAM','1999-02-22',3123133,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI','GOOD','TEST@gMAIL.COM','231231233',0,9,37,NULL,0),(39,NULL,'Nguyễn Thị Test',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,0),(40,NULL,'Nguyễn Văn A',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(41,NULL,'Đặng Mạnh Tuấn',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(42,NULL,'Đồng Thị Thủy',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(43,NULL,'Hoàng Thanh Thảo',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(44,NULL,'Nguyễn Thị Test',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(45,NULL,'Nguyễn Văn A',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(46,NULL,'Đặng Mạnh Tuấn',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(47,NULL,'Đồng Thị Thủy',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(48,NULL,'Hoàng Thanh Thảo',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(49,NULL,'Nguyễn Thị Test',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(50,NULL,'Nguyễn Văn A',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(51,NULL,'Đặng Mạnh Tuấn',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(52,NULL,'Đồng Thị Thủy',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(53,NULL,'Hoàng Thanh Thảo',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(54,NULL,'Nguyễn Thị B',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(55,NULL,'Nguyễn Văn A',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(56,NULL,'Đặng Mạnh C',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(57,NULL,'Đồng Thị D',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(58,NULL,'Hoàng Thanh E',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(59,NULL,'Nguyễn Thị B',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(60,NULL,'Nguyễn Văn A',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(61,NULL,'Đặng Mạnh C',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(62,NULL,'Đồng Thị D',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(63,NULL,'Hoàng Thanh E',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(64,NULL,'Nguyễn Thị B',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(65,NULL,'Nguyễn Văn A',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(66,NULL,'Đặng Mạnh C',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(67,NULL,'Đồng Thị D',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(68,NULL,'Hoàng Thanh E',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(69,NULL,'Th G',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(70,NULL,'Tuấn','NAM','2020-06-01',12312312,'VN','DA','DA HN','DA HN','1','tyt.paladin@gmail.com','334567454',12000000,18,1,'http://localhost:1234/api/media/1591953037216_85244311_10158217486263969_7350014023686946816_n.jpg',0),(71,NULL,'Nguyễn Thị B',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(72,NULL,'Nguyễn Văn A',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(73,NULL,'Đặng Mạnh C',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(74,NULL,'Đồng Thị D',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(75,NULL,'Hoàng Thanh E',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(76,NULL,'Th G',NULL,'1999-02-22',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(80,NULL,'tuảnetest',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'tesut@gmail.com',NULL,NULL,34,NULL,NULL,0),(83,NULL,'Tế','Nữ',NULL,NULL,NULL,'HN',NULL,NULL,NULL,NULL,'123123123',NULL,37,NULL,NULL,NULL),(114,NULL,'test','Nam','2020-07-12',NULL,NULL,'ádasd',NULL,NULL,NULL,NULL,'123123',NULL,NULL,NULL,'http://localhost:1234/api/media/1594658133013_103154030_296959398100366_216732505627266566_n.jpg',0),(115,NULL,'test','Nam','2020-07-12',NULL,NULL,'ádasd',NULL,NULL,NULL,NULL,'123123',NULL,NULL,NULL,'http://localhost:1234/api/media/1594658139358_103154030_296959398100366_216732505627266566_n.jpg',0),(116,NULL,'âsasss','Nam','2020-07-12',NULL,NULL,'111',NULL,NULL,NULL,NULL,'123',NULL,NULL,NULL,'http://localhost:1234/api/media/1594658174249_103154030_296959398100366_216732505627266566_n.jpg',0),(117,NULL,'âsasss','Nam','2020-07-12',NULL,NULL,'111',NULL,NULL,NULL,NULL,'123',NULL,NULL,NULL,'http://localhost:1234/api/media/1594658174421_103154030_296959398100366_216732505627266566_n.jpg',0),(118,NULL,'tesst','Nu','2020-07-09',NULL,NULL,'2222222',NULL,NULL,NULL,NULL,'123123',NULL,NULL,NULL,'http://localhost:1234/api/media/1594658226680_103154030_296959398100366_216732505627266566_n.jpg',0),(119,NULL,'tesst','Nu','2020-07-09',NULL,NULL,'2222222',NULL,NULL,NULL,NULL,'123123',NULL,NULL,NULL,'http://localhost:1234/api/media/1594658226841_103154030_296959398100366_216732505627266566_n.jpg',0),(122,NULL,'tét','Nu','2020-07-09',NULL,NULL,'123',NULL,NULL,NULL,NULL,'123',NULL,76,NULL,'http://localhost:1234/api/media/1594658432205_103154030_296959398100366_216732505627266566_n.jpg',0),(123,NULL,'tét','Nu','2020-07-09',NULL,NULL,'123',NULL,NULL,NULL,NULL,'123',NULL,77,NULL,'http://localhost:1234/api/media/1594658502515_103154030_296959398100366_216732505627266566_n.jpg',0),(124,NULL,'ưqqw','Nam','2020-07-07',NULL,NULL,'124124',NULL,NULL,NULL,NULL,'123',NULL,78,NULL,'http://localhost:1234/api/media/1594658588933_103154030_296959398100366_216732505627266566_n.jpg',0),(125,NULL,'ưqqw','Nam','2020-07-07',NULL,NULL,'124124',NULL,NULL,NULL,NULL,'123',NULL,79,NULL,'http://localhost:1234/api/media/1594658595408_103154030_296959398100366_216732505627266566_n.jpg',0);
+INSERT INTO `users` VALUES (1,'USER_1','Nguyễn Đình Đức','NAM','1996-02-13',113254548,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,'TEST1@gMAIL.COM','231231233',NULL,1,29,'http://localhost:1234/api/media/1591953037216_85244311_10158217486263969_7350014023686946816_n.jpg',0),(4,'USER_4','Lê Tuấn Anh','NAM','2005-08-10',113274548,'Việt Nam','NAM ĐỊNH','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI','12/12','TEST4@gMAIL.COM','231231233',0,4,37,NULL,1),(5,'USER_5','Lê Văn Nhật','NAM','2005-07-21',113274548,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI','12/12','TEST5@gMAIL.COM','231231233',0,5,37,NULL,0),(6,'USER_6','Hoàng Tuấn Anh','NAM','2005-05-24',113274548,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI','12/12','TEST6@gMAIL.COM','231231233',0,6,37,NULL,0),(7,'USER_7','Lê Văn Hoàng','NAM','2005-01-18',113274548,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI','12/12','TEST7@gMAIL.COM','231231233',0,7,39,NULL,0),(8,'USER_8','Lê Diệu hà','Nu','2005-12-21',113274548,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI','12/12','TEST8@gMAIL.COM','231231233',0,8,41,NULL,0),(9,'USER_9','Lâm Quang Huy','NAM','2005-07-26',113274548,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI','GOOD','TEST@gMAIL.COM','231231233',0,9,37,NULL,0),(39,'USER_10','Nguyễn Huy Trường','NAM','2005-07-26',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,3,NULL,NULL,0),(40,'USER_10','Đỗ Trần Tú Anh','Nu','2005-07-26',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(41,'USER_10','Đặng Mạnh Tuấn','NAM','2005-07-26',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(42,'USER_10','Lưu Phương Anh','Nu','2005-10-03',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(43,'USER_11','Hoàng Thanh Thảo','Nu','2005-07-22',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(44,'USER_12','Nguyễn Viết Phong','NAM','2005-07-26',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(45,'USER_13','Nguyễn Thị Khánh Chi','Nu','2005-07-21',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(46,'USER_14','Đào Duy Tập','NAM','1985-08-01',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(47,'USER_15','Nguyễn Đức Thắng','NAM','2005-07-26',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(48,'USER_16','Tưởng Ngân Hà','Nu','2005-12-23',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(49,'USER_17','Nguyễn Minh Trí','NAM','2005-11-21',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(50,'USER_18','Tạ Khánh Linh','Nu','2007-07-12',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(51,'USER_19','Nguyễn Hạnh Nguyên ','Nu','2007-05-25',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(52,'USER_20','Nguyễn Thị Hồng Hạnh','Nu','2007-07-07',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(53,'USER_21','Ngô Đức Duẩn','NAM','2007-05-01',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(54,'USER_22','Phan Khánh Linh','Nu','2007-07-17',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(55,'USER_23','Phạm Trà My','Nu','2007-06-06',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(56,'USER_24','Ngô Trung Hiếu','NAM','2007-07-06',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(57,'USER_25','Tô Khánh Ngọc','Nu','2007-05-01',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(58,'USER_26','Ngô Thị Hồng Thơm','Nu','2007-12-31',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(59,'USER_27','Phạm Thu Trang','Nu','2007-01-05',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(60,'USER_28','Nguyễn Đình Kha','NAM','2007-02-03',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(61,'USER_29','Nguyễn Minh Hải','NAM','2007-02-05',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(62,'USER_30','Bùi Thùy Dương','Nu','2007-08-15',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(63,'USER_31','Nguyễn Thanh Lương','Nu','2007-06-06',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(64,'USER_32','Trịnh Minh Hiếu','NAM','2007-03-16',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(65,'USER_33','Đào Thu Thảo','Nu','2007-07-21',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(66,'USER_34','Ngô Thu Thảo','Nu','2007-07-12',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(67,'USER_35','Nguyễn Thanh Thảo','Nu','2007-10-16',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(68,'USER_36','Đào Hoàng Ngân','Nu','2007-07-26',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(69,'USER_37','Nguyễn Gia Hưng','NAM','2008-07-30',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(70,'USER_2','Nguyễn Đức Hưng','NAM','2005-06-06',113234548,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI','1','tyt.paladin@gmail.com','334567454',12000000,18,1,'http://localhost:1234/api/media/1591953037216_85244311_10158217486263969_7350014023686946816_n.jpg',0),(71,'USER_39','Nguyễn Đình Giang','NAM','2008-07-30',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(72,'USER_40','Lê Kim Anh','Nu','2008-07-26',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(73,'USER_41','Bùi Thu Trà','Nu','2008-07-26',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(74,'USER_42','Nguyễn Thị Nguyệt','Nu','2008-07-26',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(75,'USER_43','Lê Doãn Trung Hiếu','NAM','2008-07-16',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(76,'USER_44','Nguyễn Đức Thịnh','NAM','2008-07-26',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(79,'USER_3','Nguyễn Minh Trí','Nam','2005-05-07',113244549,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,'12312312',123123,33,NULL,NULL,1),(80,'USER_45','Nguyễn Văn Tính','NAM','2008-07-26',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,'tesut@gmail.com',NULL,NULL,34,NULL,NULL,0),(81,'USER_46','Tuuởng Duy Lâm','NAM','2008-07-26',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,'12312312',23123123,35,NULL,NULL,1),(83,'USER_47','Nguyễn Tiến Quang','NAM','2008-07-26',NULL,'Việt Nam','HÀ NỘI','THANH TRÌ - HÀ NỘI','THANH TRÌ - HÀ NỘI',NULL,NULL,'123123123',NULL,37,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -766,7 +765,7 @@ CREATE TABLE `users_diem_map` (
 
 LOCK TABLES `users_diem_map` WRITE;
 /*!40000 ALTER TABLE `users_diem_map` DISABLE KEYS */;
-INSERT INTO `users_diem_map` VALUES (9,4,9),(10,5,10),(11,4,11),(12,4,12),(13,9,15),(14,3,16),(22,9,25),(23,9,26),(24,3,27),(25,3,28),(26,3,29),(27,3,30),(44,39,47),(45,40,48),(48,43,51),(49,44,52),(50,45,53),(53,48,56),(69,64,72),(70,65,73),(71,66,74),(73,68,76),(74,69,77),(93,71,96),(94,72,97),(95,73,98),(97,75,100),(98,76,101),(104,70,107),(105,8,98),(106,8,101),(107,8,100),(108,8,107),(109,70,108),(110,70,109),(111,70,110),(112,70,111),(113,70,112),(114,70,113);
+INSERT INTO `users_diem_map` VALUES (7,3,7),(9,4,9),(10,5,10),(11,4,11),(12,4,12),(13,9,15),(14,3,16),(22,9,25),(23,9,26),(24,3,27),(25,3,28),(26,3,29),(27,3,30),(44,39,47),(45,40,48),(46,41,49),(47,42,50),(48,43,51),(49,44,52),(50,45,53),(51,46,54),(52,47,55),(53,48,56),(69,64,72),(70,65,73),(71,66,74),(72,67,75),(73,68,76),(74,69,77),(93,71,96),(94,72,97),(95,73,98),(96,74,99),(97,75,100),(98,76,101),(104,70,107),(105,8,98),(106,8,101),(107,8,100),(108,8,107),(109,70,108),(110,70,109),(111,70,110),(112,70,111),(113,70,112),(114,70,113),(115,84,114),(116,85,115),(117,86,116),(118,87,117),(119,88,118),(120,88,119),(121,84,120),(122,85,121),(123,86,122),(124,87,123),(125,88,124),(126,88,125),(127,90,126),(128,91,127),(129,92,128),(130,93,129),(131,94,130),(132,94,131),(133,95,132),(134,96,133),(135,97,134),(136,98,135),(137,99,136),(138,100,137),(139,101,138),(140,102,139),(141,103,140),(142,104,141),(143,105,142),(144,106,143),(145,107,144),(146,108,145),(147,109,146),(148,110,147),(149,111,148),(150,112,149);
 /*!40000 ALTER TABLE `users_diem_map` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -804,4 +803,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-07-20 15:33:52
+-- Dump completed on 2020-08-05 23:06:48
