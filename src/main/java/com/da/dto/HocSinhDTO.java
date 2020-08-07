@@ -18,7 +18,7 @@ public class HocSinhDTO extends BaseSearch {
 
     private String Name;
 
-    private String GioiTinh;
+    private String gioitinh;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private String NgaySinh;
@@ -27,7 +27,9 @@ public class HocSinhDTO extends BaseSearch {
 
     private String sodt;
 
-    private String maLop;
+    private Integer maLop;
+
+    private Integer  oldMaLop;
 
     private String tenLop;
 

@@ -69,7 +69,7 @@ public class HocSinhServiceImpl implements HocSinhService {
         String maThe = RandomString.rdMaThe(Constant.MA_THE_STUDENT);
         log.info(" start service to addLopHoc with :{}", dto);
         Optional<The> t = theRepository.findByMaThe(maThe);
-        if (t.isPresent()){
+        if (t.isPresent()) {
             maThe = RandomString.rdMaThe(Constant.MA_THE_STUDENT);
         }
         The the = new The();
@@ -79,21 +79,21 @@ public class HocSinhServiceImpl implements HocSinhService {
         the.setTrangthai(true);
         the.setIdRole(3);
         theRepository.save(the);
-        Users user  = new Users();
+        Users user = new Users();
         user.setNgaysinh(dto.getBirthday());
         user.setName(dto.getTenhocsinh());
         user.setSodt(dto.getSodt());
 //        user.setEmail(dto.getEmail());
         user.setQuequan(dto.getDiachi());
-        user.setIsTeacher(false);
-        if (dto.getSex().equals("Nam")){
+        user.setIsTeacher(Boolean.FALSE);
+        if (dto.getSex().equals("Nam")) {
             user.setGioitinh("NAM");
         }
-        if (dto.getSex().equals("Nu")){
+        if (dto.getSex().equals("Nu")) {
             user.setGioitinh("NỮ");
         }
         user.setMaThe(the.getId());
-        if (dto.getImageHS() != null){
+        if (dto.getImageHS() != null) {
             try {
                 user.setImagePath(fileStorageService.storeFile(dto.getImageHS()));
             } catch (IOException e) {
@@ -101,6 +101,14 @@ public class HocSinhServiceImpl implements HocSinhService {
             }
         }
         hocSinhDao.save(user);
+        if (dto.getMaLop() !=null) {
+            UserLopMapper ulm = new UserLopMapper();
+            ulm.setIdUser(user.getId());
+            ulm.setIdLop(dto.getMaLop());
+            ulm.setActive(Boolean.TRUE);
+            ulm.setIsTeach(Boolean.FALSE);
+            userLopMapperRepository.save(ulm);
+        }
         return CommonResult.success(the);
     }
 
@@ -111,14 +119,24 @@ public class HocSinhServiceImpl implements HocSinhService {
         if (user.getId() == null) {
             throw new ResultException(ErrorCode.RECORD_NOT_EXISTED);
         }
-        user = modelMap.map(dto, Users.class);
-        if (dto.getGioiTinh().equals("Nam")){
-            user.setGioitinh("NAM");
-        }
-        if (dto.getGioiTinh().equals("Nu")){
-            user.setGioitinh("NỮ");
-        }
+        user.setName(dto.getHocsinhName());
+        user.setSodt(dto.getSodt());
+        user.setQuequan(dto.getDiachi());
+        user.setGioitinh(dto.getGioitinh());
+        user.setNgaysinh(dto.getBirthday());
         hocSinhDao.update(user);
+        if (dto.getOldMaLop() != null){
+            UserLopMapper ulm = userLopMapperRepository.findByUserAndLop(user.getId(), dto.getOldMaLop());
+            ulm.setIdLop(dto.getMaLop());
+        }else{
+            UserLopMapper ulm = new UserLopMapper();
+            ulm.setIdLop(dto.getMaLop());
+            ulm.setIdUser(user.getId());
+            ulm.setActive(Boolean.TRUE);
+            ulm.setIsTeach(Boolean.FALSE);
+            userLopMapperRepository.save(ulm);
+        }
+
     }
 
     @Override

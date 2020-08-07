@@ -105,6 +105,8 @@ public class GiaoVienServiceImpl implements GiaoVienService {
             UserLopMapper userLopMapper = new UserLopMapper();
             userLopMapper.setIdUser(user.getId());
             userLopMapper.setIdLop(dto.getIdLop());
+            userLopMapper.setIsTeach(Boolean.TRUE);
+            userLopMapper.setActive(Boolean.TRUE);
             userLopMapperRepository.save(userLopMapper);
             CardDTO cardDTO = modelMap.map(the, CardDTO.class);
             cardDTO.setPassword("123456");

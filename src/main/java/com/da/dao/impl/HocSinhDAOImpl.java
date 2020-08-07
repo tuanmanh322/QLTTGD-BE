@@ -21,11 +21,12 @@ public class HocSinhDAOImpl extends AbstractDAO implements HocSinhDao {
         sb.append(" select distinct u.id,");
         sb.append(" u.id_user as maHocSinh,");
         sb.append(" u.name as hocsinhName ,");
-        sb.append(" u.gioitinh as GioiTinh,");
+        sb.append(" u.gioitinh as gioitinh,");
         sb.append(" u.ngaysinh as NgaySinh, ");
         sb.append(" u.socmt as socmt, ");
         sb.append(" u.sodt as sodt, ");
-        sb.append(" u.ma_lop as maLop, ");
+        sb.append(" u.quequan as diachi, ");
+        sb.append(" l.id as maLop, ");
         sb.append(" l.tenlop as tenLop, ");
         sb.append(" l.thoigianbatdau as thoiGianBatDau, ");
         sb.append(" u.ma_the as maThe, ");
