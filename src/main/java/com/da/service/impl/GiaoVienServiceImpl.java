@@ -93,8 +93,8 @@ public class GiaoVienServiceImpl implements GiaoVienService {
             user.setSodt(dto.getSodt());
             String maGV = "GV_" + the.getId();
             user.setIdUser(maGV);
-            int soCmt = Integer.parseInt(dto.getSocmt());
-            user.setSocmt(soCmt);
+//            int soCmt = Integer.parseInt(dto.getSocmt());
+            user.setSocmt(dto.getSocmt());
             if (dto.getImageGV() != null) {
                 try {
                     user.setImagePath(fileStorageService.storeFile(dto.getImageGV()));
@@ -127,7 +127,7 @@ public class GiaoVienServiceImpl implements GiaoVienService {
         user.setLuongcoban(dto.getLuongcoban());
         user.setName(dto.getName());
         user.setSodt(dto.getSodt());
-        user.setSocmt(dto.getCmt());
+        user.setSocmt(dto.getSocmt());
         user.setGioitinh(dto.getSex());
         user.setNgaysinh(dto.getNgaySinh());
         UserLopMapper userLopMapper = new UserLopMapper();

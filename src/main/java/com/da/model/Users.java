@@ -30,7 +30,7 @@ public class Users implements Serializable {
     private Date ngaysinh;
 
     @Column(name = "socmt")
-    private Integer socmt;
+    private String socmt;
 
     @Column(name = "quoctich")
     private String quoctich;

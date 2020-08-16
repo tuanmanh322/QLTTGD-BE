@@ -38,7 +38,7 @@ public class UserDTO {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date ngaysinh;
 
-    private Integer socmt;
+    private String socmt;
 
     private String quoctich;
 
