@@ -93,7 +93,8 @@ public class GiaoVienServiceImpl implements GiaoVienService {
             user.setSodt(dto.getSodt());
             String maGV = "GV_" + the.getId();
             user.setIdUser(maGV);
-            user.setSocmt(dto.getCmt());
+            int soCmt = Integer.parseInt(dto.getSocmt());
+            user.setSocmt(soCmt);
             if (dto.getImageGV() != null) {
                 try {
                     user.setImagePath(fileStorageService.storeFile(dto.getImageGV()));
