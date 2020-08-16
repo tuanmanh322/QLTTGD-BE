@@ -26,7 +26,7 @@ public class CardDAOImpl extends AbstractDAO implements CardDAO {
         sb.append(" where 1=1");
         if (StringUtils.isNotBlank(dto.getMaThe())) {
             sb.append(" and cd.maThe like :p_maThe ");
-            parameter.put("p_maThe ", "%" + dto.getMaThe().trim() + "%");
+            parameter.put("p_maThe", "%" + dto.getMaThe().trim() + "%");
         }
         if (dto.getOrders() != null && !dto.getOrders().isEmpty()) {
             sb.append(" order by ");

@@ -46,11 +46,11 @@ public class BaiVietDAOImpl extends AbstractDAO implements BaiVietDAO {
         }
         if (StringUtils.isNotBlank(dto.getTitleBV())) {
             sb.append(" and bv.title like :p_title");
-            parameter.put("p_title ", "%" + dto.getTitleBV().trim() + "%");
+            parameter.put("p_title", "%" + dto.getTitleBV().trim() + "%");
         }
         if (StringUtils.isNotBlank(dto.getNoidung())) {
             sb.append(" and bv.noidung like :p_noidung");
-            parameter.put("p_noidung ", "%" + dto.getNoidung().trim() + "%");
+            parameter.put("p_noidung", "%" + dto.getNoidung().trim() + "%");
         }
         if (dto.getOrders() != null && !dto.getOrders().isEmpty()) {
             sb.append(" order by ");
