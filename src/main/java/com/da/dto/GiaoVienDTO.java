@@ -48,5 +48,7 @@ public class GiaoVienDTO extends BaseSearch{
 
     private String sex;
 
+    private String username;
+
     private MultipartFile imageGV;
 }

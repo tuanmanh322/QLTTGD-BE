@@ -37,9 +37,9 @@ public class GiaoVienDAOImpl extends AbstractDAO implements GiaoVienDAO {
         sb.append(" left join user_lop_mapper as ulm on ulm.id_user = u.id and ulm.trangthai = 1 and ulm.is_teach = 1 ");
         sb.append(" left join lop as l on l.id = ulm.id_lop");
         sb.append(" where 1=1 and u.is_teacher = 1");
-        if (StringUtils.isNotBlank(dto.getName())) {
+        if (StringUtils.isNotBlank(dto.getUsername())) {
             sb.append(" and u.name like :p_name ");
-            parameter.put("p_name", "%" + dto.getName().trim() + "%");
+            parameter.put("p_name", "%" + dto.getUsername().trim() + "%");
         }
         if (StringUtils.isNotBlank(dto.getMaGiaoVien())){
             sb.append(" and u.id_user like :p_maGV ");
