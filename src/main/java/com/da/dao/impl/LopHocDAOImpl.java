@@ -36,6 +36,8 @@ public class LopHocDAOImpl extends AbstractDAO implements LopHocDAO {
         sb.append(" lo.siso  as siSo,");
         sb.append(" lo.diadiem as diaDiem,");
         sb.append(" lo.hocphi as hocPhi,");
+        sb.append(" lo.kip_day as kipDay,");
+        sb.append(" lo.ma_monhoc as maMonHoc,");
         sb.append(" count(ulm.id_lop) as countSiSo");
         sb.append(" from LOP as lo");
         sb.append(" left join MONHOC as mh on lo.ma_monhoc = mh.ma_monhoc");
@@ -88,11 +90,13 @@ public class LopHocDAOImpl extends AbstractDAO implements LopHocDAO {
         sb.append(" lo.siso  as siSo,");
         sb.append(" lo.kip_day  as kipDay,");
         sb.append(" lo.diadiem as diaDiem,");
-        sb.append(" lo.hocphi as hocPhi");
+        sb.append(" lo.hocphi as hocPhi,");
+        sb.append(" udm.id_diem as idDiem");
         sb.append(" from LOP as lo");
         sb.append(" left join MONHOC as mh on lo.ma_monhoc = mh.ma_monhoc");
         sb.append(" left join USER_LOP_MAPPER as ulm on ulm.id_lop = lo.id and ulm.trangthai = 1");
         sb.append(" left join USERS as u on u.id = ulm.id_user");
+        sb.append(" left join USERS_DIEM_MAP as udm on udm.id_user = u.id");
         sb.append(" where 1=1");
         if (idThe != null) {
             sb.append(" and u.ma_the=:p_idThe");

@@ -29,7 +29,7 @@ public class UserDTO {
 
     private Integer idRole;
 
-    private String idUser;
+    private Integer idUser;
 
     private String name;
 

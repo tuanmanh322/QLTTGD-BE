@@ -57,4 +57,8 @@ public class LopHocSearchDTO extends BaseSearch{
 	private Integer finishLop;
 
 	private Integer countSiSo;
+
+	private int idDiem;
+
+	private int maMonHoc;
 }

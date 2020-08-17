@@ -99,7 +99,7 @@ UserServiceImpl implements UserService {
         userDTO.setPassword(the.getPassword());
         Users u = usersRepository.findByMaThe(the.getId());
         userDTO.setName(u.getName());
-        userDTO.setIdUser(u.getIdUser());
+        userDTO.setIdUser(u.getId());
         userDTO.setGioitinh(u.getGioitinh());
         userDTO.setNgaysinh(u.getNgaysinh());
         userDTO.setSocmt(u.getSocmt());

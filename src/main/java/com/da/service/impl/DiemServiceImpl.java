@@ -203,12 +203,14 @@ public class DiemServiceImpl implements DiemService {
                         if (lo.isPresent()) {
                             userLopMapper.setIdLop(lo.get().getId());
                             userLopMapper.setIdUser(u.getId());
-                            userLopMapper.setActive(true);
+                            userLopMapper.setActive(Boolean.TRUE);
+                            userLopMapper.setIsTeach(Boolean.FALSE);
                             userLopMapperRepository.save(userLopMapper);
                             UserLopMapper lopMapper = new UserLopMapper();
                             lopMapper.setIdUser(idUser);
                             lopMapper.setIdLop(lo.get().getId());
-                            lopMapper.setActive(true);
+                            lopMapper.setActive(Boolean.TRUE);
+                            lopMapper.setIsTeach(Boolean.TRUE);
                             userLopMapperRepository.save(lopMapper);
                         } else {
                             lop.setTenlop(row.getCell(9).getStringCellValue().trim());
@@ -226,14 +228,14 @@ public class DiemServiceImpl implements DiemService {
                             lopRepository.save(lop);
                             userLopMapper.setIdUser(u.getId());
                             userLopMapper.setIdLop(lop.getId());
-                            userLopMapper.setActive(true);
-                            userLopMapper.setIsTeach(false);
+                            userLopMapper.setActive(Boolean.TRUE);
+                            userLopMapper.setIsTeach(Boolean.FALSE);
                             userLopMapperRepository.save(userLopMapper);
                             UserLopMapper lopMapper = new UserLopMapper();
                             lopMapper.setIdUser(idUser);
                             lopMapper.setIdLop(lop.getId());
-                            lopMapper.setActive(true);
-                            lopMapper.setIsTeach(true);
+                            lopMapper.setActive(Boolean.TRUE);
+                            lopMapper.setIsTeach(Boolean.TRUE);
                             userLopMapperRepository.save(lopMapper);
                         }
                         notification.setIdThe(idUser);
@@ -247,14 +249,14 @@ public class DiemServiceImpl implements DiemService {
                         String maThe = "" + row.getCell(0).getNumericCellValue();
                         String newMaThe = maThe.replace(".","");
                         t.setIdRole(UserTypeEnum.STUDENT.getId());
-                        t.setTrangthai(true);
+                        t.setTrangthai(Boolean.TRUE);
                         t.setNgaycap(new Date());
                         t.setPassword(passwordEncoder.encode(PASSWORD.trim()));
                         t.setMaThe(newMaThe.substring(0,newMaThe.indexOf("E")));
                         theRepository.save(t);
                         users.setName(row.getCell(1).getStringCellValue().trim());
                         users.setNgaysinh(row.getCell(2).getDateCellValue());
-                        users.setIsTeacher(false);
+                        users.setIsTeacher(Boolean.FALSE);
                         users.setMaThe(t.getId());
                         usersRepository.save(users);
                         diem.setDiemmieng(row.getCell(3).getNumericCellValue());
@@ -269,14 +271,14 @@ public class DiemServiceImpl implements DiemService {
                         if (lo.isPresent()) {
                             userLopMapper.setIdLop(lo.get().getId());
                             userLopMapper.setIdUser(users.getId());
-                            userLopMapper.setActive(true);
-                            userLopMapper.setIsTeach(false);
+                            userLopMapper.setActive(Boolean.TRUE);
+                            userLopMapper.setIsTeach(Boolean.FALSE);
                             userLopMapperRepository.save(userLopMapper);
                             UserLopMapper lopMapper = new UserLopMapper();
                             lopMapper.setIdUser(idUser);
                             lopMapper.setIdLop(lo.get().getId());
-                            lopMapper.setActive(true);
-                            lopMapper.setIsTeach(true);
+                            lopMapper.setActive(Boolean.TRUE);
+                            lopMapper.setIsTeach(Boolean.TRUE);
                             userLopMapperRepository.save(lopMapper);
                         } else {
                             lop.setTenlop(row.getCell(9).getStringCellValue().trim());
@@ -294,14 +296,14 @@ public class DiemServiceImpl implements DiemService {
                             lopRepository.save(lop);
                             userLopMapper.setIdLop(lop.getId());
                             userLopMapper.setIdUser(users.getId());
-                            userLopMapper.setActive(true);
-                            userLopMapper.setIsTeach(false);
+                            userLopMapper.setActive(Boolean.TRUE);
+                            userLopMapper.setIsTeach(Boolean.FALSE);
                             userLopMapperRepository.save(userLopMapper);
                             UserLopMapper lopMapper = new UserLopMapper();
                             lopMapper.setIdUser(idUser);
                             lopMapper.setIdLop(lop.getId());
-                            lopMapper.setActive(true);
-                            lopMapper.setIsTeach(true);
+                            lopMapper.setActive(Boolean.TRUE);
+                            lopMapper.setIsTeach(Boolean.TRUE);
                             userLopMapperRepository.save(lopMapper);
                             notification.setIdThe(idUser);
                             notification.setIdDiem(usersDiemMap.getId());
