@@ -27,6 +27,12 @@ public class DocumentController {
         documentService.searchGetDocument(documentSearchDTO);
         return new ResponseEntity<>(documentSearchDTO, HttpStatus.OK);
     }
+    @PostMapping("/search-all")
+    public ResponseEntity<DocumentSearchDTO> getAllMain(@RequestBody DocumentSearchDTO documentSearchDTO) {
+        log.info(" start rest to getAllMain with :{}", documentSearchDTO);
+        documentService.getAllDocument(documentSearchDTO);
+        return new ResponseEntity<>(documentSearchDTO, HttpStatus.OK);
+    }
 
     @DeleteMapping("/delete/{idDc}")
     public ResponseEntity<Void> delete(@PathVariable("idDc") Integer idDc) {

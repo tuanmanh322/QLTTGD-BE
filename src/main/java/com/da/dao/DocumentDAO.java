@@ -6,4 +6,6 @@ import java.io.Serializable;
 
 public interface DocumentDAO extends Serializable,BaseDAO {
     void searchDocument(DocumentSearchDTO documentSearchDTO, Integer idThe);
+
+    void getAllDocument(DocumentSearchDTO documentSearchDTO);
 }

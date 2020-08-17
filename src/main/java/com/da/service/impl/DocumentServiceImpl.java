@@ -92,4 +92,10 @@ public class DocumentServiceImpl implements DocumentService {
         log.info(" start service to searchGetDocument document by documentSearchDTO :{}", documentSearchDTO);
         documentDAO.searchDocument(documentSearchDTO, SecurityUtils.getCurrentUserIdLogin());
     }
+
+    @Override
+    public void getAllDocument(DocumentSearchDTO searchDTO) {
+        log.info(" start service to getAllDocument document by searchDTO :{}", searchDTO);
+        documentDAO.getAllDocument(searchDTO);
+    }
 }

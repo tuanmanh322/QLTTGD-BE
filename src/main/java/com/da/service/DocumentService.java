@@ -16,4 +16,6 @@ public interface DocumentService {
     void delete(Integer docID);
 
     void searchGetDocument(DocumentSearchDTO documentSearchDTO);
+
+    void getAllDocument(DocumentSearchDTO searchDTO);
 }
