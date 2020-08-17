@@ -73,8 +73,8 @@ public class LopHocServiceImpl implements LopHocService {
         if (lop.getId() == null) {
             throw new ResultException(ErrorCode.RECORD_NOT_EXISTED);
         }
-        Lop check = lopRepository.findByTenlop(dto.getTenlop());
-        if (check.getId() != null) {
+        Optional<Lop> check = lopRepository.findTenLopOptinal(dto.getTenlop());
+        if (check.isPresent()) {
             lop = modelMap.map(dto, Lop.class);
             lopHocDao.update(lop);
 //            throw new ResultException(ErrorCode.RECORD_EXISTED);
