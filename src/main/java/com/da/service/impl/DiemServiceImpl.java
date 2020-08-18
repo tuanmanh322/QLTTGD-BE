@@ -116,16 +116,16 @@ public class DiemServiceImpl implements DiemService {
         if (diem.getId() == null) {
             throw new ResultException(ErrorCode.RECORD_NOT_EXISTED);
         }
-        Optional<Users> users = usersRepository.findById(dto.getIdUser());
-        if (users.isPresent()) {
-            Users u = users.get();
-            Lop lop = lopRepository.getOne(dto.getMaLop());
-            lop.setKipDay(dto.getKipDay());
-            lopRepository.save(lop);
-            UserLopMapper userLopMapper = userLopMapperRepository.findByUserAndLop(u.getId(), dto.getIdLopOld());
-            userLopMapper.setIdLop(lop.getId());
-            userLopMapperRepository.save(userLopMapper);
-        }
+//        Optional<Users> users = usersRepository.findById(dto.getIdUser());
+//        if (users.isPresent()) {
+//            Users u = users.get();
+//            Lop lop = lopRepository.getOne(dto.getMaLop());
+//            lop.setKipDay(dto.getKipDay());
+//            lopRepository.save(lop);
+//            UserLopMapper userLopMapper = userLopMapperRepository.findByUserAndLop(u.getId(), dto.getIdLopOld());
+//            userLopMapper.setIdLop(lop.getId());
+//            userLopMapperRepository.save(userLopMapper);
+//        }
         diem.setDiem15p(dto.getDiem15p());
         diem.setDiemmieng(dto.getDiemmieng());
         diem.setDiem90p(dto.getDiem90p());

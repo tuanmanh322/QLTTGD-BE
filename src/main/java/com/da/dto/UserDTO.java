@@ -76,8 +76,6 @@ public class UserDTO {
 
     private Boolean isTeacher;
 
-    private String maGV;
-
     private String sex;
 
     private Integer idLop;

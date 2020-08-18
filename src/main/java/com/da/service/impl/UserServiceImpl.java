@@ -347,21 +347,21 @@ UserServiceImpl implements UserService {
             users.setSodt(dto.getSodt());
             Roles roles = rolesRepository.findById(the.get().getIdRole()).get();
             if (roles.getNameRole().equals(UserTypeEnum.TEACHER.getName()) && roles.getId() == 2) {
-                Optional<Lop> lop = lopRepository.findById(users.getMaLop());
-                if (lop.isPresent()) {
-                    Lop lp = lop.get();
-                    lp.setTenlop(dto.getTenLop());
-                    lp.setKipDay(dto.getKipDay());
-                    lopRepository.save(lp);
-                    Optional<Monhoc> monhoc = monhocRepository.findById(lop.get().getMaMonhoc());
-                    monhoc.ifPresent(mh -> {
-                        mh.setTenmonhoc(dto.getTenMH());
-                    });
-                    monhocRepository.save(monhoc.get());
-                    Hangmuc hangmuc = hangMucRepository.findByMaMonhoc(monhoc.get().getId());
-                    hangmuc.setTenhangmuc(dto.getTenHangMuc());
-                    hangMucRepository.save(hangmuc);
-                }
+//                Optional<Lop> lop = lopRepository.findById(users.getMaLop());
+//                if (lop.isPresent()) {
+//                    Lop lp = lop.get();
+//                    lp.setTenlop(dto.getTenLop());
+//                    lp.setKipDay(dto.getKipDay());
+//                    lopRepository.save(lp);
+//                    Optional<Monhoc> monhoc = monhocRepository.findById(lop.get().getMaMonhoc());
+//                    monhoc.ifPresent(mh -> {
+//                        mh.setTenmonhoc(dto.getTenMH());
+//                    });
+//                    monhocRepository.save(monhoc.get());
+//                    Hangmuc hangmuc = hangMucRepository.findByMaMonhoc(monhoc.get().getId());
+//                    hangmuc.setTenhangmuc(dto.getTenHangMuc());
+//                    hangMucRepository.save(hangmuc);
+//                }
             }
             if (dto.getImageAvatar() != null) {
                 try {
@@ -372,14 +372,38 @@ UserServiceImpl implements UserService {
                 }
             }
             usersRepository.save(users);
-            UserDTO userDTO = modelMapper.map(users, UserDTO.class);
+            UserDTO userDTO = new UserDTO();
+            userDTO.setIdRole(the.get().getIdRole());
+            userDTO.setEmail(users.getEmail());
+            userDTO.setGioitinh(users.getGioitinh());
+            userDTO.setId(users.getId());
+            userDTO.setHokhau(users.getHokhau());
+            userDTO.setImagePath(users.getImagePath());
+            userDTO.setIdThe(the.get().getId());
+            userDTO.setLuongcoban(users.getLuongcoban());
+            userDTO.setName(users.getName());
+            userDTO.setNgaycap(the.get().getNgaycap());
+            userDTO.setNgaysinh(users.getNgaysinh());
+            userDTO.setNoiohientai(users.getNoiohientai());
+            userDTO.setPassword(the.get().getPassword());
+            userDTO.setQuatrinhlamviec(users.getQuatrinhlamviec());
+            userDTO.setQuequan(users.getQuequan());
+            userDTO.setSodt(users.getSodt());
+            userDTO.setSex(users.getGioitinh());
+            userDTO.setSocmt(users.getSocmt());
+            userDTO.setHokhau(users.getHokhau());
+            userDTO.setQuoctich(users.getQuoctich());
+            userDTO.setIsTeacher(users.getIsTeacher());
+            userDTO.setTrangthai(the.get().getTrangthai());
+            userDTO.setMaThe(the.get().getMaThe());
+            userDTO.setIdUser(users.getId());
             List<Baiviet> totalBv = baivietRepository.getListBVByIdUser(users.getMaThe());
             userDTO.setTotalBV(totalBv.size());
-            userDTO.setTenLop(dto.getTenLop());
-            userDTO.setTenMH(dto.getTenMH());
-            userDTO.setTenHangMuc(dto.getTenHangMuc());
-            userDTO.setKipDay(dto.getKipDay());
-            userDTO.setMaGV(users.getIdUser());
+//            userDTO.setTenLop(dto.getTenLop());
+//            userDTO.setTenMH(dto.getTenMH());
+//            userDTO.setTenHangMuc(dto.getTenHangMuc());
+//            userDTO.setKipDay(dto.getKipDay());
+//            userDTO.setMaGV(users.getIdUser());
             return CommonResult.success(userDTO);
         }
         return null;
