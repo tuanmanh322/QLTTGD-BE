@@ -44,4 +44,12 @@ public class DiemSearchDTO extends BaseSearch {
     private Date ngayKhaiGiang;
 
     private Date ngayKetThuc;
+
+    private String ma_lop;
+
+    private String diaDiem;
+
+    private Float hocPhi;
+
+    private int siSo;
 }

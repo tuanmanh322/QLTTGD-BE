@@ -173,6 +173,10 @@ public class DiemDAOImpl extends AbstractDAO implements DiemDAO {
         sb.append("  l.tenlop as tenLop,");
         sb.append("  l.thoigianbatdau as ngayKhaiGiang,");
         sb.append("  l.thoigianketthuc as ngayKetThuc,");
+        sb.append("  l.siso as siSo,");
+        sb.append("  l.diadiem as diaDiem,");
+        sb.append("  l.hocphi as hocPhi,");
+        sb.append("  l.ma_lop as ma_lop,");
         sb.append(" mh.tenmonhoc as tenMonHoc,");
         sb.append(" u.id as idHS");
         sb.append(" from users u ");
