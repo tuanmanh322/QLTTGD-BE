@@ -159,6 +159,12 @@ public class DiemServiceImpl implements DiemService {
     }
 
     @Override
+    public void searchDiemProfileStudent(DiemSearchDTO dto) {
+        log.info(" start service to searchDiemByProfile with :{}", dto);
+        diemDAO.searchDiemProfileStudent(dto, SecurityUtils.getCurrentUserIdLogin());
+    }
+
+    @Override
     public List<DiemToExcelDTO> getAllByIdUser(Integer ud) {
         log.info(" start service to getAllByIdUser");
         return diemDAO.getAllByIdThe(ud);

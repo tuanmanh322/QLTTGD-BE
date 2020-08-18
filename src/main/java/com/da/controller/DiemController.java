@@ -69,6 +69,13 @@ public class DiemController {
         return new ResponseEntity<>(dto,HttpStatus.OK);
     }
 
+    @PostMapping("/search-profile-st")
+    public ResponseEntity<DiemSearchDTO> searchDTOProfileST(@RequestBody DiemSearchDTO dto){
+        log.info(" start rest to searchDTOResponseEntity with :{}",dto);
+        diemService.searchDiemProfileStudent(dto);
+        return new ResponseEntity<>(dto,HttpStatus.OK);
+    }
+
     @GetMapping("/download/points.xlsx")
     public ResponseEntity<InputStreamResource> excelCustomersReport(@RequestParam("d")Integer d) throws IOException {
         ByteArrayInputStream in = ExcelFileUtil.objectToExcel(diemService.getAllByIdUser(d));

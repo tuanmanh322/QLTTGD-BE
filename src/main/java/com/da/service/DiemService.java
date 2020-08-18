@@ -19,6 +19,8 @@ public interface DiemService {
 
     void searchDiemByProfile(DiemSearchDTO dto);
 
+    void searchDiemProfileStudent(DiemSearchDTO dto);
+
     List<DiemToExcelDTO> getAllByIdUser(Integer ud);
 
     void readAndWriteDateFromExcel(MultipartFile file,Integer idUser);

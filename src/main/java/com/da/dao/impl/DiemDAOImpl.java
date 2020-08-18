@@ -154,6 +154,63 @@ public class DiemDAOImpl extends AbstractDAO implements DiemDAO {
     }
 
     @Override
+    public void searchDiemProfileStudent(DiemSearchDTO dto, Integer idThe) {
+        log.info("Start dao searchDiemProfileStudent with :{} and idTHe: {}", dto, idThe);
+        final StringBuilder sb = new StringBuilder();
+        Map<String, Object> params = new HashMap<>();
+        sb.append(" with info_gv");
+        sb.append(" as(select distinct u.id idUser,");
+        sb.append(" u.name, ");
+        sb.append("  l.id as idLop,");
+        sb.append(" l.tenlop");
+        sb.append(" from users u ");
+        sb.append(" left join user_lop_mapper ulm on ulm.id_user = u.id and ulm.trangthai = 1 and ulm.is_teach = 0");
+        sb.append(" left join lop l on l.id = ulm.id_lop");
+        sb.append(" where 1 = 1   ");
+        sb.append(" and  u.ma_the =" + idThe + "),");
+        sb.append(" info_hs as ");
+        sb.append(" (select distinct l.kip_day as kipDay,");
+        sb.append("  l.tenlop as tenLop,");
+        sb.append("  l.thoigianbatdau as ngayKhaiGiang,");
+        sb.append("  l.thoigianketthuc as ngayKetThuc,");
+        sb.append(" mh.tenmonhoc as tenMonHoc,");
+        sb.append(" u.id as idHS");
+        sb.append(" from users u ");
+        sb.append(" left join user_lop_mapper ulm on ulm.id_user = u.id and ulm.trangthai = 1");
+        sb.append(" left join lop l on l.id = ulm.id_lop");
+        sb.append(" left join info_gv igv on igv.idLop = l.id");
+        sb.append(" left join monhoc mh on mh.id = l.ma_monhoc");
+        sb.append(" where igv.idLop = l.id  ");
+        if (StringUtils.isNotBlank(dto.getKipDay())) {
+            sb.append(" and l.kip_day like :p_kipDay");
+            params.put("p_kipDay", "%" + dto.getKipDay().trim() + "%");
+        }
+        if (StringUtils.isNotBlank(dto.getTenLop())) {
+            sb.append(" and l.tenlop like :p_tenLop");
+            params.put("p_tenLop", "%" + dto.getTenLop().trim() + "%");
+        }
+        sb.append(" )");
+        sb.append(" select distinct d.id,");
+        sb.append("  d.ma_diem as maDiem,");
+        sb.append("    t.ma_the as maThe,");
+        sb.append("  u.name as userName,");
+        sb.append(" u.ngaysinh as ngaySinh,");
+        sb.append("  d.diemmieng as diemMieng,");
+        sb.append(" d.diem15p as diem15p,");
+        sb.append(" d.diem90p as diem90p,");
+        sb.append(" d.diemtb as diemTB,");
+        sb.append("  info_hs.* ");
+        sb.append(" from diem d ");
+        sb.append(" left join users_diem_map udm on udm.id_diem = d.id");
+        sb.append(" left join users u on u.id = udm.id_user");
+        sb.append(" left join info_hs on info_hs.idHS = u.id");
+        sb.append(" left join the t on t.id = u.ma_the");
+        sb.append(" where 1=1 and u.is_teacher =0 and info_hs.idHS = udm.id_user");
+        sb.append(" order by u.name");
+        searchAndCountTotal(dto, sb.toString(), params, DiemSearchDTO.class);
+    }
+
+    @Override
     public List<DiemToExcelDTO> getAllByIdThe(Integer idThe) {
         log.info("Start dao searchDiemProfile with idTHe: {}", idThe);
         final StringBuilder sb = new StringBuilder();

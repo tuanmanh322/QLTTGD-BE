@@ -12,5 +12,7 @@ public interface DiemDAO extends Serializable,BaseDAO {
 
     void searchDiemProfile(DiemSearchDTO dto, Integer idThe);
 
+    void searchDiemProfileStudent(DiemSearchDTO dto, Integer idThe);
+
     List<DiemToExcelDTO> getAllByIdThe(Integer idThe);
 }
